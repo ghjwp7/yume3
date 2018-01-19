@@ -30,8 +30,16 @@ editing box where you can change it, and with the option to turn
 on "roll-over" operation, where an item is executed when the mouse
 cursor crosses it.
 
-For more examples, cd to the yume3/examples directory after you
-make yume, and enter the command ./yume-examples.  Also, see 
-man yume and man yume-examples.
+For more examples, cd to the yume3/examples directory after you make
+yume, and enter the command ./yume-examples.  Also, see man yume and
+man yume-examples.
 
 - jiw, January 2018
+
+Bug notes:
+1. As of 18 Jan 2018, any examples that use exported shell functions
+won't run correctly if default shell dash is v. 0.5.8 or later, as it
+is for Ubuntu 15 and later.  A branch to fix this issue is underway.
+
+2. Misleadingly, the INSTALL doc refers to files at sourceforge
+
