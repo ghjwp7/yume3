@@ -1,0 +1,37 @@
+#!/bin/bash
+#$Id: play-sound-delay 7 2009-02-25 15:19:11Z j-waldby $
+[ "$YUME" ] || YUME=$(which yume)
+
+[ -z $1 ] && {
+   $YUME -ti "$0" -bu -ex\
+     -la 60 "$0 60" \
+     -la 180 "$0 180"\
+     -la 240 "$0 240"\
+     -do "$0 3" &
+   exit; }
+
+# After specified delay, beep or play pop.wav
+# Parameter:  Delay in seconds
+
+PLAY=`which play 2>/dev/null`
+[ -x "$PLAY" ] || { sleep $1; echo -ne '\a'; } &
+[ -x "$PLAY" ] && { sleep $1; $PLAY pop.wav > /dev/null 2>&1; } &
+
+# This example makes a menu with a row of four buttons (labeled exit,
+# 60, 180, and 240) and a do: item, containing the command
+# "./play-sound-delay 3".  When it starts, play-sound-delay tests if
+# it has no parameters; if that is so, it uses yume to create a menu,
+# and exits.  If not, it uses the parameter as a length of time to
+# sleep, in background, before playing a sound with "play pop.wav".
+# play is a SoX (Sound eXchange) program, and file pop.wav appears in
+# yume's examples directory.  If you don't have play on your system,
+# the script will just use "echo -ne '\\a'" to beep.
+
+# Techniques illustrated: Invoking a script one way to start yume, and
+# another to execute complicated actions ($0 represents script name);
+# command grouping with braces, { ... ; }; redirecting stdout and
+# stderr outputs to /dev/null.
+
+# Note that this script says "#!/bin/bash" in its first line, rather
+# than "#!/bin/sh", to emphasize that some of the notation may be
+# bash-specific.

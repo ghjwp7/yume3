@@ -1,0 +1,18 @@
+#$Id: wordexp-in 26 2009-03-13 16:17:35Z j-waldby $
+
+# wordexp-in is included by wordexp-vals to test the results
+# of some wordexp expansions of special parameters.
+
+ -ex -bw ii 
+ -bu '%%echo Cash Zero is $0'  "%%echo Cash Zero is $0"
+ -bu '%%echo Cash Star is $*'  "%%echo Cash Star is $*"
+ -bu '%%echo Cash Hook is $?'  "%%echo Cash Hook is $?"
+ -bu '%%echo Cash Hash is $#'  "%%echo Cash Hash is $#"
+ -bu '%%echo Cash Dash is $-'  "%%echo Cash Dash is $-"
+ -bu '%%echo Cash Cash is $$'  "%%echo Cash Cash is $$"
+ -bu '%%echo Cash Bang is $!'  "%%echo Cash Bang is $!"
+ -bu '%%echo Cash At   is $@'
+# Double-quoted Cash At expands to yume's arguments, leading
+# to infinite inclusion, so no can do.
+#  "%%echo Cash At   is $@"
+ -bu -ex

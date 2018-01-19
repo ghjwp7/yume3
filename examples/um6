@@ -1,0 +1,9 @@
+#!/bin/sh
+#$Id: um6 7 2009-02-25 15:19:11Z j-waldby $
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME  -bu -ti $0 \
+ -la 'Host/Whois/Dig' \
+   'IP=`xclip -o`; H=`host $IP 2>/dev/null`; W=`whois $IP@whois.arin.net | egrep -iv "whois.arin.net|^The ARIN|^Network Info|^Please use |^Information and|^ *$|^%" 2>/dev/null`; D=`dig $IP | egrep -iv "^; <<>> DiG|^;; res opt|^;; global opt|^;; got ans|^;; ->>HEAD|^;; flags:|^;; Query|^;; Total|^;; FROM:|^;; MSG SIZE|^;; ANSWER|^;; WHEN|^ *$" 2>/dev/null`; echo "H: $H"; echo "W: $W"; echo "D: $D\n"'\
+ -ex &
+

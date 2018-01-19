@@ -1,0 +1,21 @@
+#!/bin/sh
+#$Id: wordexp-vals 26 2009-03-13 16:17:35Z j-waldby $
+#
+# To see result of wordexp expansion of certain digraphs.
+# man wordexp says,
+#   The  result  of expansion of special parameters ($@, $*, $#,
+#   $?, $-, $$, $!, $0) is unspecified.
+#
+
+# The included file makes a menu with do-groups that echo the results
+# of the special parameters mentioned above.  We also tried to load
+# this file with a -in command, using IN=-in substitution so the
+# include only happens once, and thus have copies of the commands both
+# directly in parameter list and indirectly from a file, but instead
+# made separate file after getting some wordexp "metachar appears in
+# the wrong place" messages.   
+# 
+#yume -ex -do "echo '$@, $*, $#, $?, $-, $$, $!, $0'" -in wordexp-in
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME -ti $0 -in wordexp-in

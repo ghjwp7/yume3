@@ -1,0 +1,6 @@
+$Id: um2.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+Illustrates use of "firefox '...'" to open a URL in firefox.
+Clicking either button tells firefox to open the corresponding URL in
+a browser pane or tab.  Each of these example URL's has no spaces within
+it, but could do so without problem because the URL is quoted, '...'.

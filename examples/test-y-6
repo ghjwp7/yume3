@@ -1,0 +1,10 @@
+#!/bin/sh
+#$Id: test-y-6 16 2009-03-01 17:16:30Z j-waldby $
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME -ti $0 -ex -do\
+ "echo 'It\'s time to check'"\
+ "echo \"It\'s time to check\""\
+ "echo \"It's time to check\""\
+ "echo It\'s time to check"\
+ "echo 'Ok, let\'s check'" &

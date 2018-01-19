@@ -1,0 +1,29 @@
+$Id: um5.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+um5's HMS button gets a number (of seconds) from the clipboard, via
+"xclip -o".  It displays the number of minutes, hours, or days that
+the number equals.  um5's Factor button gets a number (or numbers)
+from the clipboard, via "xclip -o".  It displays the factors of the
+number(s).
+
+For example, if you select text 12000 and click HMS, the following
+will display:
+    12000 seconds = 200.0 minutes = 3.33 hours = .13 days
+or if you click Factor,
+    12000: 2 2 2 2 2 3 5 5 5
+
+Or, if you select 12345678 and click HMS, the following
+will display:
+    12345678 seconds = 205761.3 minutes = 3429.35 hours = 142.88 days
+or if you click Factor,
+    12345678: 2 3 3 47 14593
+
+If you select 8617408 1351315 355424131 and click HMS, the following
+will display:
+    8617408 1351315 355424131 seconds = 263.0 minutes = 263.02 hours = 263.02 days
+(a curiously wrong bit of nonsense), or if you click Factor, the
+following will display:
+    8617408: 2 2 2 2 2 2 29 4643
+    1351315: 5 7 38609
+    355424131: 355424131
+

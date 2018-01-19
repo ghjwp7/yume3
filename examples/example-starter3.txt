@@ -1,0 +1,32 @@
+$Id: example-starter3.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+example-starter3 creates a list of examples from the yume examples
+directory, finding relevant files with egrep and test -x.  It displays
+a tall menu, mostly with three buttons per line, from which examples
+can be viewed and run.  In the two-button menu lines, clicking exit
+exits; ls lists files in examples directory; and ll lists details.
+
+In the three-button lines, clicking the lefthand button runs the
+example corresponding to the button's label.
+
+Clicking the C (for Code) button shows the code of the example, in an
+xterm.
+
+Clicking an N (for Note) button will open an xterm and display brief
+comments about the example.  The *.txt files in the examples directory
+contain Note text, and when there is a file x.txt corresponding to
+example file x, there will be an N button to run "less x.txt" in a new
+xterm.  If there is no such .txt file, the righthand button will have
+a blank label and do nothing.
+
+Pressing q in a Code or Note xterm will close it. 
+
+
+example-starter3 shows further variations on shell quoting, using
+echo and xargs.  Either of the commands
+               yume $L &
+or
+               yume "$L" &
+would treat the string 'xterm -e less x.txt' within $L as four
+parameters ("'xterm", "-e", "less", and "x.txt'"), but using echo and
+xargs causes it to be properly treated as one parameter to yume.

@@ -1,0 +1,170 @@
+#!/bin/sh
+# $Id: yume-lat-lon 2011-03-20 $
+[ "$YUME" ]  || YUME=$(which yume)
+
+# Create a yume menu that allows user to find:
+# -- lat/lon locations of addresses;
+# -- distances between pairs of locations
+
+# Note: The initial idea of this script and the curl commands that
+# appear here are from the article "Exploring Lat/Lon with Shell
+# Scripts" in Dave Taylor's "Work the Shell" column in the November,
+# 2009 issue of Linux Journal.  For TOC of that issue, see ref [0].
+
+# References:
+#[0] http://www.linuxjournal.com/issue/187
+#[1] http://www.movable-type.co.uk/scripts/gis-faq-5.1.html
+#[2] http://www.daftlogic.com/projects-google-maps-distance-calculator.htm
+#[3] http://en.wikipedia.org/wiki/Great-circle_distance
+#[4] http://en.wikipedia.org/wiki/Geographical_distance
+#[5] http://en.wikipedia.org/wiki/Vincenty%27s_formulae
+#[6] http://www.world-airport-codes.com/
+
+# Note, distances according to [6] and [2] compare as follows:
+#   Case        [6]       [2]       y-l-l    Error Note
+# BTM to BZN     66      65.907      65.7    -0.3%
+# BOS to BUF    397     394.704     393.1    -0.4%
+# BNA to LAX   1803    1794.7      1791.5    -0.2% a
+# BOS to BIL   1870    1861.885    1856.8    -0.3%
+# BOS to BZN   1996    1987.622    1982.3    -0.3%
+# BOS to BTM   2059    2049.795    2044.6    -0.3%
+# BOS to BSW   3278                3254.5    -0.7% b
+# BOS to BRW   3402                3380.6    -0.6% b
+# BOS to BHI   5658    5635.254    5515.3     2%   c
+# BZN to BXK    865     858.285     856.6    -0.2%
+# BZN to BBC   1431    1428.938    1426.6    -0.2%
+
+# Notes --
+# (a) Ref [3] computes 1794 miles as BNA to LAX distance.
+#
+# (b) Except for BOS to BSW and BRW, error is given as % difference
+# from daftlogic [2] numbers.  The BSW and BRW error is given as %
+# difference from world-airport-codes [6] numbers.  My numbers run 
+# low probably because of using radius based on an equation in 
+# section 5.1a of [1] rather than fixed radius of 3958.76 miles.
+#
+# (c) My error in BOS to BHI occurs because yahoo geocode reports that
+# BHI Comandante Airport, Argentina is at -37.090698, -63.584808,
+# which is about 140 miles away from the actual location of the
+# airport at about  -38.721, -62.158.  (See airport and farmland at
+# http://maps.google.com/maps?ll=-38.72131,-62.1579 and
+# http://maps.google.com/maps?ll=-37.090698,-63.584808 )
+
+#---------------------------------
+# Look up lat-lon coords of a place.  Params should give an
+# address or place-name or airport code, etc.
+getLL(){
+    ADDR=$(echo $* | sed 's/ /+/g;s/,//g')
+    GEO='http://api.maps.yahoo.com/ajax/geocode'
+    OPS='?appid=onestep&qt=1&id=m&qs='
+    R=$(curl -s "$GEO$OPS$ADDR")
+    LAT=$(echo $R | sed 's/.*Lat..\([-.0-9]*\).*/\1/')
+    LON=$(echo $R | sed 's/.*Lon..\([-.0-9]*\).*/\1/')
+}
+#---------------------------------
+# Use getLL to get lat-lon coords, then display on console
+sayLL(){
+    getLL $*
+    echo "$* is at $LAT, $LON"
+}
+#---------------------------------
+# Compute approximate distance between two places, $1 and $2
+distLL(){
+# Get the latitudes and longitudes of $1 and $2 into $T...$W
+    getLL $1; T=$LAT; U=$LON
+    getLL $2; V=$LAT; W=$LON
+# Compute the distance, using formulae from refs [3] and [1]
+    CALC="
+scale=29;
+k=a(1)/45;
+ps=$T*k;
+ls=$U*k;
+pf=$V*k;
+lf=$W*k;
+# Compute haversines and a sum of them
+dphs=s((ps-pf)/2)^2;
+dlhs=s((ls-lf)/2)^2;
+hph=dphs+c(ps)*c(pf)*dlhs;
+# Compute central angle as 2*arcsin(sqrt(hph))
+if (hph>0.999) {ca=3.14} else {ca=2*a(sqrt(hph)/sqrt(1-hph))}
+# Compute radius based on a formula in section 5.1a of [1]
+er=3963 - 13*s((ps+pf)/2);
+mi=ca*er;
+scale=1;
+# Round result off to one decimal place
+mi*1/1;"
+    DIST=`echo "$CALC" | bc -l`
+}
+#---------------------------------
+# Use distLL to compute a distance, then display on console
+sayDLL(){
+    distLL "$1" "$2"
+    echo Distance is about $DIST miles
+}
+#---------------------------------
+# Make the above functions available within yume
+export -f getLL sayLL distLL sayDLL
+#---------------------------------
+# Some airport TLC's and names, for testing
+BBC='Bay City Airport, TX'
+BHI='BHI Comandante Airport, Argentina'
+BIL='Billings Logan International Airport'
+BNA='Nashville International Airport'
+BOS='Boston Logan International Airport'
+BRW='Wiley Post/Will Rogers Airport, AK'
+BSQ='Bisbee Municipal Airport, AZ'
+BSW='Boswell Bay Airport, AK'
+BTM='Butte Bert Mooney Airport'
+BUF='Buffalo Niagara Airport'
+BXK='Buckeye Municipal Airport'
+BZN='Gallatin Field Airport'
+LAX='Los Angeles International Airport'
+#---------------------------------
+# Make 2 yume buttons for each airport name in 4 6-elt rows.
+# Note, meta-mode %+ executes command No-Fork.  Old menu
+# goes away and new menu is displayed with newly selected
+# Address-1, when  "%+$0 $i" is executed.  To see pid #'s
+# changing, one can run top, press z,x,R to highlight
+# sort column and reverse sort, then press > until command
+# column is highlighted, with yume3 sorted to top of display.
+make2(){
+    L="$L -bu"
+    for i in $*; do L="$L -la $i \"%+$0 $i\""; done;
+    L="$L -bu"
+    for i in $*; do L="$L -la Loc. \"sayLL $i\""; done;
+}
+L=""
+make2 BBC BHI BIL BNA BOS BSQ
+make2 BSW BTM BUF BXK BZN LAX
+#---------------------------------
+# Set 1st address to a Montana airport or 1st param if given
+TLC=$1
+[ "$TLC" ] || TLC=BIL
+eval M=\$$TLC
+# Set 2nd address to Boston Logan IA
+S="$BOS"
+# Single quote some items to avoid premature substitutions
+CSA='echo Current selections are: ; sayLL $AdA; sayLL $AdB'
+EDI='%+ emacs --no-splash -bg black -fg white  $ME; $ME $TLC'
+# Export vars to yume's environment
+export TLC ME=$0
+#---------------------------------
+# Next two lines would add exit, %calc, restart buttons to yume menu
+# -bw aaa\
+# -ex -la '%' \'dc -e \"4k\`xclip -o\`dsd-ld/p\"\' -la Re-up \"%+$0\"\
+#---------------------------------
+
+# Display calculation menu with yume
+echo -at 350x260+0+200 \
+ -bw cfa\
+ -bu -la \'Address 1:\'  -la AdA -iv \"$M\" -la Loc. \'sayLL \$AdA\' \
+ -bu -la \'Address 2:\'  -la AdB -iv \"$S\" -la Loc. \'sayLL \$AdB\' \
+ -bw ia\
+ -bu -la \'Click here to compute distance\' \
+         \'sayDLL \"\$AdA\" \"\$AdB\"\' \
+     -la Edit \'$EDI\'\
+ -bu -la \'Click below to set first address:\' \
+         \'$CSA\' -ex \
+ -bw aaaaaa\
+ $L | xargs $YUME &
+#---end---------------------------

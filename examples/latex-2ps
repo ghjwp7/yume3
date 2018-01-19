@@ -1,0 +1,33 @@
+#!/bin/sh
+#$Id: latex-2ps 7 2009-02-25 15:19:11Z j-waldby $
+#-Id: latex-2ps,v 1.1 1997/12/31 18:39:01 j-waldby Exp -
+#
+# This is callable via a mouse button press on a yume button.
+# If the latex step goes ok it runs dvips then exits with a beep,
+#     otherwise uses $LER to display error message in xterm.
+
+LER="latex-2err"
+DOC=`basename $1 .tex`
+
+# If extra param, or no dvi or no ps file, or tex newer than dvi,
+# or dvi newer than ps ...
+
+if [ $# -gt 1 -o ! -e $DOC.dvi  -o ! -e $DOC.ps \
+   -o $DOC.tex -nt $DOC.dvi -o $DOC.dvi -nt $DOC.ps ] ; then
+
+    # Run latex and check its exit status
+    if latex $DOC < /dev/null > /dev/null ; then
+
+	# Status ok, so run dvips and ignore its stderr output.
+	dvips $DOC -o  2> /dev/null 
+	echo -en "\a"   #  beep and exit.
+	exit
+    else
+	# Status not ok, so run latex in an xterm
+	xterm -geometry -5+5 -e $LER $DOC &
+	exit
+    fi
+fi
+
+# beep if dvi file is newer than tex file.
+echo -en "\a"

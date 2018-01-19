@@ -1,0 +1,14 @@
+#!/bin/sh
+[ "$YUME" ] || YUME=$(which yume)
+
+# This yume example script makes a silly graphic keyboard, where
+# character x is typed onto original term when mouse moves across
+# button labeled x.  (Demo for -de ba, wOnTop, and wUnDec options)
+
+S="$YUME -de wOnTop -de wUnDec -de ba -at 400x133+100+100 -ex"
+for i in a b c d e f g h i j k l m n o p q r s t u v w x y z;
+do
+    S="$S -la $i 'printf $i'"
+    [ "$i" = "h" -o "$i" = "q" ] && S="$S -bu"
+done
+eval $S

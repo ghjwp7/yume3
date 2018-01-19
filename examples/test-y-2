@@ -1,0 +1,9 @@
+#!/bin/sh
+#$Id:$
+
+# Create a 2-button menu, that performs some commands and
+# goes away when a button is used
+
+[ "$YUME" ]  || YUME=$(which yume)
+
+$YUME -ti "$0" -bu -la d+du '%+date;du .' -bu -la d+df '%+date;df .' &

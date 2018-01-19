@@ -1,0 +1,11 @@
+$Id: um3.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+um3 illustrates a yume menu button that opens an xterm window of
+specified size and displays output or file within it.  The user can
+close the display by pressing q.  This particular example puts output
+from "cal -3", a three-month calendar, into a 69x9 character
+large-print xterm, that is, an xterm no larger than needed and quite
+visible.
+
+It also illustrates use of yume buttons to control two CD functions,
+with cdplay and eject.

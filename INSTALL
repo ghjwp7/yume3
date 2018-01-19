@@ -1,0 +1,103 @@
+$Id:$
+
+yume is a menu system with user-editable, mouse-activated shell
+commands.  It creates and runs a menu according to user-provided
+arguments.  For more information and examples, please see README and
+man yume and man yume-examples.
+
+The current version of yume is Gtk-based, and may be found at
+<http://sourceforge.net/projects/yume3/>.  An earlier version, as
+found at <http://sourceforge.net/projects/yume2/>, is based on the
+xforms library for X Window System.
+
+         ____________________________________________________
+
+How to get the Gtk libraries which yume uses to draw graphic objects:
+
+If your system does not already have Gtk development libraries
+available, please see <http://www.gtk.org/download.html>, which has
+URL's for linux/unix, MS-Windows, and OSX or MacOS versions of Gtk
+software.  
+
+Many linux distributions include a few dozen Gtk-based software and
+support libraries as required for use with Gnome.  Even if your system
+is Gnome-based, you still may need to install Gtk development header
+files, as found (typically) in /usr/include/gtk-2.0/gtk/.  For
+example, try the command "locate gtk.h" to see if that header file is
+available.  If it is not, use your system's package manager to install
+a package with name like "gtk2-devel - 2.10.14" (or higher number).
+For example, on recent Fedora Core distributions, sudo pirut, click
+the Search tab, put Gtk in the search box, and click the Search
+button.  Then locate and click a checkbox next to appropriate library
+entry, and click Apply.
+
+         ____________________________________________________
+
+
+To make yume after unpacking it, enter the commands
+
+          cd yume3
+          make
+          sudo make install
+
+
+In more detail: Download the latest yume tgz file.  Let us suppose
+yume3-abc.tgz has been downloaded to <path>.  (For example, you might
+have downloaded yume3-v005.tgz to ~/Downloads.)  Enter the commands
+
+          cd <path>
+          tar xzf yume3-abc.tgz
+          cd yume3; make; sudo make install
+
+
+The command 
+    	    make
+
+in the above will compile and link the several modules of yume3,
+and will also compile a small program yume (from source yumex.c).
+It also will copy yume3/examples/yume-gtkrc to $HOME/.yume-gtkrc.
+If you are reinstalling yume3 and have a .yume-gtkrc file that
+you have customized, make a backup copy of it first.  If you run
+make as root rather than an ordinary user, .yume-gtkrc will be
+installed in /root/, which may be not what you want.
+
+
+The command
+          sudo make install
+
+in the above will install yume in /usr/local/bin and yume man pages in
+/usr/share/man/man1.  If you prefer to install yume elsewhere, copy or
+move yume3/bin/yume to the preferred bin/ directory, or link to it.
+For example, if <path> is the location where you unpacked yume3:
+
+          cd yume3/
+          mv bin/yume ~/bin
+-or-
+          cd ~/bin
+          ln -s  <path>/yume3/bin/yume
+
+
+
+If you don't install the man pages in /usr/share/man/man1, use the
+following forms to read them.  (Use the ./ path when yume.1 is in
+current directory.)
+
+          man <path>/yume3/doc/yume.1
+          man <path>/yume3/doc/yume-examples.1
+          man <path>/yume3/doc/yume.1
+          man ./yume.1
+
+
+
+To try out yume script and menu examples, after making yume, use:
+
+          cd yume3/examples
+          ./yume-examples
+-or-
+          <path>/yume3/examples/yume-examples  <path>/yume3/examples
+
+The current directory should be yume3/examples when trying examples,
+or you should give yume-examples a path parameter, to tell it where to
+find examples.
+
+- jiw, 15 March 2011

@@ -1,0 +1,41 @@
+# yume3 theme, take 1
+# $Id: .yume2-gtkrc,v 1.2 2011/02/19 22:39:59 j-waldby Exp j-waldby $
+
+style "y3m" {
+  xthickness = 0
+  ythickness = 0
+  bg[NORMAL]	= "blue"
+  fg[NORMAL]	= "tan"
+  bg[PRELIGHT]	= "SkyBlue"
+  fg[PRELIGHT]	= "black"
+  bg[ACTIVE]	= "tan"
+  fg[ACTIVE]	= "green3"
+}
+style "y3gb"	= "y3m"	 { bg[PRELIGHT]	= "yellow"
+      		  	   fg[NORMAL]   = "green"
+			   bg[NORMAL]	= "yellow" }
+style "y3ga"	= "y3gb" { bg[NORMAL]	= "yellow" }
+
+style "y3db"	= "y3m"  { fg[NORMAL]	= "yellow" }
+style "y3da"	= "y3db" { bg[NORMAL]	= "red2"   }
+
+style "y3eb"	= "y3m"  { fg[NORMAL]	= "blue"
+			   bg[NORMAL]	= "YellowGreen" }
+style "y3td"	= "y3m"  { }
+style "y3ib"	= "y3m"  { fg[NORMAL]	= "red1" }
+style "y3tv"	= "y3m"  { }
+style "y3vb"	= "y3m"  { }
+
+class "GtkWidget" style "y3m"
+widget "*y3gb*" style "y3gb"
+widget "*y3db*" style "y3db"
+widget "*y3da*" style "y3da"
+widget "*y3eb*" style "y3eb"
+widget "*y3td*" style "y3td"
+widget "*y3ib*" style "y3ib"
+widget "*y3tv*" style "y3tv"
+widget "*y3vb*" style "y3vb"
+
+# Note, you can use Pango Text Attribute Markup Language in button labels.
+# See http://library.gnome.org/devel/pango/stable/PangoMarkupFormat.html
+# end - .y3-gtkrc

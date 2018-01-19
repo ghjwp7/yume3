@@ -1,0 +1,34 @@
+$Id: example-starter4.txt 25 2009-03-13 16:07:51Z j-waldby $
+
+example-starter4 is very much like example-starter3 except that
+it uses  -bw  (button width) codes, to set fixed widths of 
+columns of buttons.  Specifically, it uses   -bw daa
+which makes the left column 4 times as wide as the middle or
+right columns.  The  -bw aa codes divide row length equally 
+between two buttons.   Unlike example-starter3, this example-
+starter doesn't have a -at geometry specification, and doesn't
+define obscure constants buxMargin and buQuanta.
+
+
+
+example-starter4 creates a list of examples from the yume examples
+directory, finding relevant files with egrep and test -x.  It displays
+a tall menu, mostly with three buttons per line, from which examples
+can be viewed and run.  In the two-button menu lines, clicking exit
+exits; ls lists files in examples directory; and ll lists details.
+
+In the three-button lines, clicking the lefthand button runs the
+example corresponding to the button's label.
+
+Clicking the C (for Code) button shows the code of the example, in an
+xterm.
+
+Clicking an N (for Note) button will open an xterm and display brief
+comments about the example.  The *.txt files in the examples directory
+contain Note text, and when there is a file x.txt corresponding to
+example file x, there will be an N button to run "less x.txt" in a new
+xterm.  If there is no such .txt file, the righthand button will have
+a blank label and do nothing.
+
+Pressing q in a Code or Note xterm will close it. 
+

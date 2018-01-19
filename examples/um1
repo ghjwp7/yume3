@@ -1,0 +1,10 @@
+#!/bin/sh
+#$Id: um1 7 2009-02-25 15:19:11Z j-waldby $
+[ "$YUME" ] || YUME=$(which yume)
+
+# um1 - Two netscape buttons
+$YUME  -bu -ti $0 \
+ -la 'NS paypal' "netscape -remote 'OpenURL(https://www.paypal.com/cgi-bin/webscr?cmd=_login-run)'"\
+ -la 'NS ebay-seller' "netscape -remote 'OpenURL(cgi6.ebay.com/ws/eBayISAPI.dll?MfcISAPICommand=ViewListedItems&userid=mxqtech&since=2)'"\
+ -ex &
+

@@ -1,0 +1,85 @@
+#!/bin/sh
+#$Id: image-percents,v 1.1 2011/04/06 17:04:13 j-waldby Exp $
+
+DOC() {
+cat <<EOF
+
+yume example "$0": Click button with name of .jpg
+image, to scale it by specified percentage.  The scale 
+percentage is displayed in a user-changable -iv box.  
+Its initial value is given in shell variable $SCALE.
+
+$0 should be started with parameters as noted below.
+When it is started by yume3/examples/example-starter4, it looks 
+for pictures in ../web, a directory that will be created if
+you download and un-tar yume3-doc-eg00x.tgz, with x=latest #.
+
+Each conversion will display a message like:
+
+  Convert eg-ss-28.jpg from 100x200 to 66x133
+
+Note, sizes displayed in message are obtained via 
+program  'imginfo', apparently from 'JasPer' pkg
+
+Note, $0 uses a temporary file.  If a file exists
+having the temporary name, it will be overwritten and destroyed.
+See $TMP in code below.
+
+Parameters:
+SCALE  can be specified by parameter 1, or defaults to 66%
+PIXDIR can be specified by parameter 2, or defaults to \$PWD/../web.
+PREFIX can be specified by parameter 3, or defaults to none.
+SUFFIX can be specified by parameter 4, or defaults to .jpg.
+
+EOF
+}
+export -f DOC
+TMP=image-percents-temp-file.jpg
+
+[ "$YUME" ] || YUME=$(which yume)
+
+[ "$SCALE"  ] || SCALE=$1;  [ "$SCALE"  ] || SCALE=66
+[ "$PIXDIR" ] || PIXDIR=$2; [ "$PIXDIR" ] || PIXDIR=$PWD/../web
+[ "$PREFIX" ] || PREFIX=$3; [ "$PREFIX" ] || PREFIX=""
+[ "$SUFFIX" ] || SUFFIX=$4; [ "$SUFFIX" ] || SUFFIX=".jpg"
+
+# Function D gets width and height from an image; returns  w x h
+D() {
+    imginfo -f $1 | cut -d' ' -f3,4 | tr " " "x"
+}
+
+# Function C tells filename, original size, and converted size
+C() {
+    echo -n "Convert $1 from $(D $1) "
+    convert -scale ${SS}% "$1" $TMP && mv $TMP "$1"
+    echo "to $(D $1)"
+}
+export -f C D
+export TMP
+
+# Function U creates text like:   -la eg-ss-42 "C eg-ss-42.jpg"
+U() {
+#                    L  M     $B     $1
+[ "$P" ] && printf "%s %s -la %s \"C %s\" " "$L" $P "$B" "$1"
+#                       L     $B     $1
+[ "$P" ] || printf    "%s -la %s \"C %s\" " "$L" "$B" "$1"
+}
+
+# If expected picture directory doesn't exist, complain, then show docs
+cd $PIXDIR || { printf "\n*** Does picture-directory $PIXDIR exist? ***\n";
+    DOC; exit 1; }
+unset P Q R S T L
+P="-bu"
+
+# Make string L for a menu with 4 buttons per row.  This is done
+# by cycling the "-bu" string thru vars P, Q, R, S so it comes up
+# once per 4 file names.
+for i in ${PREFIX}*${SUFFIX}; do
+   B="$(basename $i $SUFFIX)"
+   L="$(U $i)"
+   T=$P; P=$Q; Q=$R; R=$S; S=$T
+done
+
+#echo $L
+echo -ti $0 -ex -bw aaaa -bu -la SS% -la SS -iv $SCALE \
+-bu -la "'Click a button to scale image by %'" true $L | xargs $YUME &

@@ -1,0 +1,31 @@
+#!/bin/sh
+#$Id: example-starter4 25 2009-03-13 16:07:51Z j-waldby $
+#
+# example-starter4 - Make menu to start yume examples, and
+# to show code files, and note files where they exist.
+# See example-starter4.txt for more comments.
+#
+# e-s-4 is like e-s-3 except that it has -bw codes to 
+# select specific widths of buttons, and has no -at and
+# no buxMargin & buQuanta values.  e-s-3 starts with:
+#   echo -at 240x720-2+2 -de buxMargin:5 -de buQuanta:50 -ti $0
+
+L=""
+for i in `egrep -l "yume example|^ *yume|^ *.YUME" *`; do
+    if [ -x $i ]; then		# Is i executable?
+	L="$L -bu ./$i -la C 'xterm -T Code -e less $i'"
+	[ -f $i.txt ] && L="$L -la N   'xterm -T Note -e less $i.txt'"
+	[ -f $i.txt ] || L="$L -la ' ' true"
+    fi
+done
+
+[ "$YUME" ] || YUME=$(which yume)
+export YUME
+
+echo -ti $0 \
+ -bu -la \'Click C buttons to see Code\'  true\
+ -bu -la \'Click N buttons to see Notes\' true\
+   -bw aa\
+ -bu -ex -la ll \'ls -l\'\
+   -bw daa $L\
+   -bw aa -bu -ex ls | xargs $YUME &

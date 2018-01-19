@@ -1,0 +1,19 @@
+#!/bin/sh
+#$Id: example-starter3 25 2009-03-13 16:07:51Z j-waldby $
+# example-starter3 - Make menu to start yume examples, and
+# to show code files, and note files where they exist.
+[ "$YUME" ] || YUME=$(which yume)
+export YUME
+L=""
+for i in `egrep -l "yume example|^ *yume|^ *.YUME" *`; do
+    if [ -x $i ]; then
+	L="$L -bu ./$i -la C 'xterm -T Code -e less $i'"
+	[ -f $i.txt ] && L="$L -la N   'xterm -T Note -e less $i.txt'"
+	[ -f $i.txt ] || L="$L -la ' ' true"
+    fi
+done
+
+echo -at 240x770-2+2  -de buQuanta:2 -ti $0 \
+ -bu -la \'Click C buttons to see Code\'  true\
+ -bu -la \'Click N buttons to see Notes\' true\
+ -bu -ex -la ll \'ls -l\' $L -bu -ex ls | xargs $YUME &

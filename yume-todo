@@ -1,0 +1,507 @@
+$Id: yume3-todo,v 1.1 2011/02/26 18:29:08 j-waldby Exp j-waldby $
+
+[25 Mar 2017 note:] In trying to get avr-yume-write-hex-including to
+work ok with avr-yume-write-hex-single and similar menus, had to use
+-Y7 repeatedly as the error messages did not pin down locations of
+problems.  So: (1) perhaps store line #s/col #s during parsing, so
+that error messages can tell where the problem occurred within the
+input, and (2) fix whatever is causing the errors (some of them shown
+below) 
+
+Messages of the following forms are too opaque.  Also, yume man page
+doesn't include anything about 'Bad width' errors.
+
+*** Error 15 at F:./src/yume3-p2.c L:45 D:0   Bad width : 0 40
+*** Error ERR_WEXP at F:m L:n D:n  wordexp failure n
+
+The latter error (with numbers filled in) occurred whenever the
+include file contained stuff like 'abc $SYM' or "abc $SYM" or 'abc
+\$SYM' but if SYM had been exported, "abc \$SYM" worked ok.
+
+Apparently, errors also occurred in include file processing when I
+tried to use line ends without backslashes.  Need to check, since yume
+man page says either is ok.  
+
+Note, Bad Width errors seem to be due to wrong widths getting filled
+in the .w field of some ListItem entries .  The problem seems to occur
+in entry #40 to 42 during tests of avr-yume-write-hex-single,
+avr-yume-write-hex-singleX, avr-yume-write-hex-singleY.  In
+particular, "40.  et12.0 Exitor 4 w 26 <Exit> <exit> []" shows up
+occasionally (say about 3 times out of 10) for the -singleY menu, with
+"40.  et12.0 Exitor 4 w 10 <Exit> <exit> []" showing up the rest of
+the time, apparently randomly.  Both 10 and 26 result in overly wide
+menus, 2000 to 5000 pixels wide.  Adding/changing the -bw aa flag
+didn't have a clear effect yet.
+
+Near line 248 of yume3-p1.c changed `widthString = aj;` to
+`widthString = setTxtBuf(aj); // make a copy of argv[] aj;` Half a
+dozen other places in yume3-p1.c use setTxtBuf() to make copies.  I
+may have thought widthString didn't need a copy.  This change fixed
+width problem for -singleY, -singleX and -single menus; eg -singleX
+gets bad-width message with old yume3 but not with new.
+
+Note, need to set up git for yume3 next release
+
+[end 25 Mar 2017 note]
+
+
+
+-de rh:n to set row-height of n rows.  rowH var tells y3p2 how many
+ table rows to use for each table (actual row), and buttons are
+ created with vertical span from rb to re vals, in vars rowB and rowE.
+ Eg: -de rh:4 sets rowH=4, rowB = 0, rowE=rowH-1.  Eg: What does -de
+ rh:4 A B -de re:1 D E -de rb:2 -de re:3 F G H -de rb:0 I J look
+ like???  Perhaps have a checkbox array, and during layout, mark out
+ occupied cells.  When a command is encountered, put it into leftmost
+ columns it fits into.  Problem: Don't know total width to make the
+ checkbox.  Sol.: Not a problem, just make it indefinitely wide?? (How?)
+
+done:
+remove tre stuff - just go with linear search - tre is failing to
+match wi, wo, ws, to wIconify, wOnTop, wStick, but matches wu to
+wUndec as it is the last w* key.  Problem not easy to fix with tre
+arrangement, where complicated code has to worry about branches before
+values.  The linear search will have values in a separate array, eg an
+array of shorts or bytes, and will match a string to the first key
+that matches the entirety of the string.  So, eg, string "y3" will
+match key y3da, "x" will match XYshow, "s" ShowMode, etc.  Note, short
+matches will remain stable as keys are added at end of array so that
+they don't intercept the short matches.   -- Besides
+simpler search, the initialization will look much cleaner.  Eg, like:
+const char *VVtag[]={"y3db", "y3da", ...  "xb", "bud", "bum" };
+
+done:
+Or, combine with dedata; change typedef struct { UC val, deco; } VVdata;
+to  typedef struct { UC *key, val, deco; } VVdata;
+and init with like  static VVdata dedata[Ndedata]={
+  {"y3db", DoPush, DVww},       {"y3da", DoRoll, DVww}, 
+...
+  {"ShowMode", VVShoMo, DVini}, {"wIconic", VVIconi, DVini},
+...
+(instead of with numbers as in current version; can suppress the
+comment after the numbers.)
+
+in -bd maybe accept bit names or'd together?  Or maybe not, ie -bd
+isn't set up like -de valpair, which has the or'ing already.  Perhaps
+have bd as an LHS name, with a decoder that creates an or'd bit mask.
+Eg: -de bd:bon+don+eoff which would do the same as three separate
+-de's, namely -de bon -de don -de eoff.  Another problem: do decoders
+apply to LHS items, but not to RHS???
+
+Need bits to control: Push mode vs Roll mode bits for each button
+type, b, d, e, i.  Visibility bits for each button type , to suppress
+EE buttons when they aren't desired.   But before adding vis bits, see
+if they actually work for this purpose
+
+
+done:
+make last letter of -bw repeat indefinitely & note so in yume.1
+
+figure out why last row of yume-find-word-in-c is so wide.  Imagine
+it's due to allocated width of entry field; how is that specified?
+gtk_entry_set_max_length (GTK_ENTRY (obj), 7); in case InitVal: of
+y3p2 was no help.
+
+in yume2 sf pages, add reference to yume3
+
+done:
+yume3 problem: menus either not showing up, or (presumably) off
+screen, due to problem with geometry or other params.  How to
+identify/find/stop display such instances?  
+
+done:
+add options for (a) window not resizable, via
+gtk_window_set_resizable() (b) undecorated window (no window borders),
+via gtk_window_set_decorated() (c) auto_shrink on or off
+gtk_window_set_default_size () or gtk_window_resize() (d) possibly
+accept options for gtk_window_set_screen(), gtk_window_stick(),
+gtk_window_maximize(), gtk_window_fullscreen(),
+gtk_window_set_keep_above(), gtk_window_set_keep_below ().  (Issue:
+will this blow up the exe size, for almost-never-used options??)
+
+Re how to move undecorated windows, see
+http://library.gnome.org/users/gnome-access-guide/stable/keynav-14.html.en
+
+done: remove yume-meta.1 ref in yume.1; incorporate meta docs in
+yume.1 and fix refs to yume3-gtkrc, sb yume-gtkrc and recheck err
+list, ca line 660 in man yume on dixi
+
+not:
+See about exec'ing a different executable via execle().  There's a 
+clean break between the get-parameters phase and 
+the use-parameters phase of the application.  Might possibly 
+have phase 1 write results on stdout and phase 2 read them on
+stdin.  In typical use, a dozen instances of the app run for 
+a few months at the same time, possibly started without write
+access to a file structure (ie use pipe not file).
+
+done: (differently)
+To support label wrappers, need array char *label[2] or GtkWidget
+*lab[2] in struct ListItem so that we can incorporate wrapper info
+during phase 1.  In general, correct wrapper info won't be available
+during phase 2.  Ie, whenever a new wrapper is spec'd in phase 1, the
+old wrapper info disappears unless it has been incorporated into
+label[] entry.  
+
+
+Possible problem with 'entry' fields -- in yume2, didn't need to press
+enter, after typing new text in field; with current code, box would
+show (eg) 1234 if you type 34 after 12 in box, but retrieving the
+field text gives 12, until after entry is pressed, when it gives 1234.
+
+Re above, see http://www.gtkforums.com/viewtopic.php?f=3&t=9885
+regarding use of "changed" rather than "activate"
+
+obs:
+Consider using a table for each menu.  Could set columns to
+homogeneous widths, with EE spanning 1 column, Do: spanning 2, 3, or
+more (depending on -dl or -do), and (for -dl) entry box taking up rest
+of line.  Also, if -bw is specified, say -bw abcde, we would span 1
+column for 'a' items, 2 for 'b' items, and so forth.  If -bw is not
+specified, we would allocate numbers of columns based on string
+lengths of labels.  Note, if we allocated 100 columns, the number of
+columns spanned would equal to percent of menu allocated to item.  If
+we allocated 60 columns, would have lots of divisors.  More
+practically, we could add up the number of characters in labels in
+various lines, then find number of columns that best fits the
+distribution, eg by trying a dozen or so different column-counts.
+
+obs:
+Alternately, let user specify number of columns; and whenever another
+number-of-columns setting appears, start a new table.  (Eg, R menu has
+5 rows of 6 buttons each, and 2 rows of 5 buttons each.)  For this
+plan, we have a window, then a vbox, and in the vbox, several tables.
+In each table, we have several rows all with the same number of
+columns.  (Some buttons may span multiple columns.)
+
+done:
+Need a -de setting to turn on/off the default rollover setting for
+do-groups, and setting or initial of rollover for -bu buttons.
+Also allow -iv buttons to rollover.
+
+done:
+
+Add -de keys gtkrc and nogtkrc: -de gtkrc=gtkrcfile adds a file to rc
+load list and disables built-in ~/.yume3-gtkrc load, while -de nogtkrc
+suppress loading any gtkrc file.
+
+
+done:
+Add -de keys buOn, buOff, eeOn, and eeOff, of type VVFLAG (see Data
+conversion types section, below), for setting initial states of -bu
+and EE buttons.  These settings remain in effect, affecting subsequent
+-bu or EE buttons respectively, until next such flag.
+
+Add -de vv:s form, where s is a string of key:val or key#:val pairs.
+This is intended as a transfer mechanism of parameter strings
+generated by external gui menu-design programs.
+
+Add -de keys for user (or external design program) to specify 4
+attach-points of following button.  This is to allow multi-row
+buttons.  -de attach:x,x,y,y
+
+Maybe add -de do:n such that the n terms after a -do are used as text
+for a GtkComboBoxEntry widget with n choices.  In this alternate kind
+of do: entry box,the current entry is the command executed when do:
+button is activated.  Maybe factor the -dl/-do code into a subroutine?
+Except not much help as so different.  But consider having tabbed
+menus, which fits ok into the generally-linear-specifications model of
+yume, unlike buttons of varying heights.
+
+Or consider having option forms like -bu:n, -do:n, and -iv:n, where
+n-entry GtkComboBox's or GtkComboBoxEntry's, respectively, are
+desired.
+
+
+done:
+Button type style names: In yume3-gtkrc we will have some styles with
+names like y3bu, y3ba, y3do, y3da, y3ee, y3td, y3iv, y3tv, and y3vb
+corresponding to buttons for -bu, -bu rollover, -do, -do rollover, EE,
+do: text entry, -iv, and -iv text entry, and to the VBox.  Generally,
+buttons of a given type will use the style specified for them in
+yume3-gtkrc.  The next paragraph is about allowing user to specify
+different styles for individual buttons.
+
+Consider letting the user specify new style names for each type of
+button via -de sname settings.  Eg: -de sname:y3da:t3da make yume3 use
+the name t3da for subsequent active do: buttons.  [Implementation
+problem: need to store string, eg "t3da", in affected buttons.  Some
+kinds of buttons (-iv, EE) need only one string; others (do:, -bu)
+need two.  Also, upon each name change, need to show-widget again.]
+[Because of cumbersome implementation, frightful documentation mess,
+and no demonstrated need (as of yet) for this feature, I have no plans
+to do it.]
+
+Consider replacing do: buttons with a combo box, with first choice
+being do: and other choice being ((do:)) for rollovers.  Oops,
+probably not:  "When activated, the GtkComboBox displays a popup
+which allows the user to make a new choice", which is what I want to
+happen when the double arrow is clicked; when the choice itself is
+clicked, I want to perform the do-group's action.  However, we might
+change the separate EE button to an up/down arrow on the do: button.
+Extending idea, could let user build dropdown menus for most buttons,
+eg to have constrained do groups etc
+
+
+done:
+For yume3, get rid of all -de color-setting stuff [via gtkrc and
+button style names as above].
+
+
+done:
+Add label wrappers [as below in Label Wrappers section] and add
+control over EE and do: labels.
+
+obs: (changed to linear search and yume3-init.c)
+Fix -de decoding to use a trie instead of hashes, so that
+minimal-distinct keys can be used.  Write program yume3-build.c to
+build trie.  Note that yume3 make will still depend on an external key
+file, but for download package, the keys should be embedded in
+yume3-init.h such that yume3-build.c need not be compiled and run.
+
+
+Data conversion types:
+
+
+done: (differently)
+Might want VV(x,tx) form for standard list of keys, where tx is a data
+conversion type.  eg VV(gtk,VVSTR) or VV(gtk,VVARGS), and
+VV(gtkrc,VVBOOL) or VV(gtkrc,VVFLAG).  For the VVARGS type, the val
+part of -de gtkrc:val is split up via wordexp() and used as argv for
+gtk_init() call.  For the VVBOOL type, var is set to 0 or 1 by the val
+part of -de var:val while for VVFLAG, it is set to 1 by -de var with
+no colon or value part needed.  Eg: -de nogtkrc, vs. -de
+gtk:pathtogtkrcfile .
+
+In the key processor, also read file yume3-rc which will contain
+default settings for all switches that need to have them specified.
+So yume3's behavior should be the same with or without -in yume3-rc at
+beginning of option list, if yume3-rc is its standard self.
+
+In yume3-p3.c, re waiter: If several kids are started in a short time,
+in current code there will several timeouts running at once, but only
+one is needed.  Need to find a race-free way to handle them.
+Alternately, check out the overhead of just having each waiter
+instance sit and wait for a single kid, without using repeated
+timeouts.  
+
+Check putenv() use.  Per http://www.seebs.net/c/growup.html at the
+end, "When I got a chance to run purify on an application, I found out
+that it had only one memory bug, which was a memory leak I had
+documented as a limitation of the POSIX spec for getenv/putenv.  (You
+can't tell, when looking at an environment variable, whether or not it
+uses allocated space, but when you use putenv() with a piece of
+memory, you *lose* that memory, even if it was allocated.)"
+
+Re .yume3-gtkrc : need to decide upon where (if not ~/.yume-gtkrc)
+the gtkrc file is going to sit.
+
+In man page, illustrate forms like 
+   YUME='/usr/local/bin/yume -Y7 ' ./sho-yume23-samples
+for use with scripts that say 
+   [ "$YUME" ] || YUME=$(which yume)
+near beginning (as per following paragraph).
+
+Done 26 Feb 2011 - 
+In examples, replace 'yume ...' in each script with $YUME,
+to facilitate testing with not-yet-installed new versions of yume.
+Via code like:   [ "$YUME" ] || YUME=$(which yume)
+
+
+Label Wrappers ---
+
+Label Wrappers options summary: Instead of the "-de 'wrapN:txt" form
+mentioned below, where N is a digit, will use forms "-de wsn:txt"
+to assign specified label wrapper text to widgets with the specified
+name.
+
+Note, wsn is a widget style name chosen from set {y3bg, y3dp, y3dr,
+y3ee, y3td, y3iv, y3tv, y3ex, y3vb}, while txt is format text that can
+contain Pango markup codes and may or may not contain one %s field[*],
+as illustrated below. [* Per (C99? C0x?) std as in n1256.pdf,
+sec. 7.19.6.1 par. 2, "If the format is exhausted while arguments
+remain, the excess arguments are evaluated [...] but are otherwise
+ignored."]  That is, if a wrapper has no %s field in it, resulting
+labels will be the same each time the wrapper is used.
+
+Note, set is ordered, and its order must match with enum EntryType.
+Ie, { DoPush, DoRoll, DoTxt, DoEE, RoList, BuHid, BuGen, BuFix,
+Exitor, InitBu, InitVal, VBox }.
+
+Initial label wrapper text settings are as follows.  Note, with
+default yume3-gtkrc, black label letters are used for y3bg and y3dp,
+and for y3ee's inactive state.  Red label letters are used for y3dr
+and for y3ee's active state.
+
+ y3bg:  "<b>%s</b>"    (bold letters)
+ y3dp:  "<b>do:</b>"   (bold letters)
+ y3dr:  "<b>Do:</b>"   (bold letters)
+ y3ee:  "<b>EE</b>"    (bold letters)
+ y3td:  NA
+ y3iv:  "<b>%s</b>"    (bold letters)
+ y3tv:  NA
+ y3vb:  NA
+
+In some example yume files, illustrate settings like the following.
+
+-de y3bg:"<big>%s</big>"  (big letters)
+-de y3dp:  "<b><big>do:</big></b>" (big and bold do:)
+-de y3dr:  "<span color=\"red\">((((</span><b><big>do:</big></b><span color=\"red\">))))</span>"
+           (big and bold "(((( do: ))))", with () in red)
+
+Add label-formatting notes to yume3.1 (man page) explaining "label
+wrappers"
+
+Set up -de options for "label wrappers".  Eg, -de 'wrap1:<span
+foreground="blue" size="x-large">%s</span>' -de 'wrap2:<span
+size="x-large">%s</span>' would set up two wrappers.  Each wrapper
+should be a string that is suitable for use as a format in a call to
+Gtk function g_markup_printf_escaped().
+
+obs:
+Let user define any of fmt0..9 (or possibly w0..9), of which w0..6
+have preassigned applications and definitions, and allow each fmt to
+be set to a string or to the contents of another fmt; eg, -de w0:7 and
+-de "w8:<span etc> %s etc>" such that if a value is a digit, it
+denotes a fmt being set to another fmt.
+
+The preassigned app/def numbers are, with ROO standing for "rollover
+on", w0: ordinary button; w1: ROO ordinary button; w2: do button; w3:
+ROO do button; w4: EE button; w5: ROO EE button (ie, an active EE
+toggle button); w6: -iv button.  
+
+Alternately, perhaps after -de "wrap:nn", wrapper #nn is in effect and
+applied to all buttons.  [Not a hot plan.]  After -de "wrapnn:..."
+definitions, the most-recently stated definition stays in effect until
+another -de "wrapnn:..."  definition or a -de "wrap:nn" option
+appears.
+
+Using snprintf() rather than g_markup_printf_escaped() to prepare
+markup, both the format wrapper and the label itself can contain Pango
+Text Attribute Markup Language.  In this approach, if any of the five special
+characters in the set { &, <, >, ", ' } are to appear verbatim in a displayed
+label, they must be specified by escape sequences from the set { &amp;, &lt;,
+&gt;, &quot;, &apos; }. 
+
+[Lists: One list of the five escapes appears near the end of
+<http://wiki.maemo.org/Queen_BeeCon_Widget> in section "QBW Warning!
+Possible Pango Markup Language inconsistent/unterminated Tag!".  For
+html in general, (ie, not for Pango) see
+<http://htmlhelp.com/reference/html40/entities/special.html> where
+many of the entities will produce error messages like: "Gtk-WARNING
+**: Failed to set text from markup due to error parsing markup: Error
+on line 1: Entity name 'permil' is not known"]
+
+
+ If g_markup_printf_escaped() is used
+to process the string, any markup within button labels themselves
+would be escaped so that it appears literally.  It probably
+ 
+Note, you can use any UTF8 encoding and Pango Text Attribute Markup
+Language in button labels.  For list of attributes, see
+http://library.gnome.org/devel/pango/stable/PangoMarkupFormat.html
+
+
+
+See http://library.gnome.org/devel/pango/stable/PangoMarkupFormat.html
+and glib-Simple-XML-Subset-Parser.html#g-markup-printf-escaped
+
+obs: ?
+When processing program options, in phase 1 make entries for transient
+or order-dependent items so that they can be applied in proper order
+during phase 2 form creation.  -- Unless it turns out that a single
+phase is enough.  Still don't know how sizing is going to work
+
+
+============= following items are from ~/src/yume/yume-todo
+============= and  ~/src/yume2/todo
+
+Add switches or a means for setting colors via a list of five color
+names that's initialized with current settings when yume starts, and
+then overridden if a color switch is specified.
+
+A means of setting the default starting colors is to have a program
+that plugs options in to the text of yume.  Or could have initializer
+modules that set variables then fork to yume proper, which installs
+values in certain variables only if they are undefined.
+
+Similarly, add switches for default font names and/or font sizes.
+
+Add switches to specify display text (non-command text) to be shown
+with a menu.
+
+Possibly add escape tags or numbered layers of quotes - to simplify
+quoting of command sets in yume.  (Or explain how to define and export
+shell functions for use in yume.)
+
+
+done:
+Locate the yume todo file or written notes in which I considered how
+to not show program params in ps display (by having an initializer
+that sets up variables or a pipe to init yume, rather than via
+params).  [Note, approach of zeroing argc or nulling argv didn't work]
+
+Add methods for box design - to allow items such as red buttons, drop
+down edits of button content, buttons on same line as editable
+commands, etc.
+in yume-def-init.c -- success of some mallocs not tested -- add tests!
+
+in yume2.c correct
+      errorExit (ERR_BADET, L, 32, "Wrong entry type.  e,et,i:",
+to
+      errorExit (ERR_BADET, L, 31, "Wrong entry type.  e,et,i:",
+
+in yume2.c deal with %ld vs %d cases (if any) where long int
+on my x64 system qili doesn't need l but does need it on wiji.
+
+
+
+done:
+Consider: Allow replacement-labeling of "do:" buttons, ie,
+let it be labeled with user string
+
+Consider following change:  After processing params, set
+argv[i] = null, for i > 0.  Would make this selectable as
+either a yume compilation option, or via a switch, eg -Yz
+which turns on flag to wipe params after processing.  
+Note, consider whether to memset each param string to 
+zero, or just to null the argv[] entries.
+
+
+obs:
+Consider: Rather than above (nulling strings in attempt to disappear
+params, which doesn't actually work) as soon as we've processed args,
+fork to subprocess and let original process die.  In original process
+do a waitpid (?) so original yume can exit cleanly.
+
+obs:
+Consider: Remove xforms usage (and requiring its download
+and compile) by using Xlib directly, without a toolkit
+
+done:
+Consider: Change to GDK (or GTK?) from Xforms so that users
+don't need to download and build Xforms
+
+Consider: User-written code to draw and/or update button
+appearances
+
+Consider: [re button updates] Expose button characteristics
+via shell variables and allow shell code to update in rel time
+
+Consider: For feeding a mixed stream of characters to an app [ie, kbd
+input mixed w/ yume'd stuff] see if this works: set stdin of exec'd
+app to a pipe from yume
+
+Consider:
+
+-ow or -ox (check letter availability) for "Make an output
+ window for results from this command".  The attributes of 
+the window might need to be specifiable, eg: "Make a temp
+window with a message and an ok button"  or "Make a window
+of certain size and tail all the output to it" etc
+(How would this work (ie, be done), anyway?)
+
+Consider:
+
+Consider:
+

@@ -1,0 +1,30 @@
+$Id: yume-examples.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+yume-examples creates a fixed-location menu with two buttons.  One
+button invokes example-starter4 to display a list of yume examples;
+the other exits from yume.
+
+yume-examples has an optional parameter to specify a path to the
+directory of examples.  If no parameter is given and YEGDIR isn't set,
+yume-examples assumes the current directory is the examples directory.
+
+Before it starts yume, yume-examples sets shell-variable YEGDIR to the
+specified directory (or current directory), changes to that directory,
+sets YEGDIR to the current directory, and exports YEGDIR, as follows:
+
+     	    [ $YEGDIR ] || YEGDIR=$1
+	    [ $YEGDIR ] || YEGDIR=./
+	    cd $YEGDIR
+	    export YEGDIR=`pwd`
+
+The yume command in yume-examples is like:
+
+    yume -at 320x60-2+2 -ti "yume example-starter"\
+	 -bu -la "Show list of yume examples" ./example-starter3 -ex &
+
+The location -2+2 is near the top right corner of the screen.
+
+Ordinarily, one would end a button command with an ampersand (&), eg,
+"./example-starter3&", but in this case, the yume command in
+example-starter3 itself ends with an ampersand (&), so we don't
+bother.

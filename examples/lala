@@ -1,0 +1,31 @@
+#!/bin/sh
+#$Id: lala 7 2009-02-25 15:19:11Z j-waldby $
+
+# Start yume with latest latex's from current dir
+# If we have a param, use it as filename basis.
+# Use $YEDIT or $EDITOR or emacs for editor.
+
+if [ $# -gt 0 ]
+then FILE=$1
+else FILE=`ls -t *.tex |  head -1`
+fi
+
+#***********
+# at this point need to add test for latex-2ps being on
+# search path, and explain what to do if it isn't 
+#***********
+
+export BASE=`basename $FILE .tex`
+[ "$YUME" ]  || YUME=$(which yume)
+[ "$YEDIT" ] || YEDIT=$EDITOR
+[ "$YEDIT" ] || YEDIT=emacs
+
+$YUME "latex-2ps $BASE x" -ti "$0 $BASE" \
+     "lpr -# 1 $BASE.ps"\
+ -bu -la 'Edit it'   "$YEDIT $BASE.tex"\
+     -la 'latex-2ps' "latex-2ps $BASE x"\
+     -la 'xdvi it'   "xdvi $BASE &"\
+     -la 'Ls it'     'echo; date; ls -l $BASE*; echo'\
+ -bu -la 'ps2pdf it' "ps2pdf $BASE.ps"\
+     -la 'acroread'  "acroread $BASE.pdf"\
+     -ex &

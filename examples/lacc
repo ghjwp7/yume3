@@ -1,0 +1,10 @@
+#!/bin/sh
+#$Id: lacc 7 2009-02-25 15:19:11Z j-waldby $
+
+# Start yume with latest .cc file from current dir
+[ "$YUME" ]  || YUME=$(which yume)
+export YTITL=$0
+export YGCC="g++"
+export YEXT=".cc"
+export YMAKE=make
+lac $*

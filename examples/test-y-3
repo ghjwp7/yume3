@@ -1,0 +1,15 @@
+#!/bin/sh
+#$Id: test-y-3 7 2009-02-25 15:19:11Z j-waldby $
+
+# A yume test that runs ok on my sys which has an nta dir
+# D = current directory name, A = TM Agenda directory
+D=`pwd`
+A=$HOME/nta
+cd $HOME/nta 
+
+# Define xterm's proper appearance
+XTERM="xterm -bg black -fg green -fn lucidasanstypewriter-bold-18"
+
+# Start xterm; in it, display cal -3, start yume-scp-agenda menu, and
+# then start shell.  yume output appears in same xterm as shell output.
+$XTERM -e "cal -3; ./yume-scp-agenda; /bin/bash" &

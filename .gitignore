@@ -1,0 +1,6 @@
+*.o
+yume
+yume3
+yume3-init
+*.tgz
+!README-c-src-tgz

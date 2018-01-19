@@ -1,0 +1,27 @@
+#!/bin/sh
+#$Id: latex-2err 7 2009-02-25 15:19:11Z j-waldby $
+#-Id: latex-2err,v 1.1 1997/12/31 18:40:29 j-waldby Exp j-waldby -
+# 17 May 2006: Added Babel...nohyph excludes to egrep -v
+#
+# Other  latex-2xxx  scripts execute this one to report errors.
+
+# Alarm the user
+echo -e "\a"
+
+DOC=$1
+
+# Discard most latex and tex message lines, trying to keep the
+# error-message section. (Real Soon Now: Discarding head and tail of
+# file, keeping middle part with error messages, might be better than
+# this egrep -v approach)
+
+egrep -v '^Babel |bulgarian, catalan|greek, icelandic,|romanian, russian,|ukrainian, nohyph|^This is|^LaTeX|^Hyphen|^\(/usr/lib|^Docum|^File: |^\\|^Here is| out of |^End of|^No pages|Overfull .*box|^ *$|^ *[][()]|(Font)' $DOC.log
+
+# Alarm the user again
+echo "The above lines are extracts from $DIR/$DOC.log"
+echo The current directory is `pwd`
+echo -e "\aUse \"exit\" or ^D (control-d) to close this shell\n"
+export PS1='$HOSTNAME : $USER : $PWD : $ '
+
+# The next line makes the xterm stick around until ^D or exit
+exec sh

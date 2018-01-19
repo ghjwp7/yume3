@@ -1,0 +1,10 @@
+#!/bin/sh
+#$Id: um4 7 2009-02-25 15:19:11Z j-waldby $
+[ "$YUME" ] || YUME=$(which yume)
+
+# yume example - Drop a url like http://www.ebay.com/
+# or an ebay# like 400032181378	 on a button and open it in firefox
+# The ebay# lookup format shown here worked ok on 24 Feb 2009.
+$YUME -ti $0  -bu -ex -la 'Clip url -> FF'\
+  'firefox "`xclip -o | tr -d '"'\n'"'`"'\
+  -la 'Ebay# -> FF' 'firefox "http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&item=`xclip -o`"' &

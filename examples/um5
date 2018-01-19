@@ -1,0 +1,7 @@
+#!/bin/sh
+#$Id: um5 7 2009-02-25 15:19:11Z j-waldby $
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME  -bu -ti $0 \
+ -la HMS 'S=`xclip -o`; E="k${S}r/p"; D="/usr/bin/dc -e "; echo; echo "$S seconds = `$D"60 1$E"` minutes = `$D"3600 2$E"` hours = `$D"86400 2$E"` days"'\
+ -la Factor 'factor `xclip -o`'  -ex &

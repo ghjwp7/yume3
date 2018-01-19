@@ -1,0 +1,61 @@
+# $Id: calc-wrap2,v 1.1 2011/03/30 05:20:06 j-waldby Exp j-waldby $
+#
+# Example of -iv usage to make a gui-wrapper for a 
+# command-line program that takes 3 arguments, 
+# simulated in these examples by calc-prog.
+
+# Run via:  ./calc-wrap2
+
+[ "$YUME" ] || YUME=$(which yume)
+
+if [ -z "$1" ]; then
+    $YUME -de 'y3gb:<big><b>%s</b></big>'\
+    -bu -la 'This example will make 8 big menus!' true\
+    -bu -la 'Make menus now' "%+$0 OK"\
+    -la '<big>Cancel</big>' -ex -at 440x140+30+30
+    exit
+fi
+
+cat<<EOF
+
+
+calc-wrap2 ---
+
+Like calc-wrap, this example illustrates making a wrapper around a
+command-line program with -iv, but its putative purpose is
+illustrating -bw with some random examples.  It opens eight (8) menus,
+4 of them sized and located along left edge of screen, the other 4
+sized and located by window manager.  Of the latter 4, 1 will be a
+reasonable size, and the other 3 near or exceeding full screen width.
+
+Differences between calc-wrap and calc-wrap2:
+  (1) Various -bw sequences here, vs just  -bw dc in calc-wrap
+  (2) Various -at 260x200+0+$Y here, vs -at 260x230+0+300  in calc-wrap
+  (3) The same menus as in (2) but without -at parameter
+
+EOF
+
+menu() {
+AT=$1 BWA=$2 BWB=$3
+echo "Creating menu with AT=$AT, BWA=$BWA, and BWB=$BWB."
+$YUME $AT -ti "AT=$AT, BWA=$BWA, and BWB=$BWB"\
+ -bw $BWA -bu -la "exit (-bw $BWA)" -ex -la 'Calc w echo' \
+   'echo "calc-wrap is running calc-prog $Diam $Leng $Freq ---"; \
+    ./calc-prog $Diam $Leng $Freq; echo "--- In calc-wrap again"' \
+ -bw dc\
+ -bu -la 'echo Diam is $Diam' -la 'Wire diam, mm:'   -la Diam -iv 1\
+ -bu -la 'echo Leng is $Leng' -la 'Wire length, mm:' -la Leng -iv 300\
+ -bu -la 'echo Freq is $Freq' -la 'Frequency, Hz:'   -la Freq -iv 2000000\
+ -bw $BWB -bu -la "exit (-bw $BWB)" -ex -la Calc './calc-prog $Diam $Leng $Freq'
+}
+
+mtwo() {
+Y=$1 BWA=$2 BWB=$3
+menu "-at 260x190+0+$Y" $BWA $BWB
+menu "" $BWA $BWB
+}
+
+mtwo 100 ad da
+mtwo 325 pb pk
+mtwo 550 ^e NL
+mtwo 775 tz ni

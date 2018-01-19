@@ -1,0 +1,9 @@
+#!/bin/sh
+# $Id: calc-prog 25 2009-03-13 16:07:51Z j-waldby $
+#
+# Simulate a command-line program that takes 3 arguments
+# for use by calc-wrap demo
+
+echo 'Some Effect Calculation'
+echo "Parameters are $1 and $2 and $3"
+echo "Result is `dc -e 3k$3v$2*v$1*vn`"

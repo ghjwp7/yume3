@@ -1,0 +1,28 @@
+#!/bin/sh
+[ "$YUME" ] || YUME=$(which yume)
+# Make a menu with buttons to grep for string in .c & .h files
+
+# That is, when a string is dropped on button, look for that string,
+# as a non-word-character-delimited word, in *.[ch] files of current
+# directory.
+
+# Function to open an xterm
+# XTERM() takes 1 parameter, a command string to execute in xterm
+XTERM() {
+    FONT=lucidasanstypewriter-bold-12
+    xterm -geometry 88x25 -bg black -fg green \
+        -fn $FONT -e "$1" &
+}
+export -f XTERM
+
+$YUME -at 222x222+1-1\
+ -bu -la 'Grep clip' 'T=$(xclip -o);\
+   printf "Looking for <%s> in %s at %s\n\n" "$T" "$PWD" "`date`" > t; \
+   egrep -in "\b$T\b" *.[ch] >> t; XTERM "less t"'\
+\
+ -bu -la 'Grep -Cn clip' 'T=$(xclip -o);\
+   printf "Looking for <%s> in %s at %s\n\n" "$T" "$PWD" "`date`" > t; \
+   egrep -C$n -in "\b$T\b" *.[ch] >> t; XTERM "less t"'\
+\
+ -bw aaaa\
+ -bu -ex -la n -la n -iv 2

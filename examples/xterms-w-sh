@@ -1,0 +1,29 @@
+#!/bin/sh
+#$Id: xterms-w-sh 27 2009-03-13 17:19:24Z j-waldby $
+# a yume example -- a %: / xterm / export test case
+
+# Note, -Y5 turns on ShoMode = 5 = ShoAddObj+ShoWExp.
+# ShoWExp=1    -- List the result array from wordexp expansion for
+#                 commands with %: or %- or for -in expansions.
+# ShoParProc=2 -- List parameters as they are processed
+# ShoAddObj=4  -- List objects as they are added to form.
+# ShoAssert=8  -- List objects when they are clicked on or have a mouse event.
+
+# Note, %: at front of command means "non-shell" execution.  In this
+# example, execution of the first or second -do goes straight from to
+# yume to xterm, without an intervening /bin/sh.
+
+# Note, %% at front of third command means to echo the command before
+# executing it, and %+ at front of fourth command means to not fork
+# before command, ie, exit from menu and do command.
+
+# Note, some of these commands end up in /bin/sh shell, others in
+# /bin/bash.  On many linux systems, may be same shell but different
+# initialization -- "/bin/sh" is like "/bin/bash -norc".
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME -Y5 -ex xwininfo -ti "$0"\
+ -do "%:/usr/bin/xterm -e /bin/sh" -at 600x200+0+570\
+ "%:/usr/bin/xterm -e 'cal -3; date; echo $M; export M=1495; /bin/bash'" \
+  "%%/usr/bin/xterm -e 'cal -3; date; echo $M; export M=1495; /bin/sh'"\
+  "%+/usr/bin/xterm -e 'cal -3; date; echo $M; export M=1495; /bin/bash'" &

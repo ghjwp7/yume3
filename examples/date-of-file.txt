@@ -1,0 +1,57 @@
+$Id: date-of-file.txt 26 2009-03-13 16:17:35Z j-waldby $
+
+date-of-file is a yume example with -iv value-fields that set commands
+using three -la parameters.
+
+date-of-file also illustrates some %x execution modes --
+%#, %%, %+, %-, and %:.  These appear in -do groups, so 
+that you can clearly see the commands and can change them.
+
+The 3-la -iv form for yume3 is like:
+
+   -la command -la displaylabel -la varname -iv initvalue
+
+(yume2 has displaylabel and varname in vice-versa order)
+
+With line-by-line explanations enclosed in brackets [],
+date-of-file works as follows:
+
+yume  -ti 'Display Date of File'\
+  [Set menu window title to 'Display Date of File']
+
+ -bu -la 'Enter a file name and click button' true\
+  [Make a button with label 'Enter a file name and click button'
+   and action "true", which is like a no-op.]
+
+ -bu -la 'echo "Date of $FF is `date -r $FF`"'  -la File: -la FF -iv $0\
+  [Stack 3 items for command, varname, and displaylabel;
+   then make a value field whose value is $0, the script name.]
+
+ -bu -la '%%echo "Date of $FF is `date -r $FF`"' -la File: -la FF -iv $0\
+  [Like previous command, except that leading %% cause yume to display
+   the command before executing it.  It is displayed without the %%
+   showing.  A code like "Y12:" will display also, giving the item
+   number of the button or do group that started the command.]
+
+ -bu -ex\
+  [Put an exit button on a line by itself]
+
+ -do '%#echo "Date of $FF is `date -r $FF`"'\
+  [ %# echoes a command without executing it.]
+
+ -do '%%echo "Date of $FF is `date -r $FF`"'\
+  [ %% echoes a command and then executes it.]
+
+ -do '%+echo "Date of $FF is `date -r $FF`"'\
+  [ %+ executes command without forking; that is,
+    exits from yume and executes command.]
+
+ -do '%-/bin/sh -c "echo Date of $FF is `date -r $FF`"'\
+  [ %- executes command without forking or usual shell; 
+    that is, exits from yume and executes command as
+    expanded by wordexp without going to usual $SHELL.]
+
+ -do '%:/bin/sh -c "echo Date of $FF is `date -r $FF`"'&
+  [ %: executes command without usual shell; that is, executes
+    command as expanded by wordexp without going to usual $SHELL.]
+

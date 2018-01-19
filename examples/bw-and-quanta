@@ -1,0 +1,33 @@
+#!/bin/sh
+#$Id: bw-and-quanta,v 1.1 2011/03/12 01:00:00 j-waldby Exp j-waldby $
+# As modified Mar 2011 for use with yume3 rather than yume2.
+# yume3 has no buMargin setting, and uses buQuanta on letter counts
+# rather than on pixel counts.
+
+# B is exported so it will be available in yume's environment.
+# Variables in yume's environment are available for substitution
+# within bw-and-quanta.in, a file included via -in.
+
+# Change B if you use a browser other than firefox.
+export B='firefox'
+[ "$YUME" ] || YUME=$(which yume)
+
+# H is height of each menu; Y is y-location of top edge.
+H=200 Y=20
+
+bwe() {
+    T=$1
+    shift
+    $YUME -at 400x$H+8+$Y -ti "$0 - $T $*"  $*  -in bw-and-quanta.in &
+#   Compute next value of Y
+    Y=`expr $Y + $H + 35`
+}
+
+# bwe's first argument is incorporated in title, but otherwise not
+# used.  Its second argument is added to title and also used as a yume
+# option.
+
+bwe "No buQuanta or bw"
+bwe "" -de buQuanta:3
+bwe "" -de buQuanta:7
+bwe "" -bw aaaaaaaa

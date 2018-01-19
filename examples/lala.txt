@@ -1,0 +1,43 @@
+lala - Latest-Latex script
+$Id: lala.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+Invoke lala by "lala" or by "lala f" where f represents a filename.
+If f appears, rather than finding the most-recently-changed .tex file,
+lala finds the base name of f and sets up the yume menu accordingly.
+In the rest of this note, $F represents the base name of the selected
+.tex file.  lala includes the base name $F in the title line of its
+window.
+
+lala locates the most-recently modified *.tex file in the current
+working directory, or if given a parameter locates a specified file.
+It prepares a yume menu with latex-2ps and lpr -do items, and edit,
+latex-2ps, xdvi, ls, ps2pdf, and acroread button commands for that
+file.
+
+Buttons act as follows: 'Edit it' edits $F.tex with editor selected as
+above.  'latex-2ps' does "latex-2ps $F".  'xdvi it' does "xdvi $BASE".
+'Ls it' shows the date and lists $F* files.  'ps2pdf it' does "ps2pdf
+$F.ps". 'acroread' does "acroread $F.pdf".
+
+Rename and change lala to suit your own preferences in editors,
+viewers, print or store commands, etc, or define an EDITOR shell
+variable.  lala selects editor via environment variable $YEDIT, or
+$EDITOR if $YEDIT is empty, or emacs if $EDITOR is empty too.
+
+"latex-2ps $F x" item: If you are re-latexing a file quite
+frequently, turn on EE mode of this item.  This enables "rollover" or
+"mouse-over" mode, in which the command will be performed when the
+mouse cursor enters the do: button box.
+
+"lpr -# 1 $F.ps" item: If you want to print multiple copies, change 1
+to the number of copies.  If you need to specify a printer, after the
+menu appears you can enter a -Plp parameter in the command editing
+box.  Or change "lpr -# 1 $BASE.ps" to "lpr -P$PRINTER -# 1 $BASE.ps"
+(or other appropriate value) by editing lala.
+
+latex-2ps latexs the specified tex file if it’s newer than its dvi
+file, or if a third parameter is given.  latex-2ps runs latex
+invisibly unless an error occurs.  It beeps when done if latex
+finishes without error; but if a latex error occurs, it uses script
+latex-2err to present selected latex error log messages in an xterm
+window.

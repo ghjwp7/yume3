@@ -1,0 +1,6 @@
+# $Id: in-test-4 25 2009-03-13 16:07:51Z j-waldby $
+# in-test-3,4,5 --  See notes in in-test-5
+# 3 nests 4, which nests 5, which nests 1.
+-la In-test-4 -ex 
+-in in-test-5
+-la in-Test-4 -ex

@@ -1,0 +1,85 @@
+# yume-gtkrc is a sample gtk theme file for yume3.  As a base it sets
+# up black text on skyblue background for buttons, a slightly lighter
+# blue for current button, and red text for active button.  That's a
+# fairly calm color scheme.  However, for demonstration this sample
+# gtkrc uses more-garish colors: for example the prototypical
+# click-activated style y3db has red letters on cyan background, and
+# as mouse cursor moves across buttons (ie prelights them) letters go
+# peagreen and background yellow; from that state, if the left mouse
+# button is pressed, letters go cyan and background red.  Note, in
+# yume's manpage see section "-de valpair : (1) label-colors".
+
+# Set up a default style as a basis for other styles
+style "y3m" {
+  xthickness = 0
+  ythickness = 0
+  bg[NORMAL]	= "SkyBlue3"
+  fg[NORMAL]	= "black"
+  bg[PRELIGHT]	= "SkyBlue2"
+  fg[PRELIGHT]	= "black"
+  bg[ACTIVE]	= "SkyBlue3"
+  fg[ACTIVE]	= "red"
+}
+
+style "y3db"	= "y3m" {
+fg[NORMAL] = "red"   fg[ACTIVE] = "cyan"  fg[PRELIGHT]	= "SeaGreen"
+bg[NORMAL] = "cyan"  bg[ACTIVE] = "red"   bg[PRELIGHT]	= "yellow" }
+style "y3da"	= "y3m" {
+fg[NORMAL] = "white" fg[ACTIVE] = "blue"  fg[PRELIGHT]	= "red"
+bg[NORMAL] = "green" bg[ACTIVE] = "#6699ff"   bg[PRELIGHT]	= "tan" }
+
+#      y3db                     # do: click button style 
+#      y3da                     # Do: roll button style
+style "y3bb"	= "y3db" { }    # bu click button style
+style "y3ba"	= "y3da" { }    # bu roll button style
+style "y3eb"	= "y3db" { }    # EE click button style
+style "y3ea"	= "y3da" { }    # EE roll button style
+style "y3fb"	= "y3db" { }    # fixed click button style
+style "y3fa"	= "y3da" { }    # fixed roll button style
+style "y3gb"	= "y3db" { }    # general click button style
+style "y3ga"	= "y3da" { }    # general roll button style
+style "y3hb"	= "y3db" { }    # hidden click button style
+style "y3ha"	= "y3da" { }    # hidden roll button style
+
+style "y3ib"	= "y3db" { }    # iv click button style
+style "y3ia"	= "y3da" { }    # iv roll button style
+style "y3xb"	= "y3db" { }    # exit click button style
+style "y3xa"	= "y3da" { }    # exit roll button style
+style "y3td"	= "y3da" { }    # do: text field style
+style "y3tv"	= "y3da" { }    # iv text field style
+style "y3vb"	= "y3da" { }    # vbox field style
+
+class "GtkWidget" style "y3m"
+
+widget "*y3bb*" style "y3bb"
+widget "*y3ba*" style "y3bb"
+
+widget "*y3db*" style "y3db"
+widget "*y3da*" style "y3da"
+
+widget "*y3eb*" style "y3eb"
+widget "*y3ea*" style "y3ea"
+
+widget "*y3fb*" style "y3fb"
+widget "*y3fa*" style "y3fa"
+
+widget "*y3gb*" style "y3gb"
+widget "*y3ga*" style "y3ga"
+
+widget "*y3hb*" style "y3hb"
+widget "*y3ha*" style "y3ha"
+
+widget "*y3ib*" style "y3ib"
+widget "*y3ia*" style "y3ia"
+
+widget "*y3xb*" style "y3xb"
+widget "*y3xa*" style "y3xa"
+
+widget "*y3td*" style "y3td"
+widget "*y3tv*" style "y3tv"
+widget "*y3vb*" style "y3vb"
+
+# Note, you can use Pango Text Attribute Markup Language in button labels.
+# See http://library.gnome.org/devel/pango/stable/PangoMarkupFormat.html
+
+# end of file yume-gtkrc

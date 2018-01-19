@@ -1,0 +1,53 @@
+$Id:$
+
+This illustrates some error messages, for ERR_FILE, ERR_MISSARG,
+ERR_GEOM, ERR_WEXP, and ERR_DECODE.  These errors can be easily
+provoked in predictable ways; other errors cannot.  [If you find
+exceptions, please let me know.  -jiw]
+
+With March 2011 yume3, output from ./errors-demo looked as shown below
+between the lines of dashes.  With later code, spacing and messages
+may differ.  Note, error numbers are defined near the beginning of
+yume3.h by code like:
+
+enum {ERR_EXECV=10, ERR_SEGV, ERR_FILE, ERR_MALLOC,
+	      ERR_MISSARG,  ERR_GEOM, ERR_WEXP, ERR_DECODE,
+	      ERR_NULLSTR,  ERR_BADET } ErrorCode
+
+Note, wordexp() error numbers are defined in system file
+/usr/include/wordexp.h, by code like:
+ enum {...
+    WRDE_NOSPACE = 1,     /* Ran out of memory.  */
+    WRDE_BADCHAR,         /* A metachar appears in the wrong place.  */
+    WRDE_BADVAL,          /* Undefined var reference with WRDE_UNDEF.  */
+    WRDE_CMDSUB,          /* Command substitution with WRDE_NOCMD.  */
+    WRDE_SYNTAX };        /* Shell syntax error.  */
+
+-------------------------------------------------------
+
+This file invokes yume with arguments that should produce some
+error messages on stderr, with no menu windows appearing.
+Each error message is followed by a note about it and the
+command that caused it.
+
+*** Error 14 at F:yume3-p1.c L:211 D:0   Switch argument is missing for -Yt
+is error ERR_MISSARG due to no geometry string for -at,
+from: yume -at
+
+*** Error 15 at F:yume3-p2.c L:210 D:0   Geometry code 280x2x20+-0+640 not recognized
+is error ERR_GEOM due to invalid geometry string,
+from: yume -at 280x2x20+-0+640
+
+*** Error 16 at F:yume3-p1.c L:329 D:1   wordexp failure 2
+is error ERR_WEXP due to a -in problem (metachar in wrong place),
+from: yume -in ./errors-demo
+
+*** Error 17 at F:yume3-p1.c L:193 D:0   Lookup error in  ddRolCol:red
+is error ERR_DECODE due to wrong item key,
+from: yume -de ddRolCol:red
+
+*** Error 17 at F:yume3-p1.c L:193 D:0   Lookup error in  eOn:nohow
+is error ERR_DECODE due to wrong item value,
+from: yume -de eOn:nohow
+
+-------------------------------------------------------

@@ -1,0 +1,3 @@
+# $Id: in-test-7 25 2009-03-13 16:07:51Z j-waldby $
+# in-test-7 --  Tries to nest itself.
+-in in-test-7

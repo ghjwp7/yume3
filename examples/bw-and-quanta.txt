@@ -1,0 +1,57 @@
+$Id: bw-and-quanta.txt 25 2009-03-13 16:07:51Z j-waldby $
+
+bw-and-quanta produces four menus along the left edge of the screen,
+demonstrating the effects of four different sets of button-size
+controls.  All of the menus have the same buttons, but each menu has a
+different combination of controls:
+
+   The top menu has:  no buxMargin or buQuanta or -bw settings.
+   The 2nd menu has:  -de buQuanta:3
+   The 3rd menu has:  -de buQuanta:7
+   The 4th menu has:  -bw aaaaaaaa
+
+The title of each menu-window shows which button-size controls it
+uses.  Note that the first menu, with no buxMargin or buQuanta or -bw
+settings, allows adequate room around each label; the menu is clear
+and usable, but the varying sizes of buttons and lack of alignments
+may be distracting.  The next two menus use -de buQuanta settings to
+influence button sizes.  A "quantum" is the number of label characters
+per "width unit" that yume3 uses when computing total width units in a
+row of buttons.  A small quantum will give finer gradation among
+button sizes than a larger quantum.  The last menu's -bw aaaaaaaa
+specification makes all the buttons of a row the same size.
+
+
+About the shell commands of this example --
+
+bw-and-quanta includes file bw-and-quanta.in to make the buttons of
+the example menus.  (An early version of bw-and-quanta had four
+different yume commands, so it was convenient to use one include file
+for the bulk of each menu.)  We export shell-variable $B='firefox' to
+tell bw-and-quanta.in what browser commands to create for URL access.
+Thus, B will be available in yume's environment, and variables in that
+environment are available for substitution within the include file.
+
+The current version of bw-and-quanta defines function bwe() and uses
+it to create each example.  All arguments to bwe() will appear in the
+window title of a yume menu.  All the arguments except the first will
+be used as yume parameters.  At end, bwe() uses expr to compute the
+y-coordinate value to use next time.  It adds the box height H to
+previous height Y, plus 35 pixels for box frame size.
+
+Note that many of the commands or links in bw-and-quanta.in have been
+converted to nonsense because the actual commands were irrelevant to
+demonstrating how the labels fit into variously-sized boxes.  So this
+menu has some broken commands and links among its URLs.  Oh well.
+Within bw-and-quanta.in, a line like 
+   -la blab   "$B burl"
+would create a button labeled blab, and action "firefox burl".  If you
+use some other browser than firefox, change the value of B in
+bw-and-quanta.   If the <browsername url> syntax doesn't work for the
+other browser, you may need to create an intermediary shell script.
+For example, if we require  syntax <netscape -remote OpenURL(someurl)>
+we could create an executable shell script neturl containing
+    #!/bin/sh
+    netscape -remote OpenURL("$1")
+and in bw-and-quanta, say
+    export B='neturl'

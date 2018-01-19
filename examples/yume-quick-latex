@@ -1,0 +1,40 @@
+#!/bin/bash
+# Make a yume menu with a button on which one can drop
+# fragments of LaTeX, for quick processing and viewing.
+
+cd /tmp				# Script operates in /tmp dir
+TMP=y-q-l-temp			# Set base filename
+# Note, you may wish to add an \input or \include statement
+# before \begin{document}, to customize the LaTeX environment.
+embed() {
+    L="$(xclip -o)"		# Embed fragment in a file & LaTeX it
+    cat > $TMP.tex <<EOF
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\begin{document}
+ \addtolength{\oddsidemargin}{-1.4in}
+ \addtolength{\evensidemargin}{3.4in}
+ \addtolength{\textwidth}{-2in}
+ $L 
+\end{document}
+EOF
+    if latex $TMP < /dev/null > /dev/null ; then
+	pid=$(ps | grep xdvi); pid=${pid%% [A-z?]*}
+	if [ "$pid" ]; then
+	    kill -SIGUSR1 $pid 	# xdvi is running, so tell it to reload
+	else			# xdvi is not running, so start it up.
+	    xdvi -s 3 -geometry 1200x500+30+300 $TMP 2>/dev/null &
+	fi
+    else
+	echo -en "\a"
+	latex $TMP < /dev/null	# Show LaTeX dump if LaTeX failed
+    fi
+}
+export TMP			# Export symbol to yume
+export -f embed			# Export function to yume
+echo Ready | xclip -i;		# Make default .tex file
+embed				# Process 'Ready'
+
+[ "$YUME" ] || YUME=$(which yume)
+$YUME -at 300x200+100+100 -bu -la 'ls files' 'ls -l $TMP*' -ex \
+ -de wOnTop -de wUndec -de ba -bu -la 'Run latex on selection' embed

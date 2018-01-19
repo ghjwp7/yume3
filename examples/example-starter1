@@ -1,0 +1,10 @@
+#!/bin/sh
+#$Id: example-starter1 7 2009-02-25 15:19:11Z j-waldby $
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME -ti $0 \
+ -bu ./example-starter1 ./example-starter2 ./example-starter3\
+ -bu ./find-ls-count ./menu-at-var\
+ -bu ./lac ./lacc ./lacx ./lala\
+ -bu ./play-sound-delay ./url-and-misc -ex \
+ -bu ./um1 ./um2 ./um3 ./um4 ./um5 ./um6  &

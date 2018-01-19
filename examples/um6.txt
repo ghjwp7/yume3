@@ -1,0 +1,8 @@
+$Id: um6.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+um6 illustrates use of xclip.  When you drop an IP number or internet
+machine name on the Host/Whois/Dig button, the script puts the IP
+number into shell variable IP, then in turn invokes host, whois, and
+dig to get data about the IP number.  Output from each command is
+filtered by grep -v commands, to suppress some uninteresting,
+repetitive stuff.

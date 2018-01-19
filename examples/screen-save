@@ -1,0 +1,75 @@
+#!/bin/sh
+#$Id: screen-save 35 2009-04-04 00:18:37Z j-waldby $
+
+# yume example: Click "import" to save a screenshot as next-numbered
+# jpg file in $SS directory.
+
+# Parameters:
+# PIXDIR can be specified by parameter 1, or defaults to ~/pix.
+# PREFIX can be specified by parameter 2, or defaults to "screen-"
+# DELTA  can be specified by parameter 3, or defaults to 10.
+# Parameter #4 should be blank or 'T'.
+ 
+#  A file with extension .val is used to keep track of numbers.  If no
+#  such file exists, 1100.val is created, giving (typically) 1110.jpg
+#  as the first name created.  If a name conflict occurs, the number
+#  will be incremented until no conflict exists.
+[ "$YUME" ] || YUME=$(which yume)
+[ $PIXDIR ] || PIXDIR=$1
+[ $PIXDIR ] || PIXDIR=$HOME/pix
+[ $PREFIX ] || PREFIX=$2
+[ $PREFIX ] || PREFIX="screen-"
+[ $DELTA ] || DELTA=$3
+[ $DELTA ] || DELTA=10
+
+# Usually can re-enter once via $SSAVER
+SSAVER=$PWD/$0
+# If $0 is an absolute path, use it as is.
+[ `echo $0 | cut -b1` = '/' ] && SSAVER=$0
+
+cd $PIXDIR
+case $4E in 
+
+# Re-entry case: Save a picture
+  TE )	N=`basename *.val .val`
+	[ "$N" = '*' ] && N=1100
+	[ -f $N.val ] && rm $N.val
+
+# If $N is busy, look for next unused name
+        while [ -f $PREFIX$N.jpg ]; do
+	    N=`expr $N + $DELTA`
+	done
+
+# Save new number and import picture
+	touch $N.val
+	import $YOPTS $PREFIX$N.jpg
+  ;;
+
+# Initial entry case with 3 params: Set up a menu in lower right
+# corner of screen, with Import and View and List
+  E  )	$YUME -at 320x60-1-1 -ti $0\
+         -bu -la ls      'ls ${PREFIX}*'\
+             -la ll      'ls -l ${PREFIX}*'\
+             -la Info    'xwininfo'\
+             -la Show    "kuickshow ."\
+             -ex\
+	 -bu -la Import  "YOPTS='' $SSAVER $PIXDIR $PREFIX $DELTA T"\
+	     -la 'Import window' 'W=`xwininfo|grep "Window id"|sed -e "s/^[^0]*//" -e "s/ .*//"`; YOPTS="-window $W"'" $SSAVER $PIXDIR $PREFIX $DELTA T"\
+	     -la 'Import w/ frame' 'W=`xwininfo|grep "Window id"|sed -e "s/^[^0]*//" -e "s/ .*//"`; YOPTS="-frame -window $W"'" $SSAVER $PIXDIR $PREFIX $DELTA T"\
+           &
+  ;;
+
+# Initial entry case with 4 params, and $4 = D: Set up a menu in lower
+# right corner of screen, with Import and View and List and Info and -do
+# This entry can be used for debugging changes to screen-save
+
+  DE  )	 PREFIX=$PREFIX $YUME  -ti $0\
+         -bu -la ls      'ls ${PREFIX}*'\
+             -la ll      'ls -l ${PREFIX}*'\
+             -ex\
+	 -bu -la Import  "$SSAVER $PIXDIR $PREFIX $DELTA T"\
+             -la  Show   "kuickshow ."\
+             -la  Info   "xwininfo"\
+             -do 'W=`xwininfo|grep "Window id"|sed -e "s/^[^0]*//" -e "s/ .*//"`; import -window $W $PREFIX-0010.jpg' &
+  ;;
+esac

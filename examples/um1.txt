@@ -1,0 +1,7 @@
+$Id: um1.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+Illustrates use of "netscape -remote" command to open a URL in
+netscape.  The command OpenURL(...) tells netscape to open the
+specified URL in a browser pane.  The two examples here have no spaces
+within the URL's; the URL would need to be quoted if it did.
+

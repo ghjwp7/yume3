@@ -1,0 +1,70 @@
+#$Id: bw-and-quanta.in 25 2009-03-13 16:07:51Z j-waldby $
+
+# This file sets up buttons for bw-and-quanta demos.  Note that many
+# of the commands or links have been converted to nonsense because the
+# actual commands were irrelevant to demonstrating how the labels fit
+# into variously-sized boxes.  So this menu has some broken commands
+# and links among its URLs.  Oh well.
+
+ -ex
+ -la paypal "$B https://www.paypal.com/cgi-bin/webscr?cmd=_login-run"
+ -la KLVM   "$B http://weather.noaa.gov/weather/current/KLVM.html"
+ -la 4834   "$B http://http://nimbo.wrh.noaa.gov/mso/"
+ -la cdPlay cdplay
+ -la eject  "eject /dev/cdrom"
+
+ -bu
+ -la HSDW   "$B http://www.weatherunderground.com/cgi-bin/findweather/getForecast
+?query=57350"
+ -la KUSM   "$B http://www.montanapbs.org/Schedule/NoIframe/"
+ -la TCM    "$B http://www.turnerclassicmovies.com/Schedule/Index/0%2C%2C%2C00.html"
+ -la gimpi  "cd ~/pix; /usr/bin/gimp &"
+ -la "Ec B" "echo BaQ"
+ -la "Ec q" "echo bAq"
+
+ -bu
+ -la Groc. "xterm -e $HOME/bin/tgroB &"
+ -la ysf   "yume asif&"
+ -la vbiz  "xterm -e vFile Mail/vz &"
+ -la lana  lan6
+ -la bcl   "xterm -e $HOME/bin/bcl &"
+ -la "HF"  "$B http://www.harborfreight.com/cpi/ctaf/Displayitem.taf?itemnumber=47260"
+
+ -bu
+ -la eTodo  etodo
+ -la "MaWo" "$B http://mathworld.wolfram.com/topics/NumberTheory.html"
+ -la O      "/usr/bin/opera&"
+ -la nas    "xterm -geometry 101x33+4-66 -e $HOME/bin/nasB &"
+ -la nasM   "cd $HOME/nas; yume-mvebay"
+ -la "See~" "$B file://$HOME"
+
+ -bu
+ -la nax    "xterm -geometry 101x33+4-66 -e $HOME/bin/naxB &"
+ -la Cal3   "xterm -geometry 69x9 -fn lucidasanstypewriter-bold-24 -e 'cal -3|less' &"
+ -la ylists "xterm -fn lucidasanstypewriter-bold-24 -e ~/lists/yume-address-doB &"
+ -la f24    f24
+ -la jsaj   "$B http://www.google.com/search?q=jsaj"
+ -la jraj   "$B http://www.google.com/search?q=jraj"
+
+ -bu
+ -la deltix   "$B http://yume2.sourceforge.net/"
+ -la vPhone   "xterm -e vFile lists/phone &"
+ -la ePhone   ephone
+ -la edilink  "emacs $HOME/tmp/links.html &"
+ -la sholink  "$B file://$HOME/tmp/links.html"
+ -la "HChron" "$B http://www.chron.com/"
+
+ -bu
+ -la MovieDB    "$B www.mrqe.com"
+ -la Plainsman  "$B http://www.plainsman.com/"
+ -la jbajay     "$B http://www.google.com/search?q=jbajay"
+ -la Shippings  "xterm -e $HOME/bin/shippings &"
+ -la PriorityMail "$B http://search.live.com/results.aspx?q=priority+mail"
+
+ -bu
+ -la RateCalc  "$B http://postcalc.usps.gov/"
+ -la "RCMdrop" "$B http://www.metalworking.com/dropbox/"
+ -la nunlock   nunlock
+ -la SpecChar  "xterm -e vFile notes/items/special-characters &"
+ -la "Navy time" "$B http://tycho.usno.navy.mil/cstclock.html"
+

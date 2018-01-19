@@ -1,0 +1,17 @@
+#!/bin/sh
+#$Id: date-of-file 26 2009-03-13 16:17:35Z j-waldby $
+
+# yume example with 3-la -iv's and with echo execution
+# ie,  -la command -la varname -la displaylabel -iv initvalue
+# and with %% modifier
+
+$YUME  -ti 'Display Date of File'\
+ -bu -la 'Enter a file name and click button' true\
+ -bu -la 'echo "Date of $FF is `date -r $FF`"'   -la File: -la FF -iv $0\
+ -bu -la '%%echo "Date of $FF is `date -r $FF`"' -la File: -la FF -iv $0\
+ -bu -ex\
+ -do '%#echo "Date of $FF is `date -r $FF`"'\
+ -do '%%echo "Date of $FF is `date -r $FF`"'\
+ -do '%+echo "Date of $FF is `date -r $FF`"'\
+ -do '%-/bin/sh -c "echo Date of $FF is `date -r $FF`"'\
+ -do '%:/bin/sh -c "echo Date of $FF is `date -r $FF`"'&

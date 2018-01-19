@@ -1,0 +1,17 @@
+#!/bin/sh
+#$Id: yume-examples,v 1.1 2011/04/10 14:09:18 j-waldby Exp j-waldby $
+# yume-examples -- A yume menu to run some examples
+
+# 3 Feb 2010    - changed ./example-starter3 to 4
+# 10 April 2011 - added -iv field
+
+# Optional parameter: path to examples directory.
+[ "$YUME" ] || YUME=$(which yume)
+[ $YEGDIR ] || YEGDIR=$1
+[ $YEGDIR ] || YEGDIR=./
+cd $YEGDIR
+export YUME YEGDIR=`pwd`
+
+$YUME -at 320x90-2+2 -ti "yume example-starter"\
+ -bu -la "Show list of yume examples" ./example-starter4 -ex \
+ -bu -la 'yume command:' -la YUME -iv "$YUME"

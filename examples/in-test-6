@@ -1,0 +1,12 @@
+# $Id: in-test-6 25 2009-03-13 16:07:51Z j-waldby $
+# in-test-6 --  Tries to nest itself.
+
+# Note, in-test-3 also includes in-test-4, in-test-5, and
+# in-test-1
+
+# 
+-la In-test-6 -ex 
+-in in-test-3
+-la In-Test-6 -ex 
+-in in-test-6
+-la in-Test-6 -ex

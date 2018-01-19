@@ -1,0 +1,39 @@
+$Id: README  2011-03-15  $
+
+yume is a menu system with user-editable, mouse-activated shell
+commands.  It creates and runs a menu based on user-provided
+arguments. The current version, yume3, is Gtk-based, while the
+previous version (yume2) is based on the xforms library for X Window
+System.
+
+To make yume, see directions in INSTALL.  That file explains how to
+unpack the source files, and how to make yume.  Note, as of 17 March
+2011, latest yume3 release is contained in file yume3-005.tgz
+(ca 103KB).  The file docs-HTML/yume3-doc-eg02.tgz (ca 465KB) on
+SourceForge contains a web page, eg-overview.html, and about 44 .jpg
+screen shots of menus generated with yume3.
+
+An example:  The input
+
+      yume -bu date ls -ex &
+
+creates a menu window with three buttons, labeled date, ls, exit.
+Clicking the button labeled date runs the date command and displays
+the result in the window where yume started; clicking the ls button
+runs the ls command; clicking exit closes the menu window.
+
+
+As another example:  The input
+
+      yume -do 'ls -al' 'cal -3' &
+
+makes a menu window with two "do" items, with command text in an
+editing box where you can change it, and with the option to turn
+on "roll-over" operation, where an item is executed when the mouse
+cursor crosses it.
+
+For more examples, cd to the yume3/examples directory after you
+make yume, and enter the command ./yume-examples.  Also, see 
+man yume and man yume-examples.
+
+- jiw, 15 Mar 2011

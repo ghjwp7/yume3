@@ -1,0 +1,21 @@
+#!/bin/sh
+#$Id: find-ls-count 7 2009-02-25 15:19:11Z j-waldby $
+
+# find-ls-count -- Find a file, ls files, Count files in subdirectories
+# (A yume-documentation example)
+
+# The value of `xclip -o` is current clipboard contents.  If you
+# select some text and then click 'Find filename', this script will
+# list all the file names in the current directory and its subtree
+# that contain that text.
+[ "$YUME" ] || YUME=$(which yume)
+
+D=`pwd`
+$YUME -at 100x400+77+7 \
+ -bu -la 'Find filename' \
+    "V=\`xclip -o\`; echo \"Finding \$V in $D\"; find . | grep \$V" \
+ -bu 'ls -lR'  \
+ -bu 'ls -l'  \
+ -bu 'ls'  \
+ -bu -la 'Count Files'   "echo Counts:; for i in . *; do if [ -d \$i ]; then L=\`ls \$i|wc -l\`; echo \$i: \$L; fi; done" \
+ -bu -ex &

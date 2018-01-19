@@ -1,0 +1,22 @@
+# $Id: in-test-5 25 2009-03-13 16:07:51Z j-waldby $
+# in-test-3,4,5 --
+# These three files make up a simple nested-includes 
+# test case for yume's -in option, in which 
+# in-test-3 nests in-test-4, which nests in-test-5,
+# which nests in-test-1, which is terminal.
+
+# Because we want in-test-1 to start in on a new line,
+# we have a -bu before the -in in-test-1 line.  But as
+# in-test-1 usually starts at top level, we need -do also,
+# to switch to the mode it expects to start in.
+
+# Note that command "yume -in in-test-3 &" creates a menu much like
+# that of in-test-1, except with one line of three buttons added on
+# top, and one line of three buttons added on bottom.  The added top
+# line has buttons labeled In-test-3, In-test-4, In-test-5, created as
+# we nest down.  The added bottom line has buttons labeled in-Test-5,
+# in-Test-4, in-Test-3, created as we come back up.
+
+-la In-test-5 -ex -bu -do
+-in in-test-1
+-bu -la in-Test-5 -ex

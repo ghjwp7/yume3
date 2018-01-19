@@ -1,0 +1,52 @@
+$Id: screen-save.txt 7 2009-02-25 15:19:11Z j-waldby $
+screen-save yume example
+
+Creates a menu with buttons labeled ls, ll, Show, exit, Import,
+Import window, and Import w/ frame, for saving screen-shots
+sequentially in a screen-saver directory.
+
+Accepts 3 or 4 parameters, to set values of shell variables PIXDIR,
+PREFIX, and DELTA.  If not specified otherwise, these default to
+$HOME/pix, "screen-", and 10.  Under the defaults, screen shots are
+saved in $HOME/pix with names of form screen-nnnn.jpg, (eg,
+screen-1100.jpg, screen-1110.jpg, ...)  where nnnn is a number that
+increases by 10 between pictures.
+
+Click "Import" to save a screenshot as next-numbered .jpg file in
+$PIXDIR directory.  This uses import from the ImageMagick suite.  See
+import(1).  After you click import, a fat plus sign will replace the
+usual mouse cursor.  Move it to a corner of an area you wish to
+capture, press the left mouse button, move to an opposite corner,
+release mouse button.  import will beep, will capture an image of your
+selected area, then will beep again.
+
+Click "Import window" to save a screenshot of a particular window's
+contents as next-numbered .jpg file in $PIXDIR.  After you click
+"Import window" a small plus sign will replace the usual mouse cursor.
+Move it onto some part within the window you wish to capture and press
+the left mouse button.  import will beep and expose the window if it
+was buried, will capture an image of the window's contents, then will
+beep again.  Clicking on screen background areas will capture the
+whole screen.
+
+Click "Import w/ frame" to save a screenshot of a particular window's
+contents and its window-manager frame.
+
+Click "Show" to run "kuickshow .", which will display pictures in
+$PIXDIR directory.  If you use some other picture viewer, edit
+screen-save accordingly.
+
+When started with not more than 3 parameters, screen-save creates the
+screen-save menu described earlier, and places it at the lower right
+corner of the screen.
+
+When started with 4 or more parameters, if the fourth is "T"
+screen-save computes its next number N, then runs "import $YOPTS
+$PREFIX$N.jpg" to take a screen-shot of user-selected area.  $YOPTS is
+used to choose between different actions of Import, Import window, and
+Import w/ frame buttons.  By editing screen-save, one can add import
+command options to (for example) capture particular windows
+non-interactively.  If the fourth parameter is "D", screen-save
+creates a different menu that can be used for testing different import
+options, although such options can also be easily tested at a shell
+prompt.

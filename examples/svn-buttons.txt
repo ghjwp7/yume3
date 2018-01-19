@@ -1,0 +1,27 @@
+$Id: svn-buttons.txt 25 2009-03-13 16:07:51Z j-waldby $
+
+A menu with buttons for "subversion" control.
+
+This menu appears to work ok but probably could be better organized to
+be more useful, more comfortable, and less likely to do something you
+don't want done, such as committing or updating before time.
+
+It uses -iv fields so that the user can specify a directory and a
+files list.  The directory is relative to the path shown in the top
+button.
+
+The script lines 
+     # Change EDIT to what you prefer
+     export EDIT=emacs
+are there because my usual setting of EDITOR, /usr/local/bin/x2, is
+for a script that starts emacs in background.  This is unsuitable for
+svn commit, which comes up with a misleading Abort - Continue - Edit
+dialog.
+
+The "Props-id" button leads to a 'svn propset svn:keywords "Date Id"'
+command.
+
+Use of -bw cccc with no -at should lead to a button-size large enough
+to hold up to 9 characters of label text.  However, in my tests they
+are in fact large enough to hold about twice that many characters, as
+a consequence of the long title of the top button.

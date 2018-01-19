@@ -1,0 +1,20 @@
+# $Id: calc-wrap 25 2009-03-13 16:07:51Z j-waldby $
+#
+# Example of -iv usage to make a gui-wrapper for a 
+# command-line program that takes 3 arguments, 
+# simulated in these examples by calc-prog.
+
+# Run via:  ./calc-wrap
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME -at 260x230+0+300 -ti 'Some Effect Calculation'\
+ -bw dc\
+ -bu -ex -la 'Calc w echo' \
+   'echo "calc-wrap is running calc-prog $Diam $Leng $Freq ---"; \
+    ./calc-prog $Diam $Leng $Freq; echo "--- In calc-wrap again"' \
+\
+ -bu -la 'echo Diam is $Diam' -la 'Wire diam, mm:'   -la Diam -iv 1\
+ -bu -la 'echo Leng is $Leng' -la 'Wire length, mm:' -la Leng -iv 300\
+ -bu -la 'echo Freq is $Freq' -la 'Frequency, Hz:'   -la Freq -iv 2000000\
+\
+ -bu -ex -la Calc './calc-prog $Diam $Leng $Freq'

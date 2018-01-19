@@ -1,0 +1,22 @@
+#!/bin/sh
+[ "$YUME" ] || YUME=$(which yume)
+
+# This yume example script makes a tall thin menu for changing
+# workspace via buttons with "wmctrl -s #" commands
+
+# Count number of workspaces, then make button for each
+NW=$(wmctrl -d | wc -l)
+i=-1
+SS=$(while [ $((++i)) -lt $NW ]; do
+#     Add $i label and button to SS
+      echo -la $i -bu \'wmctrl -s $i\'
+    done)
+
+# -at param gives menu size and location.
+
+# -de ba turns on Active (Rollover) Mode buttons; for non-Active 
+# (Click to operate) buttons, say -de bb or remove -de ba.
+
+# -de wOnTop sets Window-Stay-Above, -de wStick turns on Window-Stick.
+
+echo  -at 20x800+1-33 -de ba -de wOnTop -de wStick "$SS" | xargs $YUME

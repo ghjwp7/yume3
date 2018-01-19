@@ -1,0 +1,10 @@
+#!/bin/sh
+#$Id: um2 7 2009-02-25 15:19:11Z j-waldby $
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME  -bu -ti $0 \
+ -la 'FF ebay-seller' "firefox 'http://cgi6.ebay.com/ws/eBayISAPI.dll?MfcISAPICommand=ViewListedItems&userid=mxqtech&since=2'"\
+ -la 'FF KLVM-weather'\
+     "firefox 'http://weather.noaa.gov/weather/current/KLVM.html'"\
+ -ex &
+

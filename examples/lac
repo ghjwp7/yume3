@@ -1,0 +1,35 @@
+#!/bin/sh
+#$Id: lac 7 2009-02-25 15:19:11Z j-waldby $
+
+# Start yume with latest .c file from current dir
+[ "$YUME" ]  || YUME=$(which yume)
+[ "$YTITL" ] || YTITL=$0
+[ "$YGCC"  ] || YGCC=gcc
+[ "$YOPTS" ] || YOPTS="-O3 -Wall"
+[ "$YEDIT" ] || YEDIT=$EDITOR
+[ "$YEDIT" ] || YEDIT=emacs
+[ "$YEXT"  ] || YEXT=".c"
+
+# If we have a param, use it as filename basis then shift it off.
+if [ $# -gt 0 ] ; 
+then FILE=$1 ; shift;
+else FILE=`ls -t *$YEXT |  head -1` ; 
+fi
+
+export BASE=`basename $FILE $YEXT`
+FILE=$BASE$YEXT
+BEEP="echo -e '\a'"
+
+[ "$YMAKE" ] && YMAKE="$YMAKE $BASE"
+[ "$YMAKE" ] || YMAKE=-do
+
+# If we use some math functions in the code, specify "-lm"
+if egrep -qw '<math.h>|sqrt|exp|log|pow|fabs|floor|ceil|sin|cos|tan' $FILE ;
+then MATHLIB="-lm"
+else MATHLIB=""
+fi
+
+$YUME "echo;$YGCC $FILE $YOPTS $MATHLIB -o $BASE $*; $BEEP" \
+    "$YMAKE"  "./$BASE" -ti "$YTITL"\
+  -bu -la 'Edit it' "$YEDIT $FILE" \
+      -la 'Ls it' 'echo; date; ls -l $BASE*; echo'  -ex &

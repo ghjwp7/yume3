@@ -1,0 +1,24 @@
+$Id: um4.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+um4's "Clip url -> FF" button gets a URL from the clipboard, via
+"xclip -o".  It deletes any newlines within the URL, via "tr -d '\n'".
+In the command, '\n' is quoted by " marks, ie, as "'\n'".  Strings
+    'firefox "`xclip -o | tr -d '
+and 
+    '`"'
+are concatenated to the front and rear of
+    "'\n'"
+and the resulting string
+    firefox "`xclip -o | tr -d '\n'`"
+is used by yume as a single parameter.
+
+For example, if you select text http://www.google.com (in linux, by
+moving the mouse cursor to h, pressing left mouse button, then moving
+the mouse cursor to m, then releasing the left mouse button) and click
+the "Clip url -> FF" button, the www.google.com webpage should open in
+firefox.
+
+um4's "Ebay# -> FF" button creates a URL like
+    http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&item=400032181378
+when an item number like 400032181378 is dropped on it.
+

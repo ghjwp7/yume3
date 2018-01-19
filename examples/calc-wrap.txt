@@ -1,0 +1,44 @@
+$Id: calc-wrap.txt 25 2009-03-13 16:07:51Z j-waldby $
+
+calc-wrap illustrates use of -iv fields to make a gui wrapper for a
+command-line-style calculation program, with edit-boxes for parameter
+values and a click button to run the program.
+
+This example supposes that the calculation program requires three
+parameters.  It puts values into yume-environment variables Diam,
+Leng, and Freq, with initial values 1, 300, and 2000000 respectively,
+as found in the -iv parameter strings.  
+
+For example, the script line
+
+ -bu -la 'Wire length, mm:' -la Leng -iv 300\
+
+acts as follows:
+
+-bu starts a new line of buttons.  If this were not present, the
+initial-value field would be part of a line of buttons, rather than on
+a line by itself.
+
+-iv needs two -la label strings, one to use for a shell-variable name
+and one to use as a visual label for the button next to the edit-box.
+
+Thus, "-la Leng" pushes shell-variable-name Leng onto yume's label
+stack, and -la 'Wire length, mm:' pushes button-label 'Wire length,
+mm:'.  
+
+The "-iv 300" part tells yume to create an initial-value item, and
+gives Leng its initial value of 300.
+
+The bottom line of the menu, with an exit and a Calc button, is
+created by
+
+    -bu -ex -la Calc './calc-prog $Diam $Leng $Freq' &
+
+such that when the Calc button is clicked, the current values of Diam,
+Leng, and Freq are substituted into the calc-prog command line.
+If the button command had been (mis)quoted with double quotes, ie,
+
+    -bu -ex -la Calc "./calc-prog $Diam $Leng $Freq" &
+
+which is wrong, then substitution would have taken place before yume
+ran.

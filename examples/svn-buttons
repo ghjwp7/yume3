@@ -1,0 +1,35 @@
+#!/bin/sh
+#$Id: svn-buttons 32 2009-03-20 05:17:14Z j-waldby $
+
+# Buttons for subversion control.
+# Change EDIT to what you prefer
+export EDIT=emacs
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME -ti $0\
+ -bu -la 'svn help $H' -la 'Help Topic:' -la H -iv propget\
+ -bu -la "Path relative to $PWD:" true\
+ -bu -la 'Directory D:' -la D -iv .\
+ -bu -la 'File list F:' -la F -iv ""\
+ -bu -bw aaa\
+ -la 'Add $F'\
+     'cd $D; svn add $F'\
+ -la 'Props-id $F'\
+     'cd $D; svn propset svn:keywords "Date Id" $F'\
+ -la 'Proplist $F'\
+     'svn proplist $F'\
+ -bu\
+ -la 'Status'   'cd $D; svn status'\
+ -la 'Update'   'cd $D; svn update'\
+ -la 'Info $F'  'cd $D; svn info $F'\
+ -bu\
+ -la 'log $F'   'cd $D; svn log $F'\
+ -la 'diff $F'  'cd $D; svn diff $F'\
+ -la 'cat $F'   'cd $D; svn cat  $F'\
+ -bu\
+ -la 'list $F'  'cd $D; svn list $F'\
+ -la 'ls -l $F' 'cd $D; ls -l $F'\
+ -bu -ex\
+ -bu\
+ -la 'Commit $F'\
+     'cd $D; EDITOR=$EDIT svn commit $F'

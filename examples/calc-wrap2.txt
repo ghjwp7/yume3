@@ -1,0 +1,23 @@
+$Id: calc-wrap2.txt 25 2009-03-13 16:07:51Z j-waldby $
+
+Like calc-wrap, calc-wrap2 illustrates use of -iv fields to make a gui
+wrapper for a command-line-style calculation program, with edit-boxes
+for parameter values and a click button to run the program.  See
+calc-wrap and calc-wrap.txt and yume(1) for discussion of -iv.
+
+The main point of calc-wrap2 is exercising some -bw (button-width)
+settings.  calc-wrap2 creates 8 menus, all having the same sets of
+buttons, but with various ratios of sizes and absolute sizes.
+
+Four combinations of -bw parameters are illustrated.  For each
+combination, two menus are created, one with a -at parameter
+constraining its size and placement, and the other sized and placed by
+the window manager.
+
+When it runs, calc-wrap2 displays some explanatory text on the screen
+where examples were started, and for each menu that it generates, it
+displays a line like "Creating menu with AT=-at 260x190+0+775, BWA=tz,
+and BWB=ni."  The BWA parameter sets the size or size ratio for the
+top line of the menu, and BWB does the same for the bottom line.  The
+middle three lines (the -iv fields) are sized via -bw dc.
+

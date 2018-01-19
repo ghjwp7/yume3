@@ -1,0 +1,26 @@
+#!/bin/sh
+#$Id: test-y-5,v 1.1 2011/03/12 02:57:36 j-waldby Exp j-waldby $
+
+# This version of test-y-5 for yume3 was adapted from that for yume2
+# by removing options like -de "buBoxCol: YELLOW" and adding option
+# -de gtkrc:./yume3-gtkrc-5C
+
+[ "$YUME" ] || YUME=$(which yume)
+
+# yume example of changing button colors by
+# selecting alternate gtkrc file.
+$YUME -at 300x260+0+640\
+ -dl date \
+ -do -dl "df ."\
+ -do -dl ls -bu date \
+ -la 'Bye-bye' -ex  -de gtkrc:./yume3-gtkrc-5A  \
+ -la lsa "ls -a" \
+ -bu a b  xwininfo -ex $0 -ti "$0 woo hoo" \
+ -bu\
+ -la 'Item A' -la ITA -iv 'Item A value' -ex\
+ -la 'Item B' -la ITB -iv 'Item B value'\
+ -bu\
+ -la 'Item C' -la ITC -iv 'Item C value' -ex\
+ -la 'Item D' -la ITD -iv 'Item D value'\
+ -la 'Bye-bye' -ex \
+ -bu -la lsa "ls -a" a b  xwininfo -ex

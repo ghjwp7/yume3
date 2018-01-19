@@ -1,0 +1,28 @@
+#!/bin/sh
+#$Id: menu-at-var $
+
+# Illustrate placing a menu at different location depending on host name
+# (or on a parameter, if present)
+[ "$YUME" ] || YUME=$(which yume)
+
+[ "$1" ] && H="$1"
+[ "$H" ] || H=`hostname`
+X=1
+[ $H = "yuli" ] && X=101
+[ $H = "zeda" ] && X=201
+
+cd $HOME
+$YUME -at 100x50+$X+1 -ti $H -bw ba -bu -la $H "xterm &" -ex
+
+# This example makes a menu with one button, labeled with the hostname
+# of the machine running the yume command, or if a parameter is given,
+# with that text.  When you click the button, it opens an xterm from
+# the machine where the yume command was run.
+
+# The example illustrates a simple technique for placing the buttons
+# at different locations on your screen, depending on what host you
+# are logged into.  For the example, if you are logged into zeda when
+# you run menu-at-var with no parameters (or if you say "menu-at-var
+# zeda"), the menu will appear at +201+1; if yuli, at +101+1; if some
+# other, at +1+1.  All these locations are close to the top left
+# corner of the screen.

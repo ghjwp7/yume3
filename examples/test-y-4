@@ -1,0 +1,13 @@
+#!/bin/sh
+#$Id: test-y-4 27 2009-03-13 17:19:24Z j-waldby $
+
+# yume example 
+
+# Command beginning with %: is executed via fork, no shell
+[ "$YUME" ] || YUME=$(which yume)
+
+XTERM="xterm -bg black -fg green -fn lucidasanstypewriter-bold-18"
+$YUME -at 1000x250+0+570 -ti $0 -ex xwininfo \
+ -do        "$XTERM -e 'cal -3; date; echo \$M; export M=1495; /bin/bash'"\
+ "%:/usr/bin/$XTERM -e 'cal -3; date; /bin/bash'" \
+ "%-/usr/bin/$XTERM -e 'cal -3; date; /bin/bash'" &

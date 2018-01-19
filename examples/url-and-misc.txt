@@ -1,0 +1,14 @@
+$Id: url-and-misc.txt 7 2009-02-25 15:19:11Z j-waldby $
+
+url-and-misc contains several commands, to illustrate that a wide
+variety of operations can be included in a single menu.
+
+For ease of viewing, the buttons of this menu are also broken out into
+separate files, um1 ... um6, with a Note file for each.
+
+um1: 'NS paypal' and 'NS ebay-seller' buttons -- open web pages in netscape
+um2: 'FF ebay-seller' and 'FF KLVM-weather' -- open web pages in firefox
+um3: 'Cal3', cdplay, eject -- use right size of xterm for display
+um4: 'Clip url -> FF', 'Ebay# -> FF' -- Drop URL or Ebay# on a button
+um5: 'HMS' and 'Factor' buttons -- Drop number on button, get results
+um6: 'Host/Whois/Dig' button -- Drop IP number on button, get results

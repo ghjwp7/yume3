@@ -1,0 +1,21 @@
+#!/bin/sh
+#$Id: url-and-misc 32 2009-03-20 05:17:14Z j-waldby $
+[ "$YUME" ] || YUME=$(which yume)
+
+$YUME  -bu -ti $0 \
+ -la 'NS paypal' "netscape -remote 'OpenURL(https://www.paypal.com/cgi-bin/webscr?cmd=_login-run)'"\
+ -la 'NS ebay-seller' "netscape -remote 'OpenURL(cgi6.ebay.com/ws/eBayISAPI.dll?MfcISAPICommand=ViewListedItems&userid=mxqtech&since=2)'"\
+ -la 'FF ebay-seller' "firefox 'http://cgi6.ebay.com/ws/eBayISAPI.dll?MfcISAPICommand=ViewListedItems&userid=mxqtech&since=2'"\
+ -la 'FF KLVM-weather'\
+     "firefox 'http://weather.noaa.gov/weather/current/KLVM.html'"\
+ -bu\
+ -la Cal3         "xterm -geometry 69x9 -fn lucidasanstypewriter-bold-24 -e cal3B &"\
+ -la cdPlay       "cdplay &"\
+ -la eject        "eject /dev/cdrom &"\
+ -bu -la 'Select a URL, or a #, or an IP# before clicking the buttons below' true\
+ -bu\
+ -la 'Clip url -> FF' 'firefox "`xclip -o | tr -d '"'\n'"'`"'\
+ -la 'HMS' 'S=`xclip -o`;E="k${S}r/p";D="/usr/bin/dc -e "; echo; echo "$S seconds = `$D"60 1$E"` minutes = `$D"3600 2$E"` hours = `$D"86400 2$E"` days"' \
+ -la 'Host/Whois/Dig' \
+   'IP=`xclip -o`; H=`host $IP 2>/dev/null`; W=`whois $IP@whois.arin.net | egrep -iv "whois.arin.net|^The ARIN|^Network Info|^Please use |^Information and|^ *$|^%" 2>/dev/null`; D=`dig $IP | egrep -iv "^; <<>> DiG|^;; res opt|^;; global opt|^;; got ans|^;; ->>HEAD|^;; flags:|^;; Query|^;; Total|^;; FROM:|^;; MSG SIZE|^;; ANSWER|^;; WHEN|^ *$" 2>/dev/null`; echo "H: $H"; echo "W: $W"; echo "D: $D\n"'\
+ -ex &
