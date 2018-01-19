@@ -1,24 +1,35 @@
-# yume-gtkrc is a sample gtk theme file for yume3.  As a base it sets
-# up black text on skyblue background for buttons, a slightly lighter
-# blue for current button, and red text for active button, in a fairly
-# calm color scheme.  For a brighter theme, see yume-gtkrc-2.  Note,
-# in yume's manpage see section "-de valpair : (1) label-colors".
+# yume-gtkrc-2 is a sample gtk theme file for yume3.  As a base it
+# sets up black text on skyblue background for buttons, a slightly
+# lighter blue for current button, and red text for active button.
+# That's a fairly calm color scheme.  However, for demonstration this
+# file (yume-gtkrc-2) uses bolder colors; eg, the prototypical
+# click-activated style y3db has red letters on cyan background, and
+# as mouse cursor moves across buttons (ie prelights them) letters go
+# peagreen and background yellow; from that state, if the left mouse
+# button is pressed, letters go cyan and background red.  Note, in
+# yume's manpage see section "-de valpair : (1) label-colors".
 
-style "y3b" {
+# Set up a default style as a basis for other styles
+style "y3m" {
   xthickness = 0
   ythickness = 0
-  bg[NORMAL]	= "SkyBlue3"   fg[NORMAL]	= "black"
-  bg[PRELIGHT]	= "SkyBlue2"   fg[PRELIGHT]	= "black"
-  bg[ACTIVE]	= "SkyBlue3"   fg[ACTIVE]	= "red"
-}
-style "y3a" {
-  bg[NORMAL]	= "#8888ff"    fg[NORMAL]	= "white"
-  bg[PRELIGHT]	= "#cc88ff"    fg[PRELIGHT]	= "white"
-  bg[ACTIVE]	= "#8855ee"    fg[ACTIVE]	= "red"
+  bg[NORMAL]	= "SkyBlue3"
+  fg[NORMAL]	= "black"
+  bg[PRELIGHT]	= "SkyBlue2"
+  fg[PRELIGHT]	= "black"
+  bg[ACTIVE]	= "SkyBlue3"
+  fg[ACTIVE]	= "red"
 }
 
-style "y3db"	= "y3b" { }     # do: click button style 
-style "y3da"	= "y3a" { }     # Do: roll button style
+style "y3db"	= "y3m" {
+fg[NORMAL] = "red"   fg[ACTIVE] = "cyan"  fg[PRELIGHT]	= "SeaGreen"
+bg[NORMAL] = "cyan"  bg[ACTIVE] = "red"   bg[PRELIGHT]	= "yellow" }
+style "y3da"	= "y3m" {
+fg[NORMAL] = "white" fg[ACTIVE] = "blue"  fg[PRELIGHT]	= "red"
+bg[NORMAL] = "green" bg[ACTIVE] = "#6699ff"   bg[PRELIGHT]	= "tan" }
+
+#      y3db                     # do: click button style 
+#      y3da                     # Do: roll button style
 style "y3bb"	= "y3db" { }    # bu click button style
 style "y3ba"	= "y3da" { }    # bu roll button style
 style "y3eb"	= "y3db" { }    # EE click button style
@@ -38,7 +49,7 @@ style "y3td"	= "y3da" { }    # do: text field style
 style "y3tv"	= "y3da" { }    # iv text field style
 style "y3vb"	= "y3da" { }    # vbox field style
 
-class "GtkWidget" style "y3b"
+class "GtkWidget" style "y3m"
 
 widget "*y3bb*" style "y3bb"
 widget "*y3ba*" style "y3bb"
@@ -70,4 +81,5 @@ widget "*y3vb*" style "y3vb"
 
 # Note, you can use Pango Text Attribute Markup Language in button labels.
 # See http://library.gnome.org/devel/pango/stable/PangoMarkupFormat.html
-# end - .y3-gtkrc
+
+# end of file yume-gtkrc
