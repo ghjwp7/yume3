@@ -2,16 +2,16 @@ $Id: README  2011-03-15  $
 
 yume is a menu system with user-editable, mouse-activated shell
 commands.  It creates and runs a menu based on user-provided
-arguments. The current version, yume3, is Gtk-based, while the
-previous version (yume2) is based on the xforms library for X Window
-System.
+arguments. The current version, yume3, is Gtk-based, while a previous
+version (yume2) is based on the xforms library for X Window System,
+and an original version (vintage 1997) is Tcl/TK based.
 
 To make yume, see directions in INSTALL.  That file explains how to
-unpack the source files, and how to make yume.  Note, as of 17 March
-2011, latest yume3 release is contained in file yume3-005.tgz
-(ca 103KB).  The file docs-HTML/yume3-doc-eg02.tgz (ca 465KB) on
-SourceForge contains a web page, eg-overview.html, and about 44 .jpg
-screen shots of menus generated with yume3.
+unpack the source files, and how to make yume.  Note, as of January
+2018, the latest yume release is in a git repository on github.  A
+file docs-HTML/yume3-doc-eg02.tgz (ca 465KB) on SourceForge contains a
+web page, eg-overview.html, and about 44 .jpg screen shots of menus
+generated with yume3.  I'll migrate it to github when I learn how.
 
 An example:  The input
 
@@ -36,4 +36,4 @@ For more examples, cd to the yume3/examples directory after you
 make yume, and enter the command ./yume-examples.  Also, see 
 man yume and man yume-examples.
 
-- jiw, 15 Mar 2011
+- jiw, January 2018
