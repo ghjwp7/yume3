@@ -1,0 +1,1083 @@
+<html>
+<!-- $Id: eg-overview.html $ -->
+<head>
+<title>yume3 (yume) screen shots examples
+</title>
+<meta name="keywords" content="yume, yume2, custom, menu, examples">
+</head>
+
+<body>
+<A name=top>
+<h1>Screen shots for <a href=../>yume3 (yume)</a> easy custom menus program</h1>
+
+<p> The yume distribution provides an <strong>examples/</strong>
+  directory that contains a few dozen examples of yume usage.  This
+  web page lists most of those examples, via screen shots, brief
+  explanations, and links to example sources and explanatory files.
+</p>
+<p>If you create useful or exemplary yume scripts yourself, please
+ feel free to contribute them for inclusion in
+ the <strong>examples/</strong> directory.  Send email to yume at
+ pat7.com.  Subject must begin with the word <strong>yume</strong>.
+</p>
+<p> The following links take you to the indicated sections within this
+  document.
+</p>
+
+<UL>
+<LI><a href=#abc-def-ghi><strong>abc-def-ghi</strong> example</a>
+  (Output Redirection)</LI>
+<LI><a href=#button-widths><strong>button-widths</strong> example</a>
+    (Relative button-widths)</LI>
+<LI><a href=#bw-and-quanta><strong>bw-and-quanta</strong> example</a>
+  (Button-width quanta)</LI>
+<LI><a href=#calc-wrap><strong>calc-wrap</strong> example</a> (-iv fields to set environment variables)</LI>
+<LI><a href=#calc-wrap2><strong>calc-wrap2</strong> example</a>
+  (several button-width setting examples)</LI>
+<LI><A href=#date-of-file><strong>date-of-file</strong> example</a>
+  (Meta-mode-controls, <strong>%#</strong> ... <strong>%:</strong>)</LI>
+<LI><A href=#errors-demo><strong>errors-demo</strong> example</a> (Error-messages example)</LI>
+<LI><A href=#example-starter1><strong>example-starter1</strong></a> (A yume menu to start yume examples.)</LI>
+<LI><A href=#example-starter2><strong>example-starter2</strong></a>
+  (ditto; and on-the-fly menu construction)</LI>
+<LI><A href=#example-starter3><strong>example-starter3</strong></a> (ditto...)</LI>
+<LI><A href=#example-starter4><strong>example-starter4</strong></a> (ditto...)</LI>
+<LI><A href=#find-ls-count><strong>find-ls-count</strong> example</a> (using xclip with yume)</LI>
+<LI><A href=#lac><strong>lac</strong> example</a> (C compilation aid)</LI>
+<LI><A href=#lacc><strong>lacc</strong> example</a> (C++ compilation aid)</LI>
+<LI><A href=#lala><strong>lala</strong> example</a> (Latest-Latex Latex aid)</LI>
+<LI><A href=#menu-at-var><strong>menu-at-var</strong> example</a> (Variable-location-of-menu)</LI>
+<LI><A href=#play-sound-delay><strong>play-sound-delay</strong>
+    example</a> (Recursive script, plays sound after delay)</LI>
+<LI><A href=#screen-save><strong>screen-save</strong> example</a> (Save screen-shots utility)</LI>
+<LI><A href=#svn-buttons><strong>svn-buttons</strong></a> (SVN utility aid)</LI>
+<LI><A href=#test-y-1><strong>test-y-1</strong> example</a> (Otherly-labeled "exit" button)</LI>
+<LI><A href=#test-y-2><strong>test-y-2</strong> example</a> (<strong>%+</strong> metacommand)</LI>
+<LI><A href=#test-y-4><strong>test-y-4</strong> example</a> (Special-purpose xterms; <strong>%:</strong> and <strong>%-</strong> metacommands)</LI>
+<LI><A href=#test-y-5><strong>test-y-5</strong> example</a> (Different-colored buttons)</LI>
+<LI><A href=#test-y-6><strong>test-y-6</strong> example</a> (Single-, Double-, and Backslash Quoting)</LI>
+<LI><A href=#um1><strong>um1</strong> example</a> (Open URL in Netscape)</LI>
+<LI><A href=#um2><strong>um2</strong> example</a> (Open URL in Firefox)</LI>
+<LI><A href=#um3><strong>um3</strong> example</a> (xterm cal -3, cdplay, eject)</LI>
+<LI><A href=#um4><strong>um4</strong> example</a> (xclip + firefox)</LI>
+<LI><A href=#um5><strong>um5</strong> example</a> (H:M:S, xclip + dc and factor)</LI>
+<LI><A href=#um6><strong>um6</strong> example</a> (xclip + host,
+  whois, dig)</LI>
+<LI><A href=#url-and-misc><strong>url-and-misc</strong> example</a> (um1-um6 composite)</LI>
+<LI><A href=#wordexp-vals><strong>wordexp-vals</strong> example</a> (shell special
+ parameter expressions)</LI>
+<LI><A href=#xterms-w-sh><strong>xterms-w-sh</strong> example</a> (More meta-mode examples) </LI>
+<LI><A href=#yume-examples><strong>yume-examples</strong> example</a> (To start example-starter4)</LI>
+</UL>
+
+<h2>Example screen shots and brief explanations</h2>
+
+<!--begin list of examples, in form:
+<hr><LI><A name=xx>
+<h3>xx :  example</h3></A>
+<img src=eg-ss-2x.jpg>
+<br>Link to <a href="../examples/xx">code</a>
+<br>Link to <a href="../examples/xx.txt">explanatory note</a>
+<br><strong>xx</strong> contains a yume command illustrating the...
+<br><hr><A href=#>Return to top</a>
+</LI>
+-->
+
+<UL>
+<hr><LI><A name=abc-def-ghi>
+<h3>abc-def-ghi : Redirection example</h3></A>
+<img src=eg-ss-10.jpg>
+<br>Link to <a href="../examples/abc-def-ghi">code</a>
+<br><strong>abc-def-ghi</strong> contains a yume command of the form "yume ... > t",
+which causes standard output from yume and its abc and def
+subprocesses to be directed into file t.  (Standard output from ghi is
+directed into file u.)  abc, def, and ghi are shell scripts with
+commands like "<code>echo This is def at `date`</code>".  Each time abc or def
+executes, the output is appended to file t.  File t can be displayed
+(on the console where abc-def-ghi was started) via the "cat t to
+stderr" button.  Each time ghi executes, the output overwrites file
+u.  File u can be displayed via the "cat u to stderr" button.
+<br><hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=button-widths>
+<h3>button-widths :  Control of relative-widths example</h3></A>
+<img src=eg-ss-11.jpg>
+<img src=eg-ss-12.jpg>
+<img src=eg-ss-13.jpg>
+<br>Link to <a href="../examples/button-widths">code</a>
+<br><strong>button-widths</strong> contains three yume commands
+illustrating the -bw (button widths) switch without a -at switch.  The
+generated menus are shown above (at 2/3 scale), within frames that show
+their window titles.  (Frame appearance is window-manager-dependent.)
+Menus 1 and 2 each use one -bw switch, with parameter "dc", which in a
+line of two buttons gives the first button 4/7 of the line width, and
+other button 3/7 of the line. (In the absence of a -at switch, overall
+menu width is governed by the length of the longest line, which
+depends on its number of buttons, the font, and the text content.)
+Menu 3 has a "-bw dc" switch near its beginning, and a "-bw bbba" just
+before the last line.  In this line of four buttons, the first three
+each get 2/7 of the line width, and the other button gets 1/7.
+<br><hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=bw-and-quanta>
+<h3>bw-and-quanta :  -at, -bw, -de, and -in examples</h3></A>
+<img src=eg-ss-14.jpg>
+<img src=eg-ss-15.jpg>
+<img src=eg-ss-16.jpg>
+<img src=eg-ss-17.jpg>
+<br>Link to <a href="../examples/bw-and-quanta">code</a>
+<br>Link to <a href="../examples/bw-and-quanta.txt">explanatory note</a>
+<br><strong>bw-and-quanta</strong> contains four yume commands to
+produce four menus (shown above at 2/3 scale), demonstrating effects
+of different sets of button-size controls.  All the menus have the
+same buttons (as listed in the
+include-file <a href="bw-and-quanta.in">bw-and-quanta.in</a>), but
+each uses a different combination of controls:
+
+<UL TYPE=circle>
+<LI>  The 1st menu has:  no buxMargin or buQuanta or -bw settings.
+</LI>
+<LI> The 2nd menu has:  -de buxMargin:50 -de buQuanta:50
+</LI>
+<LI> The 3rd menu has:  -de buxMargin:10 -de buQuanta:1000
+</LI>
+<LI> The 4th menu has:  -bw aaaaaaaa
+</UL>
+The title of each menu-window shows which button-size controls it
+uses. <br>Please see the <a href="bw-and-quanta.txt">explanatory
+note</a> for further information about this example.
+<br><hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=calc-wrap>
+<h3>calc-wrap : -iv example</h3></A>
+<img src=eg-ss-18.jpg>
+<br>Link to <a href="../examples/calc-wrap">code</a>
+<br>Link to <a href="../examples/calc-wrap.txt">explanatory note</a>
+<br><strong>calc-wrap</strong> contains a yume command illustrating
+use of -iv fields to set environment variables.  It makes a gui
+wrapper for a command-line-style calculation program, with edit-boxes
+for parameter values and a click button to run the program.
+<br>Please see the <a href="calc-wrap.txt">explanatory note</a> for
+further information about this example.
+<br><hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=calc-wrap2>
+<h3>calc-wrap2 : -at and -bw examples</h3></A>
+<img src=eg-ss-19.jpg>
+<img src=eg-ss-20.jpg>
+<br>Link to <a href="../examples/calc-wrap2">code</a>
+<br>Link to <a href="../examples/calc-wrap2.txt">explanatory note</a>
+<br><strong>calc-wrap2</strong> demonstrates several -bw
+(button-width) settings.  calc-wrap2 creates 8 menus (two of which are
+shown above at 2/3 scale), all having the same sets of buttons, but
+with various ratios of sizes and absolute sizes.  It also displays a
+few comments and a list of -at and -bw parameter values for the menus
+it created.
+<br>Please see the <a href="calc-wrap2.txt">explanatory note</a> for
+further information about this example.
+<br><hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=date-of-file>
+<h3>date-of-file :  Meta-mode-controls example</h3></A>
+<img src=eg-ss-21.jpg>
+<br>Link to <a href="../examples/date-of-file">code</a>
+<br>Link to <a href="../examples/date-of-file.txt">explanatory note</a>
+<p><strong>date-of-file</strong> contains commands illustrating
+yume's meta-mode controls.  A meta-mode control is a percent sign and
+a code character at the beginning of a command, by which yume's usual
+method of command invocation can be altered.  As noted in yume(1), a
+command from a yume menu is executed by a shell via a forked copy of
+yume, unless the command begins with a percent sign and a meta-mode
+code character, in which case the invocation method depends on that
+code character.</p>
+<p>For details, please see <a href="date-of-file.txt">explanatory note</a>
+and <a href="../doc/yume-meta.txt"> yume-meta(1) [text]</a> or
+  <a href="../doc/yume-meta.pdf"> yume-meta(1) [pdf]</a>
+</p>
+
+<p>Other meta-mode examples include <A href=#test-y-2>test-y-2</a>,
+ <A href=#test-y-4>test-y-4</a>, and <A href=#xterms-w-sh>xterms-w-sh</a>.
+</p>
+
+<br><hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=errors-demo>
+<h3>errors-demo : Error-messages example</h3></A>
+[This example produces console output, no images.]
+<br>Link to <a href="../examples/errors-demo">code</a>
+<br>Link to <a href="../examples/errors-demo.txt">explanatory note</a>
+<br><strong>errors-demo</strong> displays examples of error codes that
+occur when yume is invoked incorrectly.
+The <a href="errors-demo.txt">explanatory note</a> has a few more
+comments and shows the output as of March, 2009.
+<br><hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=example-starter1>
+<h3>example-starter1</h3></A>
+<img src=eg-ss-22.jpg>
+<br>Link to <a href="../examples/example-starter1">code</a>
+<br><strong>example-starter1</strong> was an early version of a yume
+menu to start yume examples.  It has a fixed list of buttons.  It is
+an example of a small menu with several rows of buttons.
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=example-starter2>
+<h3>example-starter2</h3></A>
+[Image shown half-scale and truncated for brevity]
+<img src=eg-ss-24.jpg>
+<br>Link to <a href="../examples/example-starter2">code</a>
+<br><strong>example-starter2</strong> was the second version of a yume
+menu to start yume examples.  It makes a menu with one button for each
+executable file in the current directory -- several buttons in the
+menu shown above are for executables that are not yume menu scripts
+(abc, in-test-1, latex-2err, etc).
+<p><strong>example-starter2</strong> and later example-starter
+versions provide examples of menus created on-the-fly from strings in
+environment variables.</p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=example-starter3>
+<h3>example-starter3</h3></A>
+<img src=eg-ss-25.jpg>
+<br>Link to <a href="../examples/example-starter3">code</a>
+<br>Link to <a href="../examples/example-starter3.txt">explanatory note</a>
+<br><strong>example-starter3</strong> was the third version of a yume
+menu (shown half-scale) to start yume examples.  It uses strings in
+environment variables to create its menu dynamically, making one line
+of buttons for each qualified file in the current directory.  A file
+is qualified if it's executable and contains "yume example" anywhere
+in it, or "yume" first on a line of the file.  The left-hand button in
+a menu line executes an example; the middle button displays the code
+of the example; and the right-hand button displays an explanatory note
+(if available) or is a no-op.
+<p><strong>example-starter3</strong> uses button margins and quanta
+  sizes in an attempt to make buttons of uniform size.  Note
+  that <strong>example-starter4</strong>, the next example, uses -bw
+  options rather than margins and quanta, to generate buttons that are
+  pleasingly more uniform.</p>
+<p>Please see the <a href="example-starter3.txt">explanatory note</a>
+  for comments on using <strong>echo</strong>
+  and <strong>xargs</strong> for proper quoting treatment of dynamic
+  menu strings.
+</p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=example-starter4>
+<h3>example-starter4</h3></A>
+<img src=eg-ss-26.jpg>
+<br>Link to <a href="../examples/example-starter4">code</a>
+<br>Link to <a href="../examples/example-starter4.txt">explanatory note</a>
+<br><strong>example-starter4</strong> is the current version of a yume
+menu (shown half-scale) to start yume examples.  It differs
+from <strong>example-starter3</strong> in using -bw options rather
+than margins and quanta, to generate buttons of more-uniform width.
+<p></p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=find-ls-count>
+<h3>find-ls-count : xclip-with-yume example</h3></A>
+<img src=eg-ss-27.jpg>
+<br>Link to <a href="../examples/find-ls-count">code</a>
+<br><strong>find-ls-count</strong> contains a yume command with an
+example of using xclip (a unix utility) to communicate with yume.  The
+general idea is that you mouse-select some text and drop it on a yume
+button, whose command uses xclip to get the text and use it in a
+command.  In this example, the 'Find filename' button will list all
+the filenames in the current directory that include the selected text.
+
+<p>Here are a few comments about elements of this script: The
+<PRE>     -at 100x400+77+7 </PRE> switch tells yume to locate a
+100x400-pixel window's top left corner at (77,7), which will be quite
+near the top of your display, not far from the left edge.  The switch
+sequence 
+<PRE>     -bu -la 'Find filename' \
+     "V=\`xclip -o\`; echo \"Finding \$V in $D\"; find . | grep \$V" </PRE>
+
+starts a button row with a button labeled "Find filename" that runs
+the double-quoted command shown.  Note that two double-quote
+characters within the command are backslash-quoted so they apply when
+yume executes the command, rather than when yume starts.  Likewise,
+the dollar sign (in the <CODE>\$V</CODE> instances) is
+backslash-quoted to delay <CODE>$V</CODE> evaluation.
+</p>
+
+<p>The value of <CODE>`xclip -o`</CODE> (that is,
+  left-quoted <CODE>xclip -o</CODE>) is current clipboard contents
+  (ie, whatever text was most-recently selected).  When yume processes
+  the whole command, the shell runs <CODE>xclip -o</CODE> and assigns
+  the value to V.  The <CODE>echo</CODE> command displays the selected
+  text and the current-directory name.  The <CODE>find</CODE> command
+  finds all the filenames in and beneath the current directory and
+  pipes them to <CODE>grep</CODE>, which selects those that contain
+  the selected text.
+ </p>
+
+<p>Note, additional examples using <CODE>xclip</CODE> appear
+  in <a href=#url-and-misc><strong>url-and-misc</strong></a>.  (The
+  same examples appear individually in um4, um5, and um6.)
+ </p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=lac>
+<h3>lac : C compilation aid</h3></A>
+<img src=eg-ss-28.jpg>
+<img src=eg-ss-30.jpg>
+<br>Link to <a href="../examples/lac">code</a>
+<br><strong>lac</strong> contains a yume command that creates a menu
+with several commands to compile, run, or edit a C program.  By
+default, <strong>lac</strong> targets the most-recently-modified .c
+file, but you can give <strong>lac</strong> any [.c] file name when
+you start it.  Note, if <i>fn</i> stands for a filename, both of
+"<strong>lac</strong> <i>fn</i>" and "<strong>lac</strong> <i>fn</i>.c"
+act the same, using <i>fn</i> as the base name in the menu.</p>
+
+<p>If you click the EE button at the left end of the top row, the text
+  of the EE and <CODE>do:</CODE> buttons turns red, as shown in the
+  second screen shot.  This shows that "entry execution" is turned on
+  and that the compilation command in the text-box will execute
+  whenever the mouse cursor crosses the <CODE>do:</CODE> button,
+  rather than only when you click the <CODE>do:</CODE> button.
+  (Clicking the EE button toggles EE state from on to off or from
+  off to on.)  (The color change mentioned above assumes that a
+  default version of file ~/.yume-gtkrc has been installed; if not,
+  colors will differ.)
+ </p>
+
+<p>The <CODE>echo</CODE> command before the gcc command types a blank
+  line, to tell the user the compile has begun; the <CODE>echo</CODE>
+  command after gcc should produce a beep and blank line when the
+  compile finishes.  Compile errors, if any, will be listed between
+  the two blank lines.  [<small>Note, in the <CODE>echo -e '\a'</CODE>
+  part of the command, <CODE>\a</CODE> stands for bell.  Depending on
+  your shell, a bell may or may not sound.</small>]
+</p>
+
+<p>Before it makes a menu, <strong>lac</strong> tests the existence of
+  half-a-dozen variables that specify window title, compiler name,
+  compiler options, editor name, source file extension,
+  and <CODE>make</CODE> setting.  If these variables (YTITL, YGCC,
+  YOPTS, YEDIT, YEXT, and YMAKE) have not been set, 
+  <strong>lac</strong> assigns them default values: lac, gcc, -O3
+  -Wall, $EDITOR, .c, and nil.
+</p>
+
+<p> As just noted, when YEDIT isn't set, YEDIT defaults to $EDITOR.
+   If in turn EDITOR isn't set, YEDIT then defaults to emacs.  If you
+   ordinarily use some other text editor, set EDITOR appropriately.
+   For example, with vim and bash, put the first of the following
+   lines in file ~/.bashrc; or, with vim and csh, put the second line
+   in ~/.cshrc :
+   <pre>    export EDITOR=vim
+    setenv EDITOR vim</pre>
+ </p>
+
+<p>In addition to the YOPTS option settings (which are <CODE>-O3
+  -Wall</CODE> by default) <strong>lac</strong> may add
+  a <CODE>-lm</CODE> switch to the compilation command that it
+  generates.  This switch (referred to as MATHLIB
+  in <strong>lac</strong> code) is set if grep finds
+  "<CODE>&lt;math.h&gt;</CODE>" or any of certain math functions (sqrt,
+  exp, log, etc) within the .c source file.  If you add math library
+  references to your code after invoking <strong>lac</strong>, you can
+  either run <strong>lac</strong> again, or type <CODE>-lm</CODE>
+  within the <strong>do:</strong>-item's text box.  That is, in case
+  of special circumstances, you can manually edit any of the text
+  boxes as you like.  But if you find yourself frequently having to do
+  manual edits, then either change <strong>lac</strong> or create a
+  script to change it.  The next two paragraphs describe two possible
+  customizations of <strong>lac</strong> via a script.  Both of these
+  scripts appear in <strong>yume</strong>'s <strong>examples/</strong>
+  directory.
+</p>
+
+<p>First, note that the <strong>lacc</strong> utility exports <CODE>
+  YTITL=$0, YGCC="g++", YEXT=".cc", and YMAKE=make</CODE>.  Then it
+  invokes <strong>lac</strong>.  This creates a C++ compilation aid
+  instead of a C compilation aid.  The created menu has an additional
+  <CODE>do:</CODE> group with a <CODE>make</CODE> command, as shown in
+  red in the <a href=#lacc><strong>lacc</strong> screen shot</a>
+  below.
+</p>
+
+<p>Secondly, the <strong>lacx</strong> utility exports <CODE>YTITL=$0,
+  YEDIT=x2, YOPTS="-O3 -Wall -lX11 -lforms -lXpm", and
+  YMAKE=make</CODE>.  Then it invokes <strong>lac</strong>.  This
+  creates a C compilation aid suitable for
+  compiling <strong>yume</strong> and other xforms-based programs.
+  (Remove or edit the <CODE>YEDIT=x2</CODE> line unless x2 is an alias
+  for your text editor.)
+</p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=lacc>
+<h3>lacc : C++ compilation aid</h3></A>
+<img src=eg-ss-32.jpg>
+<br>Link to <a href="../examples/lacc">code</a>
+<br><strong>lacc</strong> uses <strong>lac</strong> to create a menu
+with several commands to compile, make, run, or edit a C++ program.
+By default, <strong>lacc</strong> targets the most-recently-modified
+.cc file, but you can give <strong>lacc</strong> any [.cc] file name
+when you start it.  For example, suppose you want to work with xyz.cc
+and it isn't the most-recently-modified .cc file.  Instead of starting
+<strong>lacc</strong> with the command "<code>lacc</code>", start
+it with "<code>lacc xyz</code>" or with "<code>lacc xyz.cc</code>".
+</p>
+
+<p>To locate the most-recently-modified .cc file,
+ <strong>lacc</strong> uses shell code like
+ <pre>    FILE=`ls -t *.cc | head -1`</pre>
+ (Note, other scripts like <strong>lac</strong> and
+ <strong>lala</strong> use similar shell code, but with ".c" or ".tex'
+ rather than ".cc".)
+</p>
+
+<p> The <code>ls -t *.cc</code> portion of this code makes a list of
+ current-directory filenames that end with .cc, sorted by modification
+ time; the <code>head -1</code> portion selects the first element from
+ that list.  If the  current directory has no filenames that end with
+ .cc, error messages like
+ <pre>    ls: cannot access *.cc: No such file or directory
+    egrep: .cc.cc: No such file or directory</pre> will appear, and the
+ resulting menu will refer to "filenames" like .cc and .cc.cc.
+</p>
+
+<p>Also see <a href=#lac>discussion of <strong>lac</strong></a>.
+</p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=lala>
+<h3>lala : Latest-Latex-file Latex aid</h3></A>
+<img src=eg-ss-33.jpg>
+<img src=eg-ss-34.jpg>
+<br>Link to <a href="../examples/lala">code</a>
+<br>Link to <a href="../examples/lala.txt">explanatory note</a>
+<br><strong>lala</strong> contains a yume command that creates a menu
+with several commands for processing latex files.  By
+default, <strong>lala</strong> targets the most-recently-modified .tex
+file, but you can give <strong>lala</strong> any file name when you
+start it.  For discussion of "most-recently-modified" files, please
+see topic <a href=#lacc><strong>lacc</strong>.</a>
+
+<p>Clicking the EE button at the left end of the top row toggles the
+ text color of the EE and <CODE>do:</CODE> buttons from black to red
+ (or vice versa) as shown in the second screen shot.  The red color
+ means that "entry execution" is turned on and that the command in the
+ text-box will execute whenever the mouse cursor crosses
+ the <CODE>do:</CODE> button.
+</p>
+
+<p>If you are using <CODE>xdvi</CODE> to view your <CODE>latex</CODE>
+ output, and have entry execution turned on for
+ the <CODE>latex-2ps</CODE> command, you can make and save a change to
+ your .tex file, then move the mouse cursor across the
+ red <CODE>do:</CODE> button, and after you hear a beep [indicating
+ that <CODE>latex</CODE>, <CODE>dvi2ps</CODE>, and font generation
+ (if needed) are done], move the mouse cursor into
+ the <CODE>xdvi</CODE> window.  <CODE>xdvi</CODE> will detect that the
+ .dvi file it is displaying has changed, and will display the new form
+ of your document.  (Whether beep works is shell dependent.)
+</p>
+
+<p>Note, the <CODE>latex-2ps</CODE> script uses <CODE>latex</CODE> to
+ process a .tex file.  latex-2ps runs latex invisibly unless an error
+ occurs.  It beeps when done if <CODE>latex</CODE> finishes without
+ error; but if a <CODE>latex</CODE> error occurs, it uses script
+ <CODE>latex-2err</CODE> to present selected latex error log messages
+ in an xterm window.  In other words, if <CODE>latex</CODE>
+ and <CODE>dvi2ps</CODE> processing goes ok, <CODE>latex-2ps</CODE>
+ beeps and is done; but if that processing has errors, 
+<CODE>latex-2ps</CODE> invokes the <CODE>latex-2err</CODE> script to
+ display some of the logged error messages in an xterm.  
+<CODE>latex-2err</CODE> uses grep to suppress some <CODE>latex</CODE>
+ error messages.  For example, it squeezes out messages containing "No
+ pages" and "Overfull", among others.
+</p>
+
+<p> Script <CODE>latex-2ps</CODE> is used to <CODE>latex</CODE> the
+ specified tex file if it's newer than its dvi file, or if an extra
+ parameter is given after the file name.  The "x" at the end of
+ each <CODE>latex-2ps</CODE> command just before the blue-line
+ text-cursor mark in each screen shot is just such an extra parameter,
+ used to force <CODE>latex</CODE> and <CODE>dvi2ps</CODE> processing
+ regardless of file dates.  You may remove the x if you wish.
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=menu-at-var>
+<h3>menu-at-var : Variable-location-of-menu example</h3></A>
+<img src=eg-ss-35.jpg>
+<br>Link to <a href="../examples/menu-at-var">code</a>
+<br><strong>menu-at-var</strong> contains a yume command that creates
+a one-button menu, near the top right corner of the screen.  The exact
+location of the button depends on the hostname, as described in text
+in <a href="menu-at-var">menu-at-var code</a>.
+
+<p>The button pictured above was created on qili, and when it is
+  clicked it opens an xterm that runs on qili and is displayed on the
+  current display.
+</p>
+
+<p>Note, <code>menu-at-var</code> is mostly just a simple example of
+  placing a menu at different locations for different cases, rather
+  than a useful menu.  In practice, one would use a slightly
+  longer <code>xterm</code> command, for example like:
+ <pre> yume -bu -la yuli "xterm -e ssh yuli&" &</pre> which when run
+ on qili would open a yuli xterm and display it on the current
+ display.
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=play-sound-delay>
+<h3>play-sound-delay : Script example that plays a sound after a delay</h3></A>
+<img src=eg-ss-36.jpg>
+<br>Link to <a href="../examples/play-sound-delay">code</a>
+<br><strong>play-sound-delay</strong> contains a yume command to
+create a menu as shown above.  When you click one of the numbered
+buttons, a sound will be played after a delay of that many seconds.
+If you click the <CODE>do:</CODE> button (with the command as shown) a
+sound will be played after a delay of 3 seconds.
+
+<p>Further discussion of <STRONG>play-sound-delay</STRONG> appears in
+  its <a href="play-sound-delay">code</a> file.  But very briefly,
+  the script structure is like:
+<pre>  [ -z $1 ] && {
+     &lt;yume command&gt;
+     exit;
+  }
+  &lt;command to sleep $1 seconds, then play sound via play-sound-delay&gt;</pre>
+
+The <CODE>[ -z $1 ] && { ... }</CODE> sequence says to test if
+parameter 1 has zero length, ie, is missing.  If it's missing,
+the <CODE>yume</CODE> command gets executed -- creating a menu that
+contains recursive calls to <STRONG>play-sound-delay</STRONG>, as
+shown above -- and the script exits.  But if parameter 1 is present,
+it is treated as a number of seconds to sleep, after which a sound is
+played.
+</p>
+
+<p>
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=screen-save>
+<h3>screen-save :  Save screen-shots utility</h3></A>
+<img src=eg-ss-37.jpg>
+<br>Link to <a href="../examples/screen-save">code</a>
+<br>Link to <a href="../examples/screen-save.txt">explanatory note</a>
+<br><strong>screen-save</strong> contains a yume command to create a
+menu with buttons labeled as shown above [that is, ls, ll, Show, exit,
+Import, Import window, and Import w/ frame] for saving screen-shots
+sequentially in a screen-saver directory.  The 
+<a href="screen-save.txt">explanatory note</a> contains a page of
+information about using the screen-save menu and adapting it to your
+own preferences.
+
+<p>Note, some useful adaptions can be made simply by supplying
+  parameters to the <strong>screen-save</strong> invocation.  See
+  comments near the beginning of its <a href="screen-save">code</a>.
+  For example, the pictures for this web page have titles
+  like <CODE>eg-ss-10.jpg, eg-ss-11.jpg,</CODE> and so forth.  These
+  pictures were saved using a <strong>screen-save</strong> menu that
+  was started by the command, "<CODE>screen-save . eg-ss- 1</CODE>",
+  which saves pictures in current directory, gives them a prefix of
+  "eg-ss-", and numbers them with an interval of 1.
+</p>
+
+<p>Note, the <strong>screen-save</strong> menu uses the
+ <strong>screen-save</strong> script recursively to do different
+ imports, supplying a fourth parameter to control what the script
+ does.  For a simpler example and brief explanation of this technique,
+ please see the closing paragraphs of the discussion of
+ <a href="#play-sound-delay"><strong>play-sound-delay</strong></a>.
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=svn-buttons>
+<h3>svn-buttons : SVN utility aid</h3></A>
+<img src=eg-ss-38.jpg>
+<br>Link to <a href="../examples/svn-buttons">code</a>
+<br>Link to <a href="../examples/svn-buttons.txt">explanatory note</a>
+<br><strong>svn-buttons</strong> makes a yume menu with buttons to
+execute various svn commands. 
+<p>Commands for the Subversion version control system typically have
+the form "<code>svn V F</code>" where V is a verb and F is a filelist.
+Examples: "<code>svn log myfile.c</code>" and "<code>svn cat
+myfile.c</code>"
+</p>
+<p>Several commands have the form "<code>svn V</code>"; for example,
+"<code>svn status</code>" and "<code>svn update</code>".
+</p>
+<p>To tell the menu where your svn-versioned files are located, type the
+directory name into the "Directory D:" textbox.  (This will set
+environment variable D within yume's environment.)  The path you type
+into the textbox should be relative to the path shown on the line above
+it.  (The screen-shot path has been blurred out.)
+</p>
+<p>To tell the menu the filelist that commands should apply to, type the
+filenames into the "File list F:" textbox. 
+</p>
+<p>To execute an svn command with the verb add, proplist, status,
+update, info, log, diff, cat, list, or commit, click the
+correspondingly-named button.  Then svn will apply the verb to your
+specified filelist.
+</p>
+<p>As you can see in the <a href="svn-buttons"> 
+<strong>svn-buttons</strong> code</a>, the  "<code>Props-id $F</code>"
+button will run the command sequence 
+<pre> cd $D; svn propset svn:keywords "Date Id" $F</pre> which will
+tell svn to enable expansion of $Date$ and $Id$ sequences within the
+specified files.
+</p>
+<p>The  "<code>ls -l $F</code>" button will run the command sequence 
+<pre> cd $D; ls -l $F</pre> which will show directory details of the
+files in the filelist.
+</p>
+<p>The Subversion system comes with help files that can be accessed by
+  commands of the form "<code>svn help V</code>", where V is an svn
+  verb or an svn help topic.  To display help text on the console
+  where you ran <strong>svn-buttons</strong>, put the topic name in
+  the "Help Topic:" textbox and click the "Help Topic:" button.
+</p>
+<p>See <a href="svn-buttons.txt">explanatory note</a> for further
+comments, if you don't want <code>EDIT=emacs</code> when an svn commit
+is done.  (EDIT controls the editor that svn invokes for the user to
+record comments upon commit.)
+</p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=test-y-1>
+<h3>test-y-1 : Otherly-labeled "exit" button</h3></A>
+<img src=eg-ss-39.jpg>
+<img src=eg-ss-40.jpg>
+<br>Link to <a href="../examples/test-y-1">code</a>
+<br><strong>test-y-1</strong> contains two yume commands to create two
+nearly-equivalent menus as illustrated above.  These menus are nothing
+special but are part of an informal yume regression-test suite.
+<p>Note, however, sequences like "<code>-la 'Bye-bye' -ex</code>" to
+apply a label other than "exit" to an exit button.
+</p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=test-y-2>
+<h3>test-y-2 : <strong>%+</strong> metacommand</h3></A>
+<img src=eg-ss-41.jpg>
+<br>Link to <a href="../examples/test-y-2">code</a>
+<br><strong>test-y-2</strong> contains a yume command to create a menu
+as illustrated above.  The command string associated with the
+"<strong>d+du</strong>" button is "<strong>%+date;du .</strong>",
+which first exits yume, then displays the date on the console, then
+displays the result of "<strong>du .</strong>" on the console.  The
+command string behind the other button is similar, with "<strong>df
+.</strong>" in place of "<strong>du .</strong>".
+</p>
+
+<p> Note, the menu goes away if either button is used.
+</p>
+
+<p>Other meta-mode examples include 
+ <A href=#date-of-file>date-of-file</a>, <A href=#test-y-4>test-y-4</a>,
+ and <A href=#xterms-w-sh>xterms-w-sh</a>.
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=test-y-4>
+<h3>test-y-4 : Special-purpose xterms; <strong>%:</strong> and <strong>%-</strong> metacommands</h3></A>
+<img src=eg-ss-42.jpg>
+<br>Link to <a href="../examples/test-y-4">code</a>
+<br><strong>test-y-4</strong> contains a yume command to create a menu
+as illustrated above (at 3/4 scale).  The command in the top textbox
+creates an xterm, displays a three-month calendar and current date and
+variable M in it, then sets M and starts a shell.
+</p>
+<p>In like manner, one can create xterms set up for particular purposes.
+</p>
+<p> The other textboxes create equivalent xterms, aside from not
+  showing or setting M.  The command beginning
+  with <strong>%:</strong> is executed by invoking /usr/bin/xterm
+  (within a forked copy of yume) directly rather than invoking /bin/sh
+  (within a forked copy of yume) to invoke xterm.  The command
+  beginning with <strong>%-</strong> invokes /usr/bin/xterm directly
+  from yume, without forking.  Hence the yume menu disappears when the
+  xterm opens in response to that command.
+</p>
+
+<p>Other meta-mode examples include 
+ <A href=#date-of-file>date-of-file</a>, <A href=#test-y-2>test-y-2</a>,
+ and <A href=#xterms-w-sh>xterms-w-sh</a>.
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=test-y-5>
+<h3>test-y-5 : Different-colored buttons example</h3></A>
+<img src=eg-ss-43.jpg>
+<br>Link to <a href="../examples/test-y-5">code</a>
+<br><strong>test-y-5</strong> contains a yume command illustrating use
+of the <code>-de gtkrc</code> option switch to select a particular
+gtkrc file, and in that file, setting the colors that will be used for
+buttons in a yume menu.  The commands within this menu are not
+particularly useful or interesting, but merely serve to populate a
+menu so that button colors can be observed.
+
+<p> A particular gtkrc file is selected by a yume option of the
+following form: <code>-de gtkrc:nameoffile</code> .  For example,
+test-y-5 says:
+<pre> yume ...  -de gtkrc:./yume3-gtkrc-5A ...</pre></p>
+
+<p> Note, if your home directory contains file <code>
+.yume-gtkrc </code>, settings from that file normally are processed
+by gtk_init() before settings from a -de specified gtkrc file are
+processed.  You can suppress processing of <code>
+~/.yume-gtkrc </code> via: <code>-de nogtkrc </code>.  The nogtkrc
+flag does not suppress files mentioned by <code>-de gtkrc:</code> ,
+however.
+</p>
+
+<p> In the gtkrc file, foreground and background colors can be
+specified for various widgets in various states.  For example, the EE
+buttons' normal font color and background color in this example are
+given by:
+<pre>
+   style "y3ee"	= "y3m" { fg[NORMAL] = "blue"
+                          bg[NORMAL] = "YellowGreen" }
+</pre>
+Style y3m, found at the beginning of yume3-gtkrc-5A, defines a
+base-level color scheme for yume buttons.  Styles for specific
+buttons can override whatever the user wants to be different from the
+base-level scheme, in this case normal-status text color and button
+background color.
+</p>
+
+<p>In this example, the topmost EE button has been clicked.  Thus,
+that EE button is in Active state (for which, bg[ACTIVE] is "tan",
+from y3m style), rather than Normal.  When an EE button is Active, its
+associated do: button is named "y3dr" (for which, bg[NORMAL] is
+"red2") rather than "y3dp" (for which, bg[NORMAL] is "blue", from y3m
+style).  When the screenshot was taken, the mouse was over the large
+'Bye-bye' button, which is sky-blue because y3m specified
+bg[PRELIGHT]="SkyBlue".
+</p>
+<p>Note, the top three rows in this menu are -do groups in -dl form.
+The middle two lines and the last line are ordinary -bu buttons.  The
+"Item A"..."Item D" elements are from -iv shell-variable items.
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=test-y-6>
+<h3>test-y-6 : Single-, Double-, and Backslash Quoting examples</h3></A>
+<img src=eg-ss-44.jpg>
+<br>Link to <a href="../examples/test-y-6">code</a>
+<br><strong>test-y-6</strong> contains a yume command illustrating
+some elementary usage of double quotes, single quotes, and 
+backslash quoting.
+
+<p> The first and last commands in the menu each produce the same two
+error messages:
+<pre>   /bin/bash: -c: line 0: unexpected EOF while looking for matching `''
+   /bin/bash: -c: line 1: syntax error: unexpected end of file</pre>
+
+(on a Linux system with /bin/sh linked to /bin/bash).  
+</p>
+
+<p><small>These error messages are mentioned in the "Dealing with
+ errors in shell commands" subsection of the "DIAGNOSTICS, WARNINGS,
+ CAVEATS" section of yume(1).  The "file" referred to in the error
+ messages is just the command string that yume passed to /bin/sh.
+</p>
+
+<p>In unquoted shell strings, backslash is an escape character that
+ quotes the character after it.  When it appears within a quoted
+ string, backslash most commonly is treated as a literal character:
+ always literal within a string quoted by single-quotes, else literal
+ unless next character is "$", "\", or "`" and sometimes "!".  See
+ sh(1).)  Thus, in the two commands with errors, the first
+ single-quote matches the one just after the backslash.  The text from
+ there to end of line isn't quoted text.  The single-quote at end of
+ line begins a new section of quoted text, so sh begins looking for a
+ matching single-quote; but as nothing follows, errors occur.</small>
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=um1>
+<h3>um1 : Open URL in Netscape example</h3></A>
+<img src=eg-ss-45.jpg>
+<br>Link to <a href="../examples/um1">code</a>
+<br>Link to <a href="../examples/um1.txt">explanatory note</a>
+<br><strong>um1</strong> illustrates yume menu buttons that open
+specific URL's in Netscape.
+<hr><A href=#>Return to top</a>
+</LI>
+
+
+<hr><LI><A name=um2>
+<h3>um2 : Open URL in Firefox example</h3></A>
+<img src=eg-ss-46.jpg>
+<br>Link to <a href="../examples/um2">code</a>
+<br>Link to <a href="../examples/um2.txt">explanatory note</a>
+<br><strong>um2</strong> illustrates yume menu buttons that open
+specific URL's in Firefox.
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=um3>
+<h3>um3 : xterm cal -3, cdplay, eject examples</h3></A>
+<img src=eg-ss-47.jpg>
+<img src=eg-ss-48.jpg>
+<br>Link to <a href="../examples/um3">code</a>
+<br>Link to <a href="../examples/um3.txt">explanatory note</a>
+<br><strong>um3</strong> illustrates yume menu buttons that display a
+three-month calendar in large print (the screenshot is shown
+half-scale), and that start cdplay or eject disk from /dev/cdrom.
+</p>
+
+<p>Note, for further xterm examples, please see <A href=#test-y-4><strong>test-y-4</strong></a>.
+</p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=um4>
+<h3>um4 : xclip + firefox examples</h3></A>
+<img src=eg-ss-49.jpg>
+<br>Link to <a href="../examples/um4">code</a>
+<br>Link to <a href="../examples/um4.txt">explanatory note</a>
+<br><strong>um4</strong> illustrates use of xclip for opening
+clipped URL's or auction numbers.  That is, if you drop a URL string
+on the middle button, the button's command sequence will get the
+string using xclip; make the URL into a single line, via tr; and then
+open the resulting URL in Firefox.  If you drop an ebay auction number
+on the right button, the button's command sequence will form a URL to
+open that auction's webpage in Firefox.
+
+<p>In the above, "drop string on button" means: Left click the button
+  after highlighting or selecting a string of text in some window.
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=um5>
+<h3>um5 : H:M:S, dc, and factor examples</h3></A>
+<img src=eg-ss-50.jpg>
+<br>Link to <a href="../examples/um5">code</a>
+<br>Link to <a href="../examples/um5.txt">explanatory note</a>
+<br><strong>um5</strong> illustrates use of xclip together with dc and
+factor for simple computations on selected numbers.
+ 
+<p> Per <a href="um5.txt"> note</a>: "um5's HMS button gets a number
+ (of seconds) from the clipboard, via "xclip -o".  It displays the
+ number of minutes, hours, or days that the number equals.  um5's
+ Factor button gets a number (or numbers) from the clipboard, via
+ "xclip -o".  It displays the factors of the number(s)."
+</p>
+
+<p>
+For example, if you select text 12000 and click HMS, the following
+will display:
+<pre>    12000 seconds = 200.0 minutes = 3.33 hours = .13 days</pre>
+or if you click Factor,
+<pre>    12000: 2 2 2 2 2 3 5 5 5</pre>
+The <a href="um5.txt"> note</a> shows some more examples.
+</p>
+
+dc is a reverse-polish arbitrary precision calculator.  The H:M:S
+script embeds four dc command sequences within
+<pre>    echo "$S seconds = `$D"60 1$E"` minutes = `$D"3600 2$E"` hours = `$D"86400 2$E"` days"'</pre>
+
+where E="k${S}r/p" and D="/usr/bin/dc -e ".  In the example with
+S=12000, the first dc calculation <pre>    `$D"60 1$E"`</pre> expands to
+
+<pre>    /usr/bin/dc -e "60 1k12000r/p</pre>
+
+which pushes 60; pushes 1; k pops 1 and sets precision to 1 digit;
+pushes 12000; r reverses 60 and 12000; / divides 12000 by 60; p prints
+result, 200.0.  And so forth.
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=um6>
+<h3>um6 : xclip + host, whois, dig example</h3></A>
+<img src=eg-ss-51.jpg>
+<br>Link to <a href="../examples/um6">code</a>
+<br>Link to <a href="../examples/um6.txt">explanatory note</a>
+<br><strong>um6</strong> illustrates use of xclip together with host,
+whois, and dig.
+<p> Per <a href="um6.txt"> note</a>: "When you drop an IP number or
+ internet machine name on the Host/Whois/Dig button, the script puts
+ the IP number into shell variable IP, then in turn invokes host,
+ whois, and dig to get data about the IP number.  Output from each
+ command is filtered by grep -v commands, to suppress some
+ uninteresting, repetitive stuff." </p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=url-and-misc>
+<h3>url-and-misc : um1-um6 composite example</h3></A>
+<img src=eg-ss-52.jpg>
+<br>Link to <a href="../examples/url-and-misc">code</a>
+<br>Link to <a href="../examples/url-and-misc.txt">explanatory note</a>
+<br>Per <a href="url-and-misc.txt"> note</a>: "<strong>url-and-misc</strong>  contains several commands, to illustrate that a wide
+variety of operations can be included in a single menu.
+
+For ease of viewing, the buttons of this menu are also broken out into
+separate files, um1 ... um6, with a Note file for each."
+
+<br>um1: 'NS paypal' and 'NS ebay-seller' buttons -- open web pages in netscape
+<br>um2: 'FF ebay-seller' and 'FF KLVM-weather' -- open web pages in firefox
+<br>um3: 'Cal3', cdplay, eject -- use right size of xterm for display
+<br>um4: 'Clip url -> FF', 'Ebay# -> FF' -- Drop URL or Ebay# on a button
+<br>um5: 'HMS' and 'Factor' buttons -- Drop number on button, get results
+<br>um6: 'Host/Whois/Dig' button -- Drop IP number on button, get results
+
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=wordexp-vals>
+<h3>wordexp-vals :  Shell Special
+ Parameter expressions example</h3></A>
+<img src=eg-ss-53.jpg>
+<br>Link to <a href="../examples/wordexp-vals">code</a>
+<p><strong>wordexp-vals</strong> illustrates use of shell Special
+ Parameter expressions $@, $*, $#, $?, $-, $$, $!, and $0 with yume.
+ If your menus do not use any of these expressions, this example will
+ not be relevant.
+</p>
+
+<p>Some parts of the following discussion require familiarity with the
+ "Special Parameters" subsection of the "PARAMETERS" section of sh(1).
+</p>
+
+<p><strong>wordexp-vals</strong> contains a yume command
+ like <code>yume -in wordexp-in</code>, where <code>wordexp-in</code>
+ is a file with yume-parameter entries to make a menu as above (shown
+ 2/3 scale).  For each of the seven shell special parameter
+ expressions $*, $#, $?, $-, $$, $!, and $0, <code>wordexp-in</code>
+ contains a variant of the sequence
+<pre>   -bu '%%echo Cash Zero is $0' "%%echo Cash Zero is $0"</pre>
+ with appropriate substitutions for each special parameter other than $0.
+</p>
+
+<p>Thus, the menu contains seven lines with a pair of buttons on each
+ line and each button label is the same as the command string it
+ executes.  For each left button, the button's command is
+ single-quoted (so the special parameter expands at button run time
+ rather than yume run time), while for each righthand button, the
+ button's command is double-quoted (so the special parameter expands
+ only at yume run time).  The menu also has a one-button line for $@
+ and an exit button.
+</p>
+
+<p>For $0, the left button will display [if /bin/sh is
+ linked to /bin/bash] 
+ <pre>   Y3:  echo Cash Zero is $0
+   Cash Zero is /bin/bash</pre>
+ while the  righthand button will display 
+ <pre>   Y4: echo Cash Zero is yume
+   Cash Zero is yume</pre>
+
+ As noted in yume(1) and yume-meta(1), the <strong>%%</strong> meta-mode
+ tells <strong>yume</strong> to print button's command on stdout each
+ time before the command is executed.  The number between "Y" and ":"
+ is the internal data structures index number of the button's command.
+</p>
+
+<p>This example is less complete than it should be, as it doesn't
+ illustrate button-run-time differences between single- and
+ double-quoted instances of $* and $@, nor does it illustrate values
+ when <strong>%-</strong> or <strong>%:</strong> meta-mode is used.  In these non-shell meta-mode cases,
+ wordexp [see wordexp(3)] is used to expand shell variables before
+ command invocation.  
+</p>
+
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=xterms-w-sh>
+<h3>xterms-w-sh : More meta-mode examples</h3></A>
+<img src=eg-ss-54.jpg>
+<br>Link to <a href="../examples/xterms-w-sh">code</a>
+<p>The menu presented by <strong>xterms-w-sh</strong> contains
+<code>do:</code> blocks with commands like those shown
+in <A href=#test-y-4>test-y-4</a>.  Some differences between these
+examples are:
+<ul>
+<li> <strong>xterms-w-sh</strong> turns on ShoMode =
+  ShoAddObj+ShoWExp, which causes menu objects to be listed on stdout
+  as they are added to internal data structures, and causes parameter
+  expansions to be listed whenever wordexp [see wordexp(3)] is called,
+  as will happen for the <strong>%:</strong> meta-mode commands.
+<li> Xterms opened by <strong>xterms-w-sh</strong> use default fonts,
+  colors, and sizes, rather than specified fonts and colors as
+  in <A href=#test-y-4>test-y-4</a>.
+</ul>
+ Note, command strings that begin with meta-mode <strong>%-</strong>
+ or <strong>%+</strong> <em>terminate the yume menu</em> when they execute.
+</p>
+
+<p>Other meta-mode examples include 
+ <A href=#date-of-file>date-of-file</a>,
+ <A href=#test-y-2>test-y-2</a>, and <A href=#test-y-4>test-y-4</a>.
+</p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<hr><LI><A name=yume-examples>
+<h3>yume-examples :  Small menu to start example-starter4</h3></A>
+<img src=eg-ss-55.jpg>
+<br>Link to <a href="../examples/yume-examples">code</a>
+<br>Link to <a href="../examples/yume-examples.txt">explanatory note</a>
+<br><strong>yume-examples</strong> makes a yume menu with an exit
+button and a button labeled "Show list of yume examples" -- a button
+that runs <A href=#example-starter4>example-starter4</a>.
+<p>A primary reason for <strong>yume-examples</strong> existing is to
+  allow running examples without needing to cd
+  to <strong>yume</strong>'s <strong>examples/</strong> before
+  starting an example-starter.  Start <strong>yume-examples</strong>
+  via a command like <pre> yume-examples yume/examples/</pre> -- that
+  is, use a parameter to specify the location of <strong>examples/</strong>.
+</p>
+<hr><A href=#>Return to top</a>
+</LI>
+
+<!--end of list of examples-->
+</UL> 
+</body>
+</html>
+<p>
+</p>
+<p>
+<pre></pre>
+<code></code>

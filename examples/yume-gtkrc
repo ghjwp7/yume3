@@ -1,5 +1,8 @@
-# yume3 theme, take 1
-# $Id: yume2-gtkrc,v 1.2 2011/02/19 22:39:59 j-waldby Exp j-waldby $
+# yume-gtkrc is a sample gtk theme file for yume3.  As a base it sets
+# up black text on skyblue background for buttons, a slightly lighter
+# blue for current button, and red text for active button, in a fairly
+# calm color scheme.  For a brighter theme, see yume-gtkrc-2.  Note,
+# in yume's manpage see section "-de valpair : (1) label-colors".
 
 style "y3b" {
   xthickness = 0
@@ -11,28 +14,29 @@ style "y3b" {
 style "y3a" {
   bg[NORMAL]	= "#8888ff"    fg[NORMAL]	= "white"
   bg[PRELIGHT]	= "#cc88ff"    fg[PRELIGHT]	= "white"
-  bg[ACTIVE]	= "#8855ee"   fg[ACTIVE]	= "red"
+  bg[ACTIVE]	= "#8855ee"    fg[ACTIVE]	= "red"
 }
 
-style "y3bb"	= "y3b"	{ }
-style "y3ba"	= "y3a" { }
-style "y3db"	= "y3b" { }
-style "y3da"	= "y3a" { }
-style "y3eb"	= "y3b" { }
-style "y3ea"	= "y3a" { }
-style "y3fb"	= "y3b"	{ }
-style "y3fa"	= "y3a" { }
-style "y3gb"	= "y3b"	{ }
-style "y3ga"	= "y3a" { }
-style "y3hb"	= "y3b"	{ }
-style "y3ha"	= "y3a" { }
-style "y3ib"	= "y3b" { }
-style "y3ia"	= "y3a" { }
-style "y3xb"	= "y3b" { }
-style "y3xa"	= "y3a" { }
-style "y3td"	= "y3b" { }
-style "y3tv"	= "y3b" { }
-style "y3vb"	= "y3b" { }
+style "y3db"	= "y3b" { }     # do: click button style 
+style "y3da"	= "y3a" { }     # Do: roll button style
+style "y3bb"	= "y3db" { }    # bu click button style
+style "y3ba"	= "y3da" { }    # bu roll button style
+style "y3eb"	= "y3db" { }    # EE click button style
+style "y3ea"	= "y3da" { }    # EE roll button style
+style "y3fb"	= "y3db" { }    # fixed click button style
+style "y3fa"	= "y3da" { }    # fixed roll button style
+style "y3gb"	= "y3db" { }    # general click button style
+style "y3ga"	= "y3da" { }    # general roll button style
+style "y3hb"	= "y3db" { }    # hidden click button style
+style "y3ha"	= "y3da" { }    # hidden roll button style
+
+style "y3ib"	= "y3db" { }    # iv click button style
+style "y3ia"	= "y3da" { }    # iv roll button style
+style "y3xb"	= "y3db" { }    # exit click button style
+style "y3xa"	= "y3da" { }    # exit roll button style
+style "y3td"	= "y3da" { }    # do: text field style
+style "y3tv"	= "y3da" { }    # iv text field style
+style "y3vb"	= "y3da" { }    # vbox field style
 
 class "GtkWidget" style "y3b"
 
