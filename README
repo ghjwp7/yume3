@@ -32,7 +32,8 @@ cursor crosses it.
 
 For more examples, cd to the yume3/examples directory after you make
 yume, and enter the command ./yume-examples.  Also, see man yume and
-man yume-examples.
+man yume-examples.  The /web subdirectory includes HTML and pdf
+versions of screen-shots of most yume-examples scripts.
 
 - jiw, January 2018
 
