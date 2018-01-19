@@ -1,5 +1,3 @@
-$Id: README  2011-03-15  $
-
 yume is a menu system with user-editable, mouse-activated shell
 commands.  It creates and runs a menu based on user-provided
 arguments. The current version, yume3, is Gtk-based, while a previous
