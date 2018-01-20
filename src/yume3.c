@@ -70,6 +70,7 @@ char fpidTitle[fpidTiSize];	// Alternate title of menu window
 //--------Main Program------------------------
 //--------------------------------------------
 int main (int argc, char *argv[]) {
+  // Set targv in case yume3 was called from command line
   char **targv = argv, *pargv, *home;
 
   // Set vv[] to all zeroes
@@ -81,24 +82,40 @@ int main (int argc, char *argv[]) {
   // Default values of Push vs Roll modes for b,d,e,i,x
   vv[VVbb]=vv[VVdb]=vv[VVeb]=vv[VVib]=vv[VVxb]=1;
 
-  if (argc<2) {
+  if (argc<1) {			// Do we have at least one argument?
+    fprintf (stderr, "yume3 was miscalled?\n");
+    _exit(0);			// Cannot proceed without any args
+  }
+  FILE *fin;
+  if (argc==1) {		// For one argument, check command vs fork
     enum { debug=0 };
     int argct, argvt, i, L, at=0, t;
-    char *c;
-    t = scanf ("%d %d\n", &argct, &argvt);
-    if (debug) printf ("yume3: argct=%d, argvt=%d, t=%d\n", argct, argvt,t);
-    argc = argct;
-    targv = Ymalloc ((1+argc)*sizeof(char *), __FILE__, __LINE__);
-    pargv = Ymalloc (argvt, __FILE__, __LINE__);
-    for (i=0; i < argc; ++i) {
-      c = fgets (pargv+at, argvt-at, stdin);
-      targv[i] = pargv+at;
-      L = strlen(targv[i]);
-      at += L;
-      pargv[at-1] = 0;
-      if (debug > 1) printf ("yume3: %2d.  L%-2d  <%s>  c:%s\n", i, L, targv[i], c);
+    char *c, *endptr;
+    const long int fid = strtol(argv[0], &endptr, 10); // base 10 conversion
+    
+    // See if argv[0] is simply a number [so we were called by yume3-pipr]
+    if (*argv[0] != '\0' && *endptr == '\0') { // Did strtol get whole string?
+      if (fid == STDIN_FILENO)
+	fin = stdin;		// Read from stdin?
+      else
+	fin = fdopen(fid, "r");	// Read from pipe
+      // First line of input should have 2 numbers, #args & arg-size total
+      t = fscanf (fin, "%d %d\n", &argct, &argvt);
+      if (debug) printf ("yume3: argct=%d, argvt=%d, t=%d\n", argct, argvt,t);
+      // 
+      argc = argct;
+      targv = Ymalloc ((1+argc)*sizeof(char *), __FILE__, __LINE__);
+      pargv = Ymalloc (argvt, __FILE__, __LINE__);
+      for (i=0; i < argc; ++i) {
+	c = fgets (pargv+at, argvt-at, stdin);
+	targv[i] = pargv+at;
+	L = strlen(targv[i]);
+	at += L;
+	pargv[at-1] = 0;
+	if (debug > 1) printf ("yume3: %2d.  L%-2d  <%s>  c:%s\n", i, L, targv[i], c);
+      }
+      if (debug) printf ("yume3: Start Phase I.\n");
     }
-    if (debug) printf ("yume3: Start Phase I.\n");
   }
   y3pid = getpid();
   snprintf (fpidTitle, fpidTiSize, "yume3 %d", y3pid);
