@@ -6,12 +6,17 @@ and an original version (vintage 1997) is Tcl/TK based.
 
 To make yume, see directions in INSTALL.  That file explains how to
 unpack the source files, and how to make yume.  Note, as of January
-2018, the latest yume release is in a git repository on github.  A
-file docs-HTML/yume3-doc-eg02.tgz (ca 465KB) on SourceForge contains a
-web page, eg-overview.html, and about 44 .jpg screen shots of menus
-generated with yume3.  I'll migrate it to github when I learn how.
+2018, the latest yume release is in a git repository on github.
 
-An example:  The input
+The yume3 wiki at <https://github.com/ghjwp7/yume3/wiki> has a "yume
+screen shot examples" page, with links to images, code, and notes
+working ok (but local links not working, due to markdown missing
+anchors).  The wiki also has two versions (at the moment) of the yume
+man page.  [Neither version is formatted as well as a groff-output man
+page, as generated during yume installation.]  A better-formatted man
+page will be put up when available.
+
+An example of use:  The input
 
       yume -bu date ls -ex &
 
