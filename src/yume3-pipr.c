@@ -47,17 +47,14 @@ int main(int argc, char *argv[]) {
     // Child needs to exec yume3, so get its path
     char apath[BSIZ];
     fp = popen("which yume3", "r"); // Run "which yume3" in a shell
-    //fp = popen("which ../bin/yume3", "r"); // Run "which yume3" in a shell
     char *ypath = fgets (apath, BSIZ, fp); // Read results from "which yume3"
-    
+    ypath[strlen(ypath)-1] = 0;		   // Chomp off newline at end of string
     if (!ypath || ferror(fp) || !strstr(ypath,"/yume3")) {
       fprintf (stderr, "Error: yume did not find yume3\n");
       exit (1);
     }
     pclose(fp);			// Done with the popen pipe, close it.
-    char *cpath = "/home/j-waldby/yy/yume3/bin/yume3";   // substitute path for debugging
-    ypath = cpath;		// use the substitute path
-    //fprintf (stderr, "yume found yume3 at %s\n", ypath);
+    //fprintf (stderr, "yume found yume3 at <%s>\n", ypath);
     
     enum { SLEN=11, NLEN=1+SLEN };
     char readfd[NLEN];
@@ -73,7 +70,7 @@ int main(int argc, char *argv[]) {
   close(pipefd[0]);		// Close our pipe read descriptor
 
   // Tell the kid the arguments to yume
-  //fprintf (stderr, "yume3-pipr parent piping %d args, %d chars, to y3\n", argc, parLen);
+  //fprintf (stderr, "yume3-pipr parent piping %d args, %d chars, to y3 for FD %d\n", argc, parLen, pipefd[0]);
   fprintf (fp, "%d\n", argc);	// Number of Y pars
   fprintf (fp, "%d\n", parLen); // Total number of chars in Y pars
   for (i=0; i<argc; ++i) {

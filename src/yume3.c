@@ -88,7 +88,9 @@ int main (int argc, char *argv[]) {
   int i, L, at=0;
   enum { InLen=10 };
   char *c, *endptr, **targv, *pargv, inNum[InLen+1];
+
   
+  //printf ("yume3:    argc=%d,  arg 0=%s,  arg 1=%s\n", argc, argv[0], argv[1]);
   if (argc != 2) startingError(1); // Need exactly 2 arguments
   
   // Our param is fid, the file descriptor for our input pipe or file.
