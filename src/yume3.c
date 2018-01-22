@@ -67,11 +67,14 @@ char *yrcFileName;		// Path to default yume resource file
 enum {fpidTiSize=128};
 char fpidTitle[fpidTiSize];	// Alternate title of menu window
 //--------------------------------------------
+void startingError(int ss) {
+  fprintf (stderr, "Startup error %d:  yume3 was miscalled?\n", ss);
+  _exit(0);
+}
+//--------------------------------------------
 //--------Main Program------------------------
 //--------------------------------------------
 int main (int argc, char *argv[]) {
-  char **targv = argv, *pargv, *home;
-
   // Set vv[] to all zeroes
   memset (vv, 0, VV_VV * sizeof vv[0]);
   // Set non-zeroes in vv[]
@@ -80,33 +83,47 @@ int main (int argc, char *argv[]) {
   vv[VVxys] = 1;		// Default value of XYshow
   // Default values of Push vs Roll modes for b,d,e,i,x
   vv[VVbb]=vv[VVdb]=vv[VVeb]=vv[VVib]=vv[VVxb]=1;
+    
+  FILE *fin;  
+  int i, L, at=0;
+  enum { InLen=10 };
+  char *c, *endptr, **targv, *pargv, inNum[InLen+1];
 
-  if (argc<2) {
-    enum { debug=0 };
-    int argct, argvt, i, L, at=0, t;
-    char *c;
-    t = scanf ("%d %d\n", &argct, &argvt);
-    if (debug) printf ("yume3: argct=%d, argvt=%d, t=%d\n", argct, argvt,t);
-    argc = argct;
-    targv = Ymalloc ((1+argc)*sizeof(char *), __FILE__, __LINE__);
-    pargv = Ymalloc (argvt, __FILE__, __LINE__);
-    for (i=0; i < argc; ++i) {
-      c = fgets (pargv+at, argvt-at, stdin);
-      targv[i] = pargv+at;
-      L = strlen(targv[i]);
-      at += L;
-      pargv[at-1] = 0;
-      if (debug > 1) printf ("yume3: %2d.  L%-2d  <%s>  c:%s\n", i, L, targv[i], c);
-    }
-    if (debug) printf ("yume3: Start Phase I.\n");
+  
+  //printf ("yume3:    argc=%d,  arg 0=%s,  arg 1=%s\n", argc, argv[0], argv[1]);
+  if (argc != 2) startingError(1); // Need exactly 2 arguments
+  
+  // Our param is fid, the file descriptor for our input pipe or file.
+  const long int fid   = strtol(argv[1], &endptr, 10); // 10 = base 10
+  fin = fdopen(fid, "r");	// Read from pipe
+  if (!fin) startingError(2);	// Is pipe ok?
+  // Read numYPars (number of yume params) and totChars (param-sizes total)
+  c = fgets (inNum, InLen, fin);  inNum[InLen] = 0;
+  if (!c) startingError(3);	// Did argct read ok?
+  const long int argct   = strtol(inNum, &endptr, 10);
+  c = fgets (inNum, InLen, fin);  inNum[InLen] = 0;
+  if (!c) startingError(4);	// Did argvt read ok?
+  const long int argvt   = strtol(inNum, &endptr, 10);
+  //printf ("yume3: fid=%ld,  argct=%ld,  argvt=%ld\n", fid, argct, argvt);
+  targv = Ymalloc ((1+argct)*sizeof(char *), __FILE__, __LINE__);
+  pargv = Ymalloc (argvt, __FILE__, __LINE__);
+  for (i=0; i < argct; ++i) {
+    c = fgets (pargv+at, argvt-at, fin);
+    targv[i] = pargv+at;
+    L = strlen(targv[i]);
+    at += L;
+    pargv[at-1] = 0;
+    //printf ("yume3: %2d.  L%-2d  <%s>  c:%s\n", i, L, targv[i], c);
   }
+  //printf ("yume3: Start Phase I.\n");
+
   y3pid = getpid();
   snprintf (fpidTitle, fpidTiSize, "yume3 %d", y3pid);
 
   // Construct paths & names of default resource files
 #define grcDefName "/.yume-gtkrc"
 #define yrcDefName "/.yume-rc"
-  home = getenv("HOME");
+  const char *home = getenv("HOME");
   if (home) {
     grcFileName = Ymalloc (strlen(home) + strlen(grcDefName), __FILE__, __LINE__);
     strcpy (grcFileName, home);
@@ -118,7 +135,7 @@ int main (int argc, char *argv[]) {
     grcFileName = yrcFileName = NULL;
 
   // Phase I.  Build ListItems items[].
-  process_command_options(argc, targv); // Parse parameters of yume
+  process_command_options(argct, targv); // Parse parameters of yume
   if(vv[VVShoMo] & ShoParProc)
     printf ("\nPhase I (process parameters) is done\n");
 

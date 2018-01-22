@@ -212,7 +212,7 @@ int process_option_pair(int parNumber, char *ai, char *aj) {
     case 'l':			// -dl
       startRow (ModeBu, ModeBu, ModeDl); // Enable Bu-Dl line mode
       break;
-    case 'n':			// -ti
+    case 'n':			// -in
       used = need_option (ai, aj, __LINE__); // Need a filename string
       process_option_file(aj, 1); // Read options from file
       break;
