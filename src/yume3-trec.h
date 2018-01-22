@@ -1,4 +1,4 @@
-// File yume3-trec.h, created by ../src/yume3-init.c on Sun Jan 21 21:19:55 2018
+// File yume3-trec.h, created by ../src/yume3-init.c on Mon Jan 22 15:38:56 2018
 
 // In Global Scope...
 const int SpecSiz[] = {2,2,1,1,1,1,1,1,1,1,2,2,1,1,3,3,0,0,};

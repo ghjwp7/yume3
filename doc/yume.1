@@ -1,10 +1,10 @@
 .\" -*- nroff -*-
 .\" yume.1 -- by James Waldby -- 21-22 Feb 2009
-.\" $Id: yume.1,v 1.1 2011/03/30 04:47:29 j-waldby Exp j-waldby $
+.\" $Id: yume.1,v 1.7 2018/01/22 j-waldby $
 .\" Process this file with
 .\" groff -man -Tascii yume.1
 .ds PRS \fB\-at\fP, \fB\-bd\fP, \fB\-bw\fP, \fB\-de\fP, \fB\-in\fP, \fB\-iv\fP, \fB\-la\fP, or \fB\-ti\fP
-.TH yume 1 "$Date: 2011/03/30 04:47:29 $" Linux "User Manuals"
+.TH yume 1 "$Date: 2018/01/22 $" Linux "User Manuals"
 .SH NAME
 .ad l
 yume \- Easy and flexible menu system that lets you encapsulate shell
@@ -773,7 +773,7 @@ optional command will be executed, in the usual yume manner.  The
 command, if given, is specified by a previous \fB\-la\fP parameter.  For
 example, the one-line menu
 .ce 2
-.B yume -la 'echo Pay \$$D to $B' -la Amt -la D -iv 20\(rs
+.B yume -la 'echo Pay \[u005C]\[u0024]\[u0024]D to $B' -la Amt -la D -iv 20\(rs
 .B      -de ia -la Who -la B -iv Sam
 will have buttons labeled Amt and Who, and text fields initialized to
 20 and Sam for shell variables D and B.  If you change the name in the
@@ -823,7 +823,7 @@ examples/svn-buttons was started.
 .IP "\fB\-la\fP txt"
 Push text string txt onto the label stack.  Primarily, \fB\-la\fP is used to
 specify button labels; it is also used to specify shell-variable-name
-and shell-command text for \fB\-iv\fP, as explained later.  Note, to display
+and shell-command text for \fB\-iv\fP, as mentioned above.  Note, to display
 literal character '<' in a label, write '&lt;'.  See "Button label
 text markup" below.
 
@@ -1128,8 +1128,9 @@ This section includes:
 .IP "\[bu] yume's error messages and error exits;"
 .IP "\[bu] how to deal with errors in shell commands in menus;"
 .IP "\[bu] what environment is available to shell commands;"
-.IP "\[bu] yume interaction with "script" command;"
+.IP "\[bu] yume interaction with \"script\" command;"
 .IP "\[bu] visibility of parameter lists;"
+.IP "\[bu] piping a parameter list into yume3;"
 .IP "\[bu] safety and SUID and shell history lists."
 .RE
 .\"------------------------------------------------------------
@@ -1272,36 +1273,49 @@ along with other session activity.
 .\"------------------------------------------------------------
 .IP "Visibility of parameter lists:"
 
-On many multiuser unix systems, parameter lists to processes can be
-viewed by anyone who enters a ps command.  yume uses a startup program
-that runs briefly.  It hands parameters over to yume3 and then exits.
-Parameters to yume usually are visible to ps only for a fraction of a
-second.  (If that is not good enough and the commands of your yume
-menu should be secret at all times, put them into an access-protected
-file and use -in option.)
+Historically, on multiuser unix systems parameter lists to processes
+could be viewed by anyone who entered a ps -f command.  On most unix
+systems that's no longer so; superuser access is required.
 
-More specifically, yume-pipr.c, running as 'yume', (1) accepts
+To minimize parameter visibility, yume is just a startup program that
+runs briefly.  It hands parameters over to yume3 and then exits.
+Parameters to yume usually are visible to ps only for a fraction of a
+second.  If that is not good enough and the commands of your yume menu
+should never be be exposed to ps -f, you can put the commands into an
+access-protected file and use -in option.  With a little more effort,
+it also is possible to put commands into an encrypted file, and pipe
+directly from a decryptor program into yume3.
+
+In more detail:  yume-pipr.c, running as 'yume', (1) accepts
 parameters for yume3, (2) pipes them to yume3, and (3) exits, while
 yume3 continues.  Both yume and yume3 must be executable and on your
 search paths for this startup method to work.
 
-If for some reason you want option parameters to be visible to ps,
-execute yume3 directly with the parameters.  For example, after
-.ce
-.B yume  a b c d
-ps will show yume3 running with no parameters, and after
-.ce
-.B yume3  a b c d &
-ps will show yume3 running with 4 parameters, a b c d.
+.\"------------------------------------------------------------
+.IP "Piping a parameter list into yume3:"
 
 All of the scripts in the examples/ directory invoke yume via a shell
-variable called YUME.  You can make all the examples run yume3 instead
-of yume by (in examples/):
+variable called YUME.  With pre-2018.01.22 yume versions, yume3 read
+parameters from stdin.  Thus one could make all the examples run yume3
+(instead of yume) by cd'ing to examples and entering the following
+command to run yume-examples:
 .ce
 .B YUME="yume3" ./yume-examples
-or can turn on -Y display options by, for example,
+or one could turn on -Y display options for any examples run by saying:
 .ce
 .B YUME="yume -Y4" ./yume-examples
+
+With current versions of yume, yume3 is given a file descriptor to use
+when reading parameters.  That FD is the sole parameter to yume3.
+Also, yume3 now requires a parameter count and an upper bound on total
+parameter size, given as the first two lines of input from the pipe.
+The current set of examples does not cover direct input to yume3.
+Here is a trivial example, where we suppose paramFile is a file of
+less than 400 characters, containing 7 parameters to yume, and file
+7400 has two lines, containing 7 and 400 respectively:
+.ce
+.B cat 7400 paramFile | yume3 0
+Note, FD 0 (corresponding to stdin) tells yume3 to read stdin.
 
 .\"------------------------------------------------------------
 .IP "Safety and SUID and shell history lists:"
