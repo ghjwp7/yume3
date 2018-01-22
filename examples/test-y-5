@@ -10,7 +10,7 @@
 # yume example of changing button colors by
 # selecting alternate gtkrc file.
 $YUME -at 300x260+0+640\
- -dl date \
+ -dl 'date; ps -f' \
  -do -dl "df ."\
  -do -dl ls -bu date \
  -la 'Bye-bye' -ex  -de gtkrc:./yume3-gtkrc-5A  \
