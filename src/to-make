@@ -1,0 +1,2 @@
+#!/bin/sh
+yume -ti mita -bu 'echo;echo;date;make;echo;echo' -bu -ex
