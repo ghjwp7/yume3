@@ -19,7 +19,7 @@ YUTI = $(S)/yume3-util.h $(S)/yume3-init.c $(TRE)
 OBJECTS=$(B)/yume3.o $(B)/yume3-p1.o $(B)/yume3-p2.o \
 	$(B)/yume3-p3.o $(B)/yume3-util.o
 
-all:  $(B)/yume $(B)/yume3 $(HOME)/.yume-gtkrc
+all:  $(B)/yume $(B)/yume3 $(HOME)/.yume-gtkrc pdfs
 
 init: $(B)/yume3-init $(TRE)
 
@@ -28,6 +28,13 @@ $(B)/yume3-init: $(S)/yume3-init.c
 
 $(TRE): $(B)/yume3-init
 	$(B)/yume3-init
+
+pdfs:   $(D)/yume.1  $(D)/yume-examples.1
+	man -l -t $(D)/yume.1 > yume.1.ps
+	ps2pdf yume.1.ps
+	man -l -t $(D)/yume-examples.1 > yume-examples.1.ps
+	ps2pdf yume-examples.1.ps
+	rm yume*.1.ps
 
 # "install" not yet tested on other systems.
 install: $(B)/yume
