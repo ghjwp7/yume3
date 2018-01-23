@@ -7,15 +7,17 @@ and an original version (vintage 1997) is Tcl/TK based.
 To make yume, see directions in INSTALL.  That file explains how to
 unpack the source files, and how to make yume.  Note, as of January
 2018, the latest yume release is in a git repository on github.
+Briefly, after cloning the repository, `cd yume3`, then for typical
+linux systems, `make` and `sudo make install`.  The INSTALL file tells
+(generally) how to get Gtk libraries if not already on-system, and
+where `make install` puts linked binaries and man pages.
 
 The yume3 wiki at <https://github.com/ghjwp7/yume3/wiki> has a "yume
 screen shot examples" page, with links to images, code, and notes
-working ok.  The wiki also has two versions (at the moment) of the yume
-man page.  [Neither version is formatted as well as a groff-output man
-page, as generated during yume installation.]  A better-formatted man
-page will be put up when available.
+working ok.  The wiki also has links for PDF files with man pages for
+yume and yume-examples.
 
-An example of use:  The input
+Here is an example using yume:  The input
 
       yume -bu date ls -ex &
 
