@@ -41,7 +41,8 @@ int main(int argc, char *argv[]) {
   //fprintf (stderr, "yume to tell yume3 %d args with %d chars\n", argc, parLen);
 
   //-----------------------------------------------------------------
-  if (cpid == 0) {		// Select code for child
+  //-----------------------------------------------------------------
+  if (cpid == 0) {		// Running child code if cpid is zero
     close(pipefd[1]);		// Close our pipe write descriptor
     
     // Child needs to exec yume3, so get its path
@@ -59,11 +60,14 @@ int main(int argc, char *argv[]) {
     enum { SLEN=11, NLEN=1+SLEN };
     char readfd[NLEN];
     extern char **environ;
-    snprintf (readfd,   SLEN, "%d", pipefd[0]); readfd[SLEN]=0;
+    snprintf (readfd,   SLEN, "%d", pipefd[0]);
+    readfd[SLEN]=0;
 
+    // Now child starts yume3 running
     //    binary   par0   par1   EOP   environment
     execle(ypath, ypath, readfd, NULL, environ);
   }
+  //-----------------------------------------------------------------
   //-----------------------------------------------------------------
   // Code for parent
   fp = fdopen(pipefd[1], "w");	// Open file on our pipe write descriptor

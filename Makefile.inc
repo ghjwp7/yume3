@@ -26,7 +26,7 @@ OBJECTS=$(B)/yume3.o $(B)/yume3-p1.o $(B)/yume3-p2.o \
 
 PDFS=$(D)/yume.1.pdf $(D)/yume-examples.1.pdf
 
-all:  $(B)/yume $(B)/yume3 $(HOME)/.yume-gtkrc $(PDFS)
+all:  $(B)/yume3-init $(B)/yume $(B)/yume3 $(HOME)/.yume-gtkrc $(PDFS)
 
 init: $(B)/yume3-init $(TRE)
 
@@ -35,6 +35,7 @@ $(B)/yume3-init: $(S)/yume3-init.c
 
 $(TRE): $(B)/yume3-init
 	$(B)/yume3-init
+	test -d src && mv yume3-tre*h src
 
 $(D)/yume.1.pdf: $(D)/yume.1
 	man -l -t $(D)/yume.1 > t.ps
@@ -63,7 +64,7 @@ man-page:
 $(HOME)/.yume-gtkrc: $(E)/yume-gtkrc
 	install $(E)/yume-gtkrc $(HOME)/.yume-gtkrc
 
-$(B)/yume3: $(OBJECTS)
+$(B)/yume3: $(TRE) $(OBJECTS)
 	$(CC) $(YOPTS) $(OBJECTS) -o $(B)/yume3 $(LIBS)
 
 $(B)/yume3.o: $(S)/yume3.c $(S)/yume3.h $(S)/yume3-p1.h $(S)/yume3-p2.h $(S)/yume3-p3.h $(YUTI)
@@ -86,3 +87,6 @@ $(B)/yume: $(S)/yume3-pipr.c
 
 clean: 
 	rm -f $(B)/*.o
+	rm -f $(B)/yume3-init
+	rm -f $(S)/yume3-tre*
+
