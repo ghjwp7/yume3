@@ -2,6 +2,9 @@
 yume
 yume3
 yume3-init
+yume3-trec.h
+yume3-treh.h
 *.tgz
 !README-c-src-tgz
 t.*
+t1-*

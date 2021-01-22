@@ -263,9 +263,9 @@ int main(int argc, char *argv[]) {
   }
 
   // Put creation dates into treh & trec
-  fprintf (fco, "// File %s, created by %s on %s\n",
+  fprintf (fco, "// This is a generated file - don't edit it manually; don't archive it\n// File %s, created by %s on %s\n",
 	   trec, __FILE__, filetime);
-  fprintf (feo, "// File %s, created by %s on %s\n",
+  fprintf (feo, "// This is a generated file - don't edit it manually; don't archive it\n// File %s, created by %s on %s\n",
 	   treh, __FILE__, filetime);
 
   // Get loop to control left side debugs.  [Obsolete: roop for right side]
