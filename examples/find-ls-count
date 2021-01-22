@@ -11,8 +11,17 @@
 [ "$YUME" ] || YUME=$(which yume)
 
 D=`pwd`
+cat<<EOF
+
+$0 has several "ls" commands with options, that execute when 
+you click the corresponding button.
+
+Note, when you click "Find clip name" the current clipboard
+selection is used as a name to grep for in "find" output.
+
+EOF
 $YUME -at 100x400+77+7 \
- -bu -la 'Find filename' \
+ -bu -la 'Find clip name' \
     "V=\`xclip -o\`; echo \"Finding \$V in $D\"; find . | grep \$V" \
  -bu 'ls -lR'  \
  -bu 'ls -l'  \

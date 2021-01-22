@@ -1,5 +1,5 @@
 #!/bin/sh
-#$Id: lac 7 2009-02-25 15:19:11Z j-waldby $
+#$Id: lac 7 2009-02-25 15:19:11Z j-waldby $ - jiw rev. 3 Apr 2020
 
 # Start yume with latest .c file from current dir
 [ "$YUME" ]  || YUME=$(which yume)
@@ -29,7 +29,12 @@ then MATHLIB="-lm"
 else MATHLIB=""
 fi
 
-$YUME "echo;$YGCC $FILE $YOPTS $MATHLIB -o $BASE $*; $BEEP" \
+# If we use some gmp in the code, specify "-lgmp"
+if egrep -qw '<gmp.h>' $FILE ;
+then MATHLIB=${MATHLIB}" -lgmp"
+fi
+
+$YUME "echo;date;$YGCC $FILE $YOPTS $MATHLIB -o $BASE $*; $BEEP" \
     "$YMAKE"  "./$BASE" -ti "$YTITL"\
   -bu -la 'Edit it' "$YEDIT $FILE" \
       -la 'Ls it' 'echo; date; ls -l $BASE*; echo'  -ex &

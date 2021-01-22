@@ -4,7 +4,7 @@
 .\" Process this file with
 .\" groff -man -Tascii yume.1
 .ds PRS \fB\-at\fP, \fB\-bd\fP, \fB\-bw\fP, \fB\-de\fP, \fB\-in\fP, \fB\-iv\fP, \fB\-la\fP, or \fB\-ti\fP
-.TH yume 1 "$Date: 2018/01/22 $" Linux "User Manuals"
+.TH yume 1 "$Date: 2018/11/11 $" Linux "User Manuals"
 .SH NAME
 .ad l
 yume \- Easy and flexible menu system that lets you encapsulate shell
@@ -376,7 +376,10 @@ def buttons, output is fed to t, as you can see after the command
 finishes, or while it is running by clicking the 'cat t to stderr'
 button.  As stderr is not redirected, its output will appear on the
 terminal where the example is started.
+
 .\"------------------------------------------------------------
+.ce
+~~~
 .IP "\fB\-de\fP valpair"
 Decode valpair to override default attribute values.  For example, the
 sequence
@@ -442,7 +445,7 @@ included via \fB\-in\fP option.  Also see example test-y-5 and its
 yume3-gtkrc-5C resource file.
 
 .ce
-Pango markup examples
+\fBPango markup examples\fP
 
 Example:  Create a menu with first button labeled "date" in ordinary
 text, and other button "exit" in big bold text:
@@ -580,7 +583,9 @@ as described earlier in \fB\-at\fP section.
 .IP (7)\ initial-window-properties:
 wIconic, wOnTop, wStick, wUndec ~[flags]~ By default, a yume menu window
 is created with Decorated turned on, and Iconic, Keep-Above, and Stick
-properties turned off.  The defaults can be overridden as follows:
+properties turned off.  You can override those settings either
+manually (typically by right-clicking in a yume menu's title bar), or
+automatically, via the following parameter settings:
 
 \fB\-de wIcon\fP will cause menu to be created iconified, rather than as an
 open window.
@@ -589,11 +594,12 @@ open window.
 
 \fB\-de wStick\fP will cause menu to be visible on all workspaces.
 
-\fB\-de wUndec\fP will cause menu to be created without a window-manager
-frame, as one might want for small menus where decorations (such as
-window manager ops bar) may be larger than the menu itself.  Note, if
-you subsequently need to move or resize an undecorated menu, use a
-window-manager menu.  Eg, on metacity press alt-F7 and arrow keys; see
+\fB\-de wUndec\fP will cause menu to be created without a
+window-manager frame, as one might want for small menus where
+decorations (such as title bar or window management bar) may be larger
+than the menu itself.  Note, if you subsequently need to move or
+resize an undecorated menu, use a window-manager menu.  Eg, on
+metacity press alt-F7 and arrow keys; see
 <http://library.gnome.org/users/gnome-access-guide/stable/keynav-14.html.en>.
 
 .RE
@@ -1067,8 +1073,9 @@ differently than described above; see next section for details.
 A command list that starts with a percent sign (%) is processed in
 "meta-mode", which allows one to control how commands are invoked, and
 allows echoing commands for debugging.  Meta-mode is explained below.
-For an example, please see examples/date-of-file and
-examples/date-of-file.txt.
+For examples, please see files \fBdate-of-file\fP and
+\fBdate-of-file.txt\fP in the \fBexamples/\fP subdirectory of yume
+source.
 
 In this section, "Command" stands for the shell command sequence of a
 .B yume
@@ -1076,15 +1083,15 @@ menu button.  That is, "Command" is the action to be performed when an
 associated button is clicked or activated.  If Command begins begins
 as shown below left, it will act as shown below right.
 .RS
-.IP %%
+.IP "\fB%%\fP"
 Print command on stdout before it is executed
-.IP %#
+.IP "\fB%#\fP"
 Print command on stdout, don't execute.
-.IP %+
+.IP "\fB%+\fP"
 Execute command without forking. (Non-fork)
-.IP "%-"
+.IP "\fB%-\fP"
 Execute command as-is, without forking. (Non-fork, non-SHELL)
-.IP "%:"
+.IP "\fB%:\fP"
 Execute command as-is.  (Non-SHELL)
 .RE
 
@@ -1128,13 +1135,13 @@ This section includes:
 .IP "\[bu] yume's error messages and error exits;"
 .IP "\[bu] how to deal with errors in shell commands in menus;"
 .IP "\[bu] what environment is available to shell commands;"
-.IP "\[bu] yume interaction with \"script\" command;"
+.IP "\[bu] yume interaction with \fBscript\fP command;"
 .IP "\[bu] visibility of parameter lists;"
 .IP "\[bu] piping a parameter list into yume3;"
 .IP "\[bu] safety and SUID and shell history lists."
 .RE
 .\"------------------------------------------------------------
-.IP "yume's error messages and error exits:"
+.IP "\fByume's error messages and error exits:\fP"
 
 Messages as listed below may appear on stderr if any of the following
 errors occur.  This section shows symbolic names for the numbers that
@@ -1194,7 +1201,7 @@ processing leads to a wordexp problem.
 string contains an unrecognized constant name.
 .RE
 .\"------------------------------------------------------------
-.IP "Dealing with errors in shell commands:"
+.IP "\fBDealing with errors in shell commands:"
 
 If your command list is wrong or malformed, you probably will see
 error messages in the window where yume was started.  Some general
@@ -1205,8 +1212,8 @@ Try out the command at a shell prompt
 .IP \[bu]
 Add temporary echo commands to display command text, or preface the
 command list with %% (to echo command list before execution) or %# (to
-echo command list, but not execute it).  (See yume-meta(1),
-examples/date-of-file, and examples/date-of-file.txt.)
+echo command list, but not execute it).  (See yume meta section above,
+or see \fBexamples/date-of-file\fP and \fBexamples/date-of-file.txt\fP.)
 .IP \[bu]
 Or, add \fB\-Y4\fP to the parameter list.  See -Y<d> OPTIONS section.
 .IP \[bu]
@@ -1241,7 +1248,7 @@ alternative character to delimit parameters.
 .\" << explain here more about -Y<d> command for debug use >>
 
 .\"------------------------------------------------------------
-.IP "Environment of menu commands:"
+.IP "\fBEnvironment of menu commands:\fP"
 
 In the usual UNIX scheme of things, parent and child have separate
 environments; the child starts out with a copy of the parent's
@@ -1253,7 +1260,7 @@ in any one of the processes has no effect upon that of the other two.
 yume's -iv value-fields allows you to change variables in yume's
 environment while yume is running.
 .\"------------------------------------------------------------
-.IP "yume and script interaction:"
+.IP "\fByume and script interaction:\fP"
 
 script(1) is a unix command to make a typescript of a terminal
 session.  The sequence
@@ -1271,7 +1278,7 @@ will result in file t not containing the output of commands started
 from the yume menu, although that output will appear on the terminal
 along with other session activity.
 .\"------------------------------------------------------------
-.IP "Visibility of parameter lists:"
+.IP "\fBVisibility of parameter lists:\fP"
 
 Historically, on multiuser unix systems parameter lists to processes
 could be viewed by anyone who entered a ps -f command.  On most unix
@@ -1281,10 +1288,10 @@ To minimize parameter visibility, yume is just a startup program that
 runs briefly.  It hands parameters over to yume3 and then exits.
 Parameters to yume usually are visible to ps only for a fraction of a
 second.  If that is not good enough and the commands of your yume menu
-should never be be exposed to ps -f, you can put the commands into an
-access-protected file and use -in option.  With a little more effort,
-it also is possible to put commands into an encrypted file, and pipe
-directly from a decryptor program into yume3.
+should never be exposed to \fBps -f\fP, you can put the commands into
+an access-protected file and use \fB-in\fP option.  With a little more
+effort, it also is possible to put commands into an encrypted file,
+and pipe directly from a decryptor program into yume3.
 
 In more detail:  yume-pipr.c, running as 'yume', (1) accepts
 parameters for yume3, (2) pipes them to yume3, and (3) exits, while
@@ -1292,7 +1299,7 @@ yume3 continues.  Both yume and yume3 must be executable and on your
 search paths for this startup method to work.
 
 .\"------------------------------------------------------------
-.IP "Piping a parameter list into yume3:"
+.IP "\fBPiping a parameter list into yume3:\fP"
 
 All of the scripts in the examples/ directory invoke yume via a shell
 variable called YUME.  With pre-2018.01.22 yume versions, yume3 read
@@ -1318,7 +1325,7 @@ less than 400 characters, containing 7 parameters to yume, and file
 Note, FD 0 (corresponding to stdin) tells yume3 to read stdin.
 
 .\"------------------------------------------------------------
-.IP "Safety and SUID and shell history lists:"
+.IP "\fBSafety and SUID and shell history lists:\fP"
 
 It is common advice to never use SUID shell scripts (that is, a script
 one user can run with another's uid).  If, against this advice you
@@ -1362,31 +1369,31 @@ email to yume@pat7.com
 .SH FILES
 
 .I INSTALL
-Not needed after yume is installed, this file explains how to install
+-- Not needed after yume is installed, this file explains how to install
 yume and how to obtain libraries that yume uses to draw graphics
 objects.  The INSTALL file distributed with yume2 explains how to
 obtain xforms, while that distributed with yume3 explains how to
 obtain Gtk.
 
 .I ${yumedirectory}/examples/*
-Two dozen examples of yume usage appear in the examples directory of
+-- Two dozen examples of yume usage appear in the examples directory of
 the yume distribution.  See yume-examples(1) for details.
 
 .I $HOME/.yume-rc
-An optional user configuration file for yume default values.  If this
+-- An optional user configuration file for yume default values.  If this
 file exists, it should be a text file containing yume option strings
-to be treated in the same way as an -in file.
+to be treated in the same way as a \fB-in\fP file.
 
 .I yume-rc
-The yume3 distribution may include a file 
+-- The yume3 distribution may include a file 
 'I yume-rc
 containing yume3 option settings.  If so, it lists all configurable
 items, with default values in commented-out lines.  It can be used as
 a prototype for creating your own
-'I $HOME/.yume3-rc.
+'I $HOME/.yume-rc.
 
 .I $HOME/.yume-gtkrc
-An optional user configuration file for Gtk settings.  If this file
+-- An optional user configuration file for Gtk settings.  If this file
 exists, it should be a text file in Gtk resource-file format.
 Distribution includes file
 'I yume-gtkrc
@@ -1398,7 +1405,7 @@ directory and are used by example scripts and explained in .txt files
 in that directory.
 
 .I eg-overview.html
-See webpages <http://yume2.sourceforge.net/examples/eg-overview.html>
+-- See webpages <http://yume2.sourceforge.net/examples/eg-overview.html>
 and <http://yume3.sourceforge.net/examples/eg-overview.html> for
 numerous examples of yume use.
 .\"------------------------------------------------------------
@@ -1424,8 +1431,8 @@ This change to \fB\-iv\fP lets simple menus like
 .ce
 .B yume \fB\-la\fP VVAR \fB\-iv\fP vvarInitialValue \fB\-bu\fP commandUsingVvar
 be given without needing to separately specify a button label.  (The
-\fB\-iv\fP button in this example is labeled VVAR.)  This change probably
-will be back-ported to yume2.
+\fB\-iv\fP button in this example is labeled VVAR.)  This change could
+(but probably will not) be back-ported to yume2.
 
 Hidden-command/general/fixed-command button types: In current release,
 all \fB\-bu\fP buttons are "hidden-command" buttons such that command

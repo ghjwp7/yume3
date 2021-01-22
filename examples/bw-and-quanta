@@ -20,7 +20,7 @@ bwe() {
     shift
     $YUME -at 400x$H+8+$Y -ti "$0 - $T $*"  $*  -in bw-and-quanta.in &
 #   Compute next value of Y
-    Y=`expr $Y + $H + 35`
+    Y=`expr $Y + $H + 110`
 }
 
 # bwe's first argument is incorporated in title, but otherwise not

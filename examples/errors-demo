@@ -1,11 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 #$Id: errors-demo 25 2009-03-13 16:07:51Z j-waldby $
+# Note, need /bin/bash instead of /bin/sh for shift 2
 
 # errors-demo -- Exhibit some error messages
 # (A yume-documentation example)
 [ "$YUME" ] || YUME=$(which yume)
 demo() {
-    E=$1 C=$2 shift 2
+    E=$1
+    C=$2
+    shift 2
     $YUME $*
 # yume is backgrounded; sleep briefly so output is in order.
     sleep 1
@@ -15,6 +18,7 @@ demo() {
     echo
 }
 echo
+echo Starting $0 at $(date) with YUME = $YUME
 echo
 echo This file invokes yume with arguments that should produce some
 echo error messages on stderr, with no menu windows appearing.
@@ -24,9 +28,11 @@ echo
 
 demo ERR_FILE "infinite include with default depth" '-in in-test-7'
 demo ERR_FILE "infinite include with depth limit 567" '-de FStackLim:567 -in in-test-7'
-demo ERR_MISSARG "no geometry string for -at" -at
-demo ERR_GEOM "invalid geometry string" '-at 280x2x20+-0+640'
-demo ERR_WEXP "a -in problem (metachar in wrong place)" "-in $0"
-demo ERR_DECODE "wrong item key" '-de ddRolCol:red'
-demo ERR_DECODE "wrong item value" '-de eOn:nohow'
+demo ERR_MISSARG "no geometry string for -at" '-at'
+demo ERR_GEOM "invalid geometry string"       '-at 280x2x20+-0+640'
+demo ERR_WEXP "a -in problem (metachar in wrong place)"   "-in $0"
+demo ERR_DECODE "wrong item key"    '-de ddRolCol:red'
+demo ERR_DECODE "wrong item value"  '-de eOn:nohow'
+echo
+echo Ending $0 at $(date)
 echo

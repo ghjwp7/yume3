@@ -5,10 +5,11 @@ commands.  It creates and runs a menu according to user-provided
 arguments.  For more information and examples, please see README and
 man yume and man yume-examples.
 
-The current version of yume is Gtk-based, and may be found at
-<http://sourceforge.net/projects/yume3/>.  An earlier version, as
-found at <http://sourceforge.net/projects/yume2/>, is based on the
-xforms library for X Window System.
+The current version of yume is Gtk3-based.  Current source code is in
+a git repo at https://github.com/ghjwp7/yume3 while some obsolete
+versions are at <http://sourceforge.net/projects/yume3/> and
+<http://sourceforge.net/projects/yume2/>, the latter based on the
+xforms library for X Window System rather than Gtk.
 
          ____________________________________________________
 
@@ -22,14 +23,16 @@ software.
 Many linux distributions include a few dozen Gtk-based software and
 support libraries as required for use with Gnome.  Even if your system
 is Gnome-based, you still may need to install Gtk development header
-files, as found (typically) in /usr/include/gtk-2.0/gtk/.  For
+files, as found (typically) in /usr/include/gtk-3.0/gtk/.  For
 example, try the command "locate gtk.h" to see if that header file is
 available.  If it is not, use your system's package manager to install
-a package with name like "gtk2-devel - 2.10.14" (or higher number).
-For example, on recent Fedora Core distributions, sudo pirut, click
-the Search tab, put Gtk in the search box, and click the Search
-button.  Then locate and click a checkbox next to appropriate library
-entry, and click Apply.
+a package with name like "gtk3-devel - " and a version number.  For
+example, on vintage Fedora Core distributions: sudo pirut; click the
+Search tab; put Gtk in the search box; click the Search button.  Then
+locate and click a checkbox next to appropriate library entry, and
+click Apply.
+
+On Ubuntu distributions, eg:    sudo apt-get install libgtk-3-dev
 
          ____________________________________________________
 

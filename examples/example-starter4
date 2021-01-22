@@ -13,8 +13,8 @@
 L=""
 for i in `egrep -l "yume example|^ *yume|^ *.YUME" *`; do
     if [ -x $i ]; then		# Is i executable?
-	L="$L -bu ./$i -la C 'xterm -T Code -e less $i'"
-	[ -f $i.txt ] && L="$L -la N   'xterm -T Note -e less $i.txt'"
+	L="$L -bu ./$i -la C 'gnome-terminal -- less $i'"
+	[ -f $i.txt ] && L="$L -la N   'gnome-terminal -- less $i.txt'"
 	[ -f $i.txt ] || L="$L -la ' ' true"
     fi
 done
@@ -25,6 +25,7 @@ export YUME
 echo -ti $0 \
  -bu -la \'Click C buttons to see Code\'  true\
  -bu -la \'Click N buttons to see Notes\' true\
+ -bu -la \'Press q to close Notes or Code\' true\
    -bw aa\
  -bu -ex -la ll \'ls -l\'\
    -bw daa $L\

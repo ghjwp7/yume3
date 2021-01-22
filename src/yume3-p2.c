@@ -10,11 +10,11 @@
     yume3-init.h, and some other yume3* files.
 
     yume3-p2: Window- or widget-sizing phase
-
 */
 
 #include <wordexp.h>
 #include <gtk/gtk.h>
+#include <ctype.h>
 #include "yume3.h"
 #include "yume3-p2.h"
 #include "yume3-p3.h"
@@ -203,7 +203,7 @@ gboolean XYtestCoords(void *data) {
 void Phase2 (void) {
   GtkWindow *form;
   GtkWidget *vbox;
-  gboolean g;
+  //gboolean g;
 
   /* First, treat gtk, gtkrc, and nogtkrc options that may have been
      set in Phase I.  Add user's .yume3-gtkrc to list of files to be
@@ -257,16 +257,53 @@ void Phase2 (void) {
   form = make_objects (form, vbox);
 
   // Treat -at and -ti options.
+  int atva[4]={0,0,200,100};
   if (atPar) {			// Set geometry, if given by -at
-    g = gtk_window_parse_geometry ((GtkWindow*)form, atPar);
-    if (!g) errorExit (YERR_GEOM, __FILE__, __LINE__, 3, 0,
-		       "Geometry code", atPar, "not recognized");
+    // Because gtk_window_parse_geometry is deprecated emulate it
+    // at least in part.  parse also no longer seems to size the window.
+    int v, si=1, vn;  char *c = atPar;
+    for (vn=0; *c && vn<4; ) {
+      if (isdigit(*c)) {
+        v = 0;              // Got a digit; get rest of decimal #
+        for (; isdigit(*c); ++c)
+          v = 10*v + (*c & 0xF);
+        atva[vn] = si*v;	// Save number
+        ++vn;               // Go on to next number
+        si = +1;            // Default to + for next number
+      }
+      if (*c=='-') si = -1;
+      if (*c=='+') si = +1;
+      ++c;                  // Consume the character that ended number
+    }
+    //printf ("n\atPar:  %s  %3d %3d %3d %3d\n", atPar, atva[0], atva[1], atva[2], atva[3]);
+    // This sets the size ok:
+    gtk_window_set_default_size(form, atva[0], atva[1]);
   }
   gtk_widget_show_all ((GtkWidget*)form); // Make all widgets visible
   if (formTitle)		// Set title, if given by -ti
-    gtk_window_set_title ((GtkWindow*)form, formTitle);
+    gtk_window_set_title (form, formTitle);
   else 
     gtk_window_set_title (form, fpidTitle);
+  
+  if (atPar) {		      // With window showing, move to position
+    // This window_move fails when given negative numbers
+    gtk_window_move (form, atva[2], atva[3]);
+    // The window_move within parse_geometry works ok but
+    // gtk_window_parse_geometry is deprecated
+    gboolean g = gtk_window_parse_geometry (form, atPar);
+    if (!g) errorExit (YERR_GEOM, __FILE__, __LINE__, 3, 0,
+		       "Geometry code", atPar, "not recognized");
+  }
+    /*
+    GdkGeometry hints;
+    hints.min_width = hints.min_height = 10;
+    hints.max_width = hints.max_height = 9999;
+    gtk_window_set_geometry_hints(
+        form, NULL, &hints,
+        (GdkWindowHints)(GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE));
+    */
+    
+
 
   // Schedule a test for menu-on-screen, a few ms from now
   if (vv[VVxys])

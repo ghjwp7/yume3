@@ -8,11 +8,11 @@
 [ "$1" ] && H="$1"
 [ "$H" ] || H=`hostname`
 X=1
-[ $H = "yuli" ] && X=101
-[ $H = "zeda" ] && X=201
+[ $H = "dici" ] && X=101
+[ $H = "zili" ] && X=201
 
 cd $HOME
-$YUME -at 100x50+$X+1 -ti $H -bw ba -bu -la $H "xterm &" -ex
+$YUME -at 100x50+$X+1 -ti $H -bw ba -bu -la $H "gnome-terminal" -ex
 
 # This example makes a menu with one button, labeled with the hostname
 # of the machine running the yume command, or if a parameter is given,

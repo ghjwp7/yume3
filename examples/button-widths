@@ -9,13 +9,13 @@ $YUME  -ti "$0 - Menu 1 of 3" -ex -bw dc -at 256x128+50+200\
  -bu  "I....I....II" "I....IIII"\
  -bu  "I....I....II" "I....IIII" "I....I....II" "I....IIII"&
 
-$YUME  -ti "$0 - Menu 2 of 3" -ex -de buq:6 -at 256x128+50+350\
+$YUME  -ti "$0 - Menu 2 of 3" -ex -de buq:6 -at 256x128+50+400\
  -bu  "Abcde12345Abc" "12345Abcd"\
  -bu  "1234512345NNN" "12345NNNN"\
  -bu  "I....I....II" "I....IIII"\
  -bu  "I....I....II" "I....IIII" "I....I....II" "I....IIII"&
 
-$YUME  -ti "$0 - Menu 3 of 3" -ex -bw bbbb -at 256x128+50+500\
+$YUME  -ti "$0 - Menu 3 of 3" -ex -bw bbbb -at 256x128+50+600\
  -bu  "Abcde12345Abc" "12345Abcd"\
  -bu  "1234512345NNN" "12345NNNN"\
  -bu  "I....I....II" "I....IIII"\

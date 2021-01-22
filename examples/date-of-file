@@ -5,10 +5,23 @@
 # ie,  -la command -la varname -la displaylabel -iv initvalue
 # and with %% modifier
 
+cat <<EOF
+
+$0 displays the modification date of a specified file using 
+date -r .   The several preface characters like  %%  %#  %+  %-  %:
+are meta-modes that control how yume invokes the command that follows
+them.  For example,  %+  and  %-  execute command without forking 
+(which also closes menu);  %%  prints command before executing it;
+%# prints command and does not execute it; %: executes command non-shell.
+Note, the  File:  and  File: %%  buttons are clickable as are the EE
+and do: buttons.
+
+EOF
+
 $YUME  -ti 'Display Date of File'\
  -bu -la 'Enter a file name and click button' true\
  -bu -la 'echo "Date of $FF is `date -r $FF`"'   -la File: -la FF -iv $0\
- -bu -la '%%echo "Date of $FF is `date -r $FF`"' -la File: -la FF -iv $0\
+ -bu -la '%%echo "Date of $FF is `date -r $FF`"' -la 'File: %%' -la FF -iv $0\
  -bu -ex\
  -do '%#echo "Date of $FF is `date -r $FF`"'\
  -do '%%echo "Date of $FF is `date -r $FF`"'\

@@ -5,14 +5,19 @@ SHELL = /bin/sh
 INSTDIR = /usr/local/bin
 MANDIR = /usr/share/man/man1
 CC = gcc
-CFLAGS = -O3 -Wall -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
+#CFLAGS = -O3 -Wall -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
+CFLAGS = -O3 -Wall
 B = $(YDIR)/bin
 D = $(YDIR)/doc
 E = $(YDIR)/examples
 S = $(YDIR)/src
 
-LIBS = `pkg-config gtk+-2.0 --libs`
-INCS = `pkg-config gtk+-2.0 --cflags`
+# Note, one may need to install development files, via eg
+#    sudo apt-get install build-essential libgtk-3-dev
+
+LIBS = `pkg-config gtk+-3.0 --libs`
+INCS = `pkg-config gtk+-3.0 --cflags`
+
 TRE  = $(S)/yume3-trec.h $(S)/yume3-treh.h
 YUTI = $(S)/yume3-util.h $(S)/yume3-init.c $(TRE)
 

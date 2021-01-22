@@ -3,12 +3,12 @@ $Id:$
 This illustrates some error messages, for ERR_FILE, ERR_MISSARG,
 ERR_GEOM, ERR_WEXP, and ERR_DECODE.  These errors can be easily
 provoked in predictable ways; other errors cannot.  [If you find
-exceptions, please let me know.  -jiw]
+other errors, please let me know.  -jiw]
 
-With March 2011 yume3, output from ./errors-demo looked as shown below
-between the lines of dashes.  With later code, spacing and messages
-may differ.  Note, error numbers are defined near the beginning of
-yume3.h by code like:
+With the January 2021 version of yume3, output from ./errors-demo
+looked as shown below between the lines of dashes.  With other
+versions, spacing and messages may differ.  Note, error numbers are
+defined near the beginning of yume3.h by code like:
 
 enum {ERR_EXECV=10, ERR_SEGV, ERR_FILE, ERR_MALLOC,
 	      ERR_MISSARG,  ERR_GEOM, ERR_WEXP, ERR_DECODE,
@@ -24,30 +24,49 @@ Note, wordexp() error numbers are defined in system file
     WRDE_SYNTAX };        /* Shell syntax error.  */
 
 -------------------------------------------------------
+Starting ./errors-demo at Thu 21 Jan 2021 09:40:58 PM MST with YUME = ../bin/yume
 
 This file invokes yume with arguments that should produce some
 error messages on stderr, with no menu windows appearing.
 Each error message is followed by a note about it and the
 command that caused it.
 
-*** Error 14 at F:yume3-p1.c L:211 D:0   Switch argument is missing for -Yt
+
+*** Error 12 at F:./src/yume3-p1.c L:314 D:400   Unable to open file in-test-7
+is error ERR_FILE due to infinite include with default depth,
+from: yume -in in-test-7
+
+
+*** Error 12 at F:./src/yume3-p1.c L:314 D:567   Unable to open file in-test-7
+is error ERR_FILE due to infinite include with depth limit 567,
+from: yume -de FStackLim:567 -in in-test-7
+
+
+*** Error 14 at F:./src/yume3-p1.c L:223 D:0   Switch argument is missing for -Yt
 is error ERR_MISSARG due to no geometry string for -at,
 from: yume -at
 
-*** Error 15 at F:yume3-p2.c L:210 D:0   Geometry code 280x2x20+-0+640 not recognized
+
+*** Error 15 at F:./src/yume3-p2.c L:262 D:0   Geometry code 280x2x20+-0+640 not recognized
 is error ERR_GEOM due to invalid geometry string,
 from: yume -at 280x2x20+-0+640
 
-*** Error 16 at F:yume3-p1.c L:329 D:1   wordexp failure 2
+
+*** Error 16 at F:./src/yume3-p1.c L:345 D:1   wordexp failure 2
 is error ERR_WEXP due to a -in problem (metachar in wrong place),
 from: yume -in ./errors-demo
 
-*** Error 17 at F:yume3-p1.c L:193 D:0   Lookup error in  ddRolCol:red
+
+*** Error 17 at F:./src/yume3-p1.c L:205 D:0   Lookup error in  ddRolCol:red
 is error ERR_DECODE due to wrong item key,
 from: yume -de ddRolCol:red
 
-*** Error 17 at F:yume3-p1.c L:193 D:0   Lookup error in  eOn:nohow
+
+*** Error 17 at F:./src/yume3-p1.c L:205 D:0   Lookup error in  eOn:nohow
 is error ERR_DECODE due to wrong item value,
 from: yume -de eOn:nohow
+
+
+Ending ./errors-demo at Thu 21 Jan 2021 09:41:05 PM MST
 
 -------------------------------------------------------
