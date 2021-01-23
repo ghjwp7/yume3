@@ -12,7 +12,7 @@ BRANCH1=$(git rev-parse --abbrev-ref HEAD)
 TITLE="Branch $BRANCH1 in ~${PWD#$HOME}"
 
 yume  -at 480x220+1050+444  -ti "$TITLE"\
- -bu -la 'Start an Email to SN' "thunderbird -compose \"to='Stuart Nelson <asdfstuart@gmail.com>',subject='Committed change to ${PWD##*/} repo',body='Committed change to ${PWD##*/} repo -- '\"" \
+ -bu -la 'Start an Email to SN' "thunderbird -compose \"to='Some Person <someone@gmail.com>',subject='Committed change to ${PWD##*/} repo',body='Committed change to ${PWD##*/} repo -- '\"" \
      -la 'Edit menu' "x2 $0"\
      -la 'Reload menu' "%+$0"\
      -la 'ls' 'echo;echo "At $(date):"; ls'\
