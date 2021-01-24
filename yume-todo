@@ -11,6 +11,34 @@ But this gets error:
   *** Error 17 at F:./src/yume3-p1.c L:205 D:0 Lookup error in y3dr:(((Do)))
 Fix it.
 
+[23 Jan 2021]
+
+Re following item from 23 Jan 2018, call the auxiliary program a
+`canner`, and the output from canner a `can`.  That is, a can contains
+the data for some particular yume script, either in a form suitable
+for piping to yume3, or in a program that when called pipes it to
+yume3, etc depending on options to canner.  Note, canner can be in
+python or any convenient language; it merely needs to be able to
+process and store input scripts, and possibly pipe results to yume3.
+
+In items mentioned below, `action code` might mean the code behind the
+button, but should also allow a script or function (in shell or python
+etc) to create the code behind a button.  Also have docs columns, with
+eg title / precis / details / example / test-it for each button.
+Output modes should include pipe to yume3; create canned program;
+create nice display (for screen or print) of button names, title,
+precis etc.
+
+[23 Jan 2018]
+
+Write an auxiliary program or script that creates a table form, in
+which one can write a yume script that then gets embedded into a
+compiled yume3-caller.  [A limited but still capable version of
+full-gui menu/forms designer.]  Column headings like row number or row
+break, box kind, box color, fixed or default value, action code, var
+name, etc.  Other data: output program name, target location.  Default
+values can be overridden by run time parameters to the generated
+program.
 
 [23 Jan 2018]
 
@@ -21,15 +49,6 @@ could overwrite without asking.
 Q: how to have PDF's of man pages available / archived without using
 lots of space and cluttering up the repo.  Or does it not really
 matter, ie is insignificant?
-
-Write an auxiliary program or script that creates a table form, in
-which one can write a yume script that then gets embedded into a
-compiled yume3-caller.  [A limited but still capable version of
-full-gui menu/forms designer.]  Column headings like row number or row
-break, box kind, box color, fixed or default value, action code, var
-name, etc.  Other data: output program name, target location.  Default
-values can be overridden by run time parameters to the generated
-program.
 
 [25 Mar 2017 note:] In trying to get avr-yume-write-hex-including to
 work ok with avr-yume-write-hex-single and similar menus, had to use
