@@ -5,8 +5,21 @@ SHELL = /bin/sh
 INSTDIR = /usr/local/bin
 MANDIR = /usr/share/man/man1
 CC = gcc
-#CFLAGS = -O3 -Wall -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
-CFLAGS = -O3 -Wall
+
+# Adding -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED to CFLAGS
+# would make some warnings go away but those need to be fixed, so no
+
+# In git branch testSanatizeAddr added all the options after -Wall
+#  while addressing issue #6.  jiw 23 Jan 2021
+#CFLAGS = -O3 -Wall
+
+# first version, with  -fsanitize=address  -fno-omit-frame-pointer  -static-libstdc++  -static-libasan  -lrt
+# got hundreds of "undefined reference to `__asan_report_load8'" (or similar) messages
+#CFLAGS = -O3 -Wall  -ggdb  -fsanitize=address  -fno-omit-frame-pointer  -static-libstdc++  -static-libasan  -lrt
+#                    -ggdb -fsanitize=address -fno-omit-frame-pointer -static-libstdc++ -static-libgcc -static-libasan -lrt
+#CFLAGS = -O3 -Wall  -ggdb  -fsanitize=address  LDFLAGS=-fsanitize=address -fno-omit-frame-pointer  -lrt
+CFLAGS = -O3 -Wall -ggdb -fsanitize=address   -fno-omit-frame-pointer -static-libstdc++ -static-libgcc -static-libasan -lrt  
+
 B = $(YDIR)/bin
 D = $(YDIR)/doc
 E = $(YDIR)/examples
@@ -65,7 +78,7 @@ $(HOME)/.yume-gtkrc: $(E)/yume-gtkrc
 	install $(E)/yume-gtkrc $(HOME)/.yume-gtkrc
 
 $(B)/yume3: $(TRE) $(OBJECTS)
-	$(CC) $(YOPTS) $(OBJECTS) -o $(B)/yume3 $(LIBS)
+	$(CC) -fsanitize=address $(YOPTS) $(OBJECTS) -o $(B)/yume3 $(LIBS)
 
 $(B)/yume3.o: $(S)/yume3.c $(S)/yume3.h $(S)/yume3-p1.h $(S)/yume3-p2.h $(S)/yume3-p3.h $(YUTI)
 	 $(CC) $(CFLAGS) -c $(S)/yume3.c $(INCS) -o $(B)/yume3.o
