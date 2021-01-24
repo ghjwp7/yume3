@@ -124,11 +124,11 @@ int main (int argc, char *argv[]) {
 #define grcDefName "/.yume-gtkrc"
 #define yrcDefName "/.yume-rc"
   const char *home = getenv("HOME");
-  if (home) {
-    grcFileName = Ymalloc (strlen(home) + strlen(grcDefName), __FILE__, __LINE__);
+  if (home) {  // Need +1 for null byte at end
+    grcFileName = Ymalloc (strlen(home) + strlen(grcDefName)+1, __FILE__, __LINE__);
     strcpy (grcFileName, home);
     strcat (grcFileName, grcDefName); // Default gtk resource file
-    yrcFileName = Ymalloc (strlen(home) + strlen(yrcDefName), __FILE__, __LINE__);
+    yrcFileName = Ymalloc (strlen(home) + strlen(yrcDefName)+1, __FILE__, __LINE__);
     strcpy (yrcFileName, home);
     strcat (yrcFileName, yrcDefName); // Default yume resource file
   } else
