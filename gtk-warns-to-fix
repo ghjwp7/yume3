@@ -1,0 +1,96 @@
+make: Entering directory '/home/j-waldby/src/yume/yume3'
+gcc ./src/yume3-init.c -O3 -Wall  -o bin/yume3-init
+./bin/yume3-init
+test -d src && mv yume3-tre*h src
+gcc -O3 -Wall -c ./src/yume3.c `pkg-config gtk+-3.0 --cflags` -o ./bin/yume3.o
+gcc -O3 -Wall -c ./src/yume3-p1.c `pkg-config gtk+-3.0 --cflags` -o ./bin/yume3-p1.o
+gcc -O3 -Wall -c ./src/yume3-p2.c `pkg-config gtk+-3.0 --cflags` -o ./bin/yume3-p2.o
+gcc -O3 -Wall -c ./src/yume3-p3.c `pkg-config gtk+-3.0 --cflags` -o ./bin/yume3-p3.o
+gcc -O3 -Wall -c ./src/yume3-util.c `pkg-config gtk+-3.0 --cflags` -o ./bin/yume3-util.o
+gcc  ./bin/yume3.o ./bin/yume3-p1.o ./bin/yume3-p2.o ./bin/yume3-p3.o ./bin/yume3-util.o -o ./bin/yume3 `pkg-config gtk+-3.0 --libs`
+make: Leaving directory '/home/j-waldby/src/yume/yume3'
+
+zili ~/yy/yume3 > make 2>&1 1> gtk-warns-to-fix
+./src/yume3-p2.c: In function ‘intoBox’:
+./src/yume3-p2.c:76:3: warning: ‘gtk_table_attach’ is deprecated: Use 'GtkGrid' instead [-Wdeprecated-declarations]
+   76 |   gtk_table_attach (GTK_TABLE(htab), item, m->xL,
+      |   ^~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtk.h:280,
+                 from ./src/yume3-p2.c:16:
+/usr/include/gtk-3.0/gtk/deprecated/gtktable.h:127:9: note: declared here
+  127 | void    gtk_table_attach       (GtkTable        *table,
+      |         ^~~~~~~~~~~~~~~~
+./src/yume3-p2.c:76:3: warning: ‘gtk_table_get_type’ is deprecated [-Wdeprecated-declarations]
+   76 |   gtk_table_attach (GTK_TABLE(htab), item, m->xL,
+      |   ^~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtk.h:280,
+                 from ./src/yume3-p2.c:16:
+/usr/include/gtk-3.0/gtk/deprecated/gtktable.h:117:10: note: declared here
+  117 | GType    gtk_table_get_type       (void) G_GNUC_CONST;
+      |          ^~~~~~~~~~~~~~~~~~
+./src/yume3-p2.c: In function ‘make_objects’:
+./src/yume3-p2.c:149:2: warning: ‘gtk_table_new’ is deprecated: Use 'GtkGrid' instead [-Wdeprecated-declarations]
+  149 |  htab = gtk_table_new (1, m->w, TRUE);
+      |  ^~~~
+In file included from /usr/include/gtk-3.0/gtk/gtk.h:280,
+                 from ./src/yume3-p2.c:16:
+/usr/include/gtk-3.0/gtk/deprecated/gtktable.h:119:12: note: declared here
+  119 | GtkWidget* gtk_table_new       (guint  rows,
+      |            ^~~~~~~~~~~~~
+./src/yume3-p2.c: In function ‘XYtestCoords’:
+./src/yume3-p2.c:196:3: warning: ‘gdk_screen_get_width’ is deprecated [-Wdeprecated-declarations]
+  196 |   w = gdk_screen_get_width (gds);
+      |   ^
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from ./src/yume3-p2.c:16:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:58:14: note: declared here
+   58 | gint         gdk_screen_get_width             (GdkScreen   *screen);
+      |              ^~~~~~~~~~~~~~~~~~~~
+./src/yume3-p2.c:197:3: warning: ‘gdk_screen_get_height’ is deprecated [-Wdeprecated-declarations]
+  197 |   h = gdk_screen_get_height (gds);
+      |   ^
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from ./src/yume3-p2.c:16:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:60:14: note: declared here
+   60 | gint         gdk_screen_get_height            (GdkScreen   *screen);
+      |              ^~~~~~~~~~~~~~~~~~~~~
+./src/yume3-p2.c: In function ‘Phase2’:
+./src/yume3-p2.c:214:5: warning: ‘gtk_rc_add_default_file’ is deprecated: Use 'GtkStyleContext' instead [-Wdeprecated-declarations]
+  214 |     gtk_rc_add_default_file(grcFileName);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtk.h:273,
+                 from ./src/yume3-p2.c:16:
+/usr/include/gtk-3.0/gtk/deprecated/gtkrc.h:169:11: note: declared here
+  169 | void      gtk_rc_add_default_file       (const gchar *filename);
+      |           ^~~~~~~~~~~~~~~~~~~~~~~
+./src/yume3-p2.c:221:5: warning: ‘gtk_rc_add_default_file’ is deprecated: Use 'GtkStyleContext' instead [-Wdeprecated-declarations]
+  221 |     gtk_rc_add_default_file(gtkrc);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtk.h:273,
+                 from ./src/yume3-p2.c:16:
+/usr/include/gtk-3.0/gtk/deprecated/gtkrc.h:169:11: note: declared here
+  169 | void      gtk_rc_add_default_file       (const gchar *filename);
+      |           ^~~~~~~~~~~~~~~~~~~~~~~
+./src/yume3-p2.c:254:3: warning: ‘gtk_vbox_new’ is deprecated: Use 'gtk_box_new' instead [-Wdeprecated-declarations]
+  254 |   vbox = gtk_vbox_new (TRUE, 0);
+      |   ^~~~
+In file included from /usr/include/gtk-3.0/gtk/gtk.h:286,
+                 from ./src/yume3-p2.c:16:
+/usr/include/gtk-3.0/gtk/deprecated/gtkvbox.h:61:13: note: declared here
+   61 | GtkWidget * gtk_vbox_new      (gboolean homogeneous,
+      |             ^~~~~~~~~~~~
+./src/yume3-p2.c:293:5: warning: ‘gtk_window_parse_geometry’ is deprecated [-Wdeprecated-declarations]
+  293 |     gboolean g = gtk_window_parse_geometry (form, atPar);
+      |     ^~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkdialog.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:31,
+                 from ./src/yume3-p2.c:16:
+/usr/include/gtk-3.0/gtk/gtkwindow.h:443:10: note: declared here
+  443 | gboolean gtk_window_parse_geometry   (GtkWindow   *window,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~
+
