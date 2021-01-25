@@ -5,21 +5,23 @@ SHELL = /bin/sh
 INSTDIR = /usr/local/bin
 MANDIR = /usr/share/man/man1
 CC = gcc
-#CFLAGS = -O3 -Wall -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
 CFLAGS = -O3 -Wall
+
+# Set up short labels for yume's bin, doc, examples, & src dirs
 B = $(YDIR)/bin
 D = $(YDIR)/doc
 E = $(YDIR)/examples
 S = $(YDIR)/src
 
-# Note, one may need to install development files, via eg
-#    sudo apt-get install build-essential libgtk-3-dev
-
-LIBS = `pkg-config gtk+-3.0 --libs`
-INCS = `pkg-config gtk+-3.0 --cflags`
-
+# Make labels to stand for files with parsing-data search structures,
+# constants, and generated arrays, and for some dependencies
 TRE  = $(S)/yume3-trec.h $(S)/yume3-treh.h
 YUTI = $(S)/yume3-util.h $(S)/yume3-init.c $(TRE)
+
+# Note, one may need to install GDK/GTK development files,
+# via eg    sudo apt-get install build-essential libgtk-3-dev
+LIBS = `pkg-config gtk+-3.0 --libs`
+INCS = `pkg-config gtk+-3.0 --cflags`
 
 OBJECTS=$(B)/yume3.o $(B)/yume3-p1.o $(B)/yume3-p2.o \
 	$(B)/yume3-p3.o $(B)/yume3-util.o
@@ -49,7 +51,7 @@ $(D)/yume-examples.1.pdf: $(D)/yume-examples.1
 	mv t.pdf $(D)/yume-examples.1.pdf
 	rm t.ps
 
-# "install" not yet tested on other systems.
+# "install" hasn't been tested on non-linux systems
 install: $(B)/yume
 	install -s $(B)/yume  $(INSTDIR)/yume
 	install -s $(B)/yume3 $(INSTDIR)/yume3
@@ -73,8 +75,12 @@ $(B)/yume3.o: $(S)/yume3.c $(S)/yume3.h $(S)/yume3-p1.h $(S)/yume3-p2.h $(S)/yum
 $(B)/yume3-p1.o: $(S)/yume3-p1.c $(S)/yume3.h $(S)/yume3-p1.h $(S)/yume3-p2.h  $(YUTI)
 	    $(CC) $(CFLAGS) -c $(S)/yume3-p1.c $(INCS) -o $(B)/yume3-p1.o
 
+# In the  yume3-p2  section, uncomment just one of the $(CC) lines, to
+# allow or disallow display of warnings about Gtk deprecated functions.
+# (8 Gtk functions used in yume3-p2.c have been deprecated.)
 $(B)/yume3-p2.o: $(S)/yume3-p2.c $(S)/yume3.h $(S)/yume3-p2.h $(S)/yume3-p3.h  $(YUTI)
-	    $(CC) $(CFLAGS) -c $(S)/yume3-p2.c $(INCS) -o $(B)/yume3-p2.o
+	#$(CC) $(CFLAGS) -c $(S)/yume3-p2.c $(INCS) -o $(B)/yume3-p2.o
+	$(CC) $(CFLAGS) -Wno-deprecated-declarations -c $(S)/yume3-p2.c $(INCS) -o $(B)/yume3-p2.o
 
 $(B)/yume3-p3.o: $(S)/yume3-p3.c $(S)/yume3.h $(S)/yume3-p3.h $(YUTI) $(S)/yume3-util.h
 	    $(CC) $(CFLAGS) -c $(S)/yume3-p3.c $(INCS) -o $(B)/yume3-p3.o
