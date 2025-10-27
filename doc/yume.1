@@ -4,7 +4,7 @@
 .\" Process this file with
 .\" groff -man -Tascii yume.1
 .ds PRS \fB\-at\fP, \fB\-bd\fP, \fB\-bw\fP, \fB\-de\fP, \fB\-in\fP, \fB\-iv\fP, \fB\-la\fP, or \fB\-ti\fP
-.TH yume 1 "$Date: 2018/11/11 $" Linux "User Manuals"
+.TH yume 1 "$Date: 2018/11/11; 2025 $" Linux "User Manuals"
 .SH NAME
 .ad l
 yume \- Easy and flexible menu system that lets you encapsulate shell
@@ -410,7 +410,15 @@ Data types include flags, numbers, and strings.
 .IP (1)\ label-colors:
 Label-color string names are listed in column 1 of the following
 table.  The strings may contain Pango markup and are used as formats
-for labels of buttons as noted in column 3.
+for labels of buttons as noted in column 3.  [Caveat 1: Although Pango
+markup worked ok on some Linux distributions at some point in the 201x
+timeframe it apparently doesn't work on Ubuntu in the 202x timeframe.
+Caveat 2: the fixed-command, general-command, and hidden-command
+terminology for fa/fb, ga/gb, and ha/hb is intended for future
+developments, which as of 2025 still haven't happened and probably
+shouldn't be in table.  Instead see item (2), "initial
+on/off-settings", which explains the ba, bb, da, db, ea, eb, ia, ib,
+xa, xb flag settings.]
 
  	 1.		 2.		  3.
  	Name		Value	Purpose
@@ -489,18 +497,27 @@ yume's five kinds of buttons (-bu, do:, ee, -iv, -ex).  For example,
 \fB\-bu\fP buttons created after \fB\-de ba\fP are created in
 auto-mode and operate when the mouse enters the button.
 
-In the menu created by the following example, the current date prints
-whenever the mouse crosses the "date" button or whenever that button
-is clicked, and the menu exits whenever the mouse enters the button
-labeled Exit.  The button labeled ls only operates when clicked.
+Note, use \fB\-de ba\fP before a sequence of \fB\-bu\fP buttons to
+turn on auto-mode (rollover mode) for those buttons, and if non-auto
+buttons follow, say \fB\-de bb\fP to turn it off.
+
+In the menus created by the following lines, the \fBls\fP buttons only
+operate when clicked; the \fBdate\fP buttons operate whenever the mouse
+crosses them or whenever clicked.  The first menu has an \fBExit\fP
+button, and exits when mouse enters or clicks it.  The second menu has
+an \fBexit\fP button and exits when it's clicked.  Note, \fB\-de xb\fP is
+on by default.
 .ce
-.B yume -de xa -bu ls -de ba date -ex
+.B yume -bu ls -de ba date -de xa -ex
+.ce
+.B yume -bu ls -de ba date -de xb -ex
 
 If you use the supplied yume-gtkrc file as ~/.yume-gtkrc and haven't
 changed default settings within that file, then buttons with auto-mode
 enabled have a violet-blue normal background, pink prelight
 background, and white lettering.  Click-mode buttons by default are
-displayed with sky-blue backgrounds and black lettering.
+displayed with sky-blue backgrounds and black lettering. [Caveat: This
+was the case in 201x timeframe but probably not in 202x]
 
 A future version of yume may provide right-click dropdown menus to
 change auto- vs click-mode states.  In current version, except for \fB\-do\fP
