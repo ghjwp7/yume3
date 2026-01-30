@@ -253,8 +253,8 @@ example x, it runs "less x.txt" in a new xterm.
 example-starter3 shows another variation on shell quoting, by using
 xargs.  Either of these two commands
 .ce 2
-.B yume $L &
-.B yume """$L""" &
+.B yume $L
+.B yume """$L"""
 would treat the string 'xterm -e less x.txt' in $L as four parameters
 ("'xterm", "-e", "less", and "x.txt'"), but using xargs causes it to
 be properly treated as one parameter to yume.
@@ -345,7 +345,7 @@ belonging to a child process.  Consider this sequence:
 .br
 > export G=7
 .br
-> yume 'echo $G; export G=8'&
+> yume 'echo $G; export G=8'
 .br
 > echo $G; export G=9
 .br

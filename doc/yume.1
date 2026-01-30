@@ -37,6 +37,12 @@ OPTIONS section below.  Options for Gtk-based yume3 are described
 here.  For the older (and no longer developed) xforms-based yume2, see
 documents distributed with yume2 source.
 
+Remark -- yume starts yume3 via a pipe / fork / exec sequence.  This
+runs yume3 in background.  Older examples may show an "&" after yume
+arguments, but that's not needed. (Ref: section "Visibility of
+parameter lists")
+
+
 .IP "\fB\-at\fP geometry"
 Specifies menu window geometry in widexhigh+xo+yo or similar form
 
@@ -118,11 +124,11 @@ as they are executed.  Note, except for accepting larger numbers,
 creates and runs a menu based on the arguments it's given.  Order of
 arguments is significant; for example,
 .ce
-.B yume -bu date ls -ex &
+.B yume -bu date ls -ex
 creates a menu window with three buttons, labeled date, ls, exit (left
 to right); while
 .ce
-.B yume -bu ls -ex date &
+.B yume -bu ls -ex date
 creates a menu window with three buttons, labeled ls, exit, date (left
 to right).  For either of these examples, clicking a button
 labeled 'date' runs the date command and displays the result in the
@@ -145,7 +151,7 @@ as described below for the \fB\-iv\fP option.
 
 For example,
 .ce
-.B yume -do 'ls -al' 'cal -3' &
+.B yume -do 'ls -al' 'cal -3'
 creates a yume menu window with two do: items.  Clicking the do:
 button of the top item runs the command "ls -al".  Clicking the other
 do: button runs the command "cal -3".  Clicking the EE button of a do:
@@ -369,7 +375,7 @@ example, on the terminal window where yume was started.  If yume
 output is redirected, so is command output, unless the executed
 command list has redirection of its own.  For example,
 .ce
-.B  yume ./abc ./def \(dq./ghi > u\(dq > t &
+.B  yume ./abc ./def \(dq./ghi > u\(dq > t
 directs output from programs abc and def to file t, and output from
 program ghi to file u.  See examples/abc-def-ghi for a
 slightly-extended version of this example; when you click the abc or
@@ -1276,22 +1282,32 @@ own copies of P's environment.  After that, changes to the environment
 in any one of the processes has no effect upon that of the other two.
 
 yume's -iv value-fields allows you to change variables in yume's
-environment while yume is running.
+environment while yume is running.  When a yume button is used to
+execute a command under a shell, the shell running the command
+inherits variables from yume's environment.  In this example, typing
+"echo $bar" in a created terminal will echo "hey":
+
+.ce
+.B yume -ex -la 'Set bar' -la bar -iv hey -la 'Terminal' gnome-terminal
+
 .\"------------------------------------------------------------
 .IP "\fByume and script interaction:\fP"
 
 script(1) is a unix command to make a typescript of a terminal
 session.  The sequence
+
 .ce 2
-script t
-yume ...
+script t yume ...
+
 will result in file t containing the output of any commands started
-from the yume menu, along with other session activity, and that
-output will also appear on the terminal.  (But t will not show the
+from the yume menu, along with other session activity, and that output
+will also appear on the terminal.  (But file t will not show the
 yume-invoked commands themselves.)  On the other hand, the sequence
+
 .ce 2
 yume ...
 script t
+
 will result in file t not containing the output of commands started
 from the yume menu, although that output will appear on the terminal
 along with other session activity.
@@ -1311,10 +1327,11 @@ an access-protected file and use \fB-in\fP option.  With a little more
 effort, it also is possible to put commands into an encrypted file,
 and pipe directly from a decryptor program into yume3.
 
-In more detail:  yume-pipr.c, running as 'yume', (1) accepts
+In more detail: yume3-pipr.c, running as 'yume', (1) accepts
 parameters for yume3, (2) pipes them to yume3, and (3) exits, while
-yume3 continues.  Both yume and yume3 must be executable and on your
-search paths for this startup method to work.
+yume3 continues, running in background.  Both yume and yume3 must be
+executable and on your search paths for this pipe - fork - exec
+startup method to work.
 
 .\"------------------------------------------------------------
 .IP "\fBPiping a parameter list into yume3:\fP"

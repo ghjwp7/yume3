@@ -24,9 +24,9 @@ Pressing q in a Code or Note xterm will close it.
 
 example-starter3 shows further variations on shell quoting, using
 echo and xargs.  Either of the commands
-               yume $L &
+               yume $L
 or
-               yume "$L" &
+               yume "$L"
 would treat the string 'xterm -e less x.txt' within $L as four
 parameters ("'xterm", "-e", "less", and "x.txt'"), but using echo and
 xargs causes it to be properly treated as one parameter to yume.

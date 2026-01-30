@@ -12,19 +12,19 @@ Before it starts yume, yume-examples sets shell-variable YEGDIR to the
 specified directory (or current directory), changes to that directory,
 sets YEGDIR to the current directory, and exports YEGDIR, as follows:
 
-     	    [ $YEGDIR ] || YEGDIR=$1
-	    [ $YEGDIR ] || YEGDIR=./
-	    cd $YEGDIR
-	    export YEGDIR=`pwd`
+   	    [ $YEGDIR ] || YEGDIR=$1
+        [ $YEGDIR ] || YEGDIR=./
+        cd $YEGDIR
+        export YEGDIR=`pwd`
 
 The yume command in yume-examples is like:
 
     yume -at 320x60-2+2 -ti "yume example-starter"\
-	 -bu -la "Show list of yume examples" ./example-starter3 -ex &
+	 -bu -la "Show list of yume examples" ./example-starter3 -ex
 
 The location -2+2 is near the top right corner of the screen.
 
-Ordinarily, one would end a button command with an ampersand (&), eg,
-"./example-starter3&", but in this case, the yume command in
-example-starter3 itself ends with an ampersand (&), so we don't
-bother.
+Typically, button commands need not have an ampersand (&) to run in
+background, as yume will fork commands to run in a shell in background
+[except possibly in a metamode like %-, for which, see COMMENTS:
+Meta-mode 'Commands' in man page].

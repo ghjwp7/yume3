@@ -19,7 +19,7 @@ yume and yume-examples.
 
 Here is an example using yume:  The input
 
-      yume -bu date ls -ex &
+      yume -bu date ls -ex
 
 creates a menu window with three buttons, labeled date, ls, exit.
 Clicking the button labeled date runs the date command and displays
@@ -29,7 +29,7 @@ runs the ls command; clicking exit closes the menu window.
 
 As another example:  The input
 
-      yume -do 'ls -al' 'cal -3' &
+      yume -do 'ls -al' 'cal -3'
 
 makes a menu window with two "do" items, with command text in an
 editing box where you can change it, and with the option to turn

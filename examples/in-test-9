@@ -2,7 +2,7 @@
 #
 # test case 9 for yume's -in option
 # and example of -iv usage
-# Run via:  yume -in in-test-9 &
+# Run via:  yume -in in-test-9
 
  -at 260x230+0+300 -ti 'Skin Effect Calculation'
  -bu -ex -la Calc 'echo skin $Diam $Leng $Freq'
