@@ -73,12 +73,14 @@ void malloc_errorExit (char *F, int L, size_t S) {
 }
 //--------------------------------------------
 void *Ymalloc(size_t size, char *F, int L) {
+  fprintf(stderr, "Ymalloc %ld %s %d \n", size, F, L);
   void *t = malloc(size);
   if (!t) malloc_errorExit(F, L, size);
   return t;
 }
 //--------------------------------------------
 void *Yrealloc(void *ptr, size_t size, char *F, int L) {
+  fprintf(stderr, "Yrealloc %ld %s %d \n", size, F, L);
   void *t = realloc(ptr, size);
   if (!t) malloc_errorExit(F, L, size);
   return t;
