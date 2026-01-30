@@ -1,4 +1,24 @@
-$Id: yume3-todo  2011-2022 j-waldby Exp j-waldby $
+$Id: yume3-todo  2011-2025 j-waldby Exp j-waldby $
+
+[26 Oct 2025]
+
+1. Merge or close "testSanitizeAddr" branch which apparently dates
+from some 2021 changes
+
+2. Resolve repo problem - push not working from ygit-basics menu - it
+gives:
+
+The authenticity of host 'github.com (140.82.114.3)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? 
+Host key verification failed.
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+Note, git remote get-url origin says git@github.com:ghjwp7/yume3
 
 [8 Feb 2022]
 

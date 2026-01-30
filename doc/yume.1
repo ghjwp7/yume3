@@ -75,10 +75,11 @@ Loads options from file
 
 .IP "\fB\-iv\fP initialValue"
 Set up a value-field (a button-plus-textbox unit) for a shell
-variable, initialized with initialValue.  Typical \fB\-iv\fP sequence:
+variable, initialized with initialValue.  Typical \fB\-iv\fP sequences:
 
-.ce
-\fB\-la\fP buttonLabel \fB\-la\fP shellVar \fB\-iv\fP initialValue
+\h'+4n' \fB\-la\fP buttonLabel \fB\-la\fP shellVar \fB\-iv\fP initialValue
+
+\h'+4n' \fB\-la\fP action \fB\-la\fP buttonLabel \fB\-la\fP shellVar \fB\-iv\fP initialValue
 
 .IP "\fB\-la\fP txt"
 Push a text string onto the label stack, to specify a text item such
@@ -415,8 +416,8 @@ markup worked ok on some Linux distributions at some point in the 201x
 timeframe it apparently doesn't work on Ubuntu in the 202x timeframe.
 Caveat 2: the fixed-command, general-command, and hidden-command
 terminology for fa/fb, ga/gb, and ha/hb is intended for future
-developments, which as of 2025 still haven't happened and probably
-shouldn't be in table.  Instead see item (2), "initial
+developments, which as of 2026 still haven't happened and perhaps
+shouldn't be listed in table.  Instead see item (2), "initial
 on/off-settings", which explains the ba, bb, da, db, ea, eb, ia, ib,
 xa, xb flag settings.]
 
@@ -506,7 +507,7 @@ operate when clicked; the \fBdate\fP buttons operate whenever the mouse
 crosses them or whenever clicked.  The first menu has an \fBExit\fP
 button, and exits when mouse enters or clicks it.  The second menu has
 an \fBexit\fP button and exits when it's clicked.  Note, \fB\-de xb\fP is
-on by default.
+on by default; it's in second example only to make difference explicit.
 .ce
 .B yume -bu ls -de ba date -de xa -ex
 .ce
@@ -517,7 +518,7 @@ changed default settings within that file, then buttons with auto-mode
 enabled have a violet-blue normal background, pink prelight
 background, and white lettering.  Click-mode buttons by default are
 displayed with sky-blue backgrounds and black lettering. [Caveat: This
-was the case in 201x timeframe but probably not in 202x]
+was the case in 201x timeframe but probably not in 202x due to Gtk changes]
 
 A future version of yume may provide right-click dropdown menus to
 change auto- vs click-mode states.  In current version, except for \fB\-do\fP
