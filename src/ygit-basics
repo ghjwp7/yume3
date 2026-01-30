@@ -10,26 +10,34 @@ LopCode=$(ls -t 2>/dev/null      | head -1 2>/dev/null)
 LopFile=${LopFile:-$LopCode}
 BRANCH1=$(git rev-parse --abbrev-ref HEAD)
 TITLE="Branch $BRANCH1 in ~${PWD#$HOME}"
+JW='James Waldby <j13@pat7.com>'
+SN='Stuart Nelson <asdfstuart@gmail.com>'
+if `who -u | grep -q waldby`
+then MTO="$SN"
+else MTO="$JW"
+fi
 
 yume  -at 480x220+1050+444  -ti "$TITLE"\
- -bu -la 'Start an Email to SN' "thunderbird -compose \"to='Some Person <someone@gmail.com>',subject='Committed change to ${PWD##*/} repo',body='Committed change to ${PWD##*/} repo -- '\"" \
+ -bu -la 'Start an Email re commit' "echo Committed change in $PWD > t; echo >> t; echo -------------- output from: git log -1 --name-only -------------- >> t; git log -1 --name-only >> t; thunderbird -compose \"to='$MTO',subject='Committed change to ${PWD##*/} repo',message=${PWD}/t\"" \
      -la 'Edit menu' "x2 $0"\
      -la 'Reload menu' "%+$0"\
      -la 'ls' 'echo;echo "At $(date):"; ls'\
      -ex\
  -bu -la 'echo "git log -p $LOPFILE"; git log -p $LOPFILE' -la  'git log -p this file:' -la LOPFILE -iv "$LopFile"\
+     -la 'git log oneline' 'PAGER="" git log --oneline'\
      -la 'ls -l' 'echo;echo "At $(date), all files:"; ls -alG'\
      -la 'ls -t' 'echo;echo "At $(date), 15 most-recent files:"; ls -talG|head -16'\
- -bu -la "%+$0" -la 'Current or new branch:' -la BRANCH -iv $BRANCH1\
+ -bu -la "echo Entries like -b newBranch and -d obsBranch work ok with next button or 2" -la 'Current or new branch:' -la BRANCH -iv $BRANCH1\
      -la 'git branch' 'echo git branch $BRANCH; git branch $BRANCH'\
      -la 'git checkout' 'echo git checkout $BRANCH; git checkout $BRANCH'\
- -bu -la 'date; git add $ADLIST; git status' -la 'git add these files:' -la ADLIST -iv '.gitignore '\
-     -la 'git ls-tree' 'echo; echo "For $REPO, git ls-tree --full-tree -r -l --abbrev HEAD  says:"; git ls-tree --full-tree -r -l --abbrev HEAD; echo'\
+ -bu -la 'echo; date; git add $ADLIST; git status' -la 'git add these files:' -la ADLIST -iv '.gitignore '\
+     -la 'ls-tree' 'echo; echo "For $REPO, git ls-tree --full-tree -r -l --abbrev HEAD  says:"; git ls-tree --full-tree -r -l --abbrev HEAD; echo'\
      -la 'gitk' 'gitk&'\
+     -la 'git-cola' 'git-cola&'\
  -bu -la 'echo;date;git commit -am "$COLINE";echo' -la 'git commit -am with message:' -la COLINE -iv ''\
-     -la 'git remote' 'echo; echo "For $REPO, git remote -v  says:"; git remote -v; echo; echo "For $REPO, git remote get-url origin says:"; git remote get-url origin; echo; echo "Change via commands like:"; echo "git remote set-url origin https://github.com/livcoco/${REPO}.git"; echo "git remote set-url origin git@github.com:livcoco/${REPO}.git"; echo "git remote set-url origin https://github.com/ghjwp7/${REPO}.git"; echo "git remote set-url origin git@github.com:ghjwp7/${REPO}.git"; echo'\
-     -la "git status" 'git status'\
- -bu -la 'Repository name:' -la REPO -iv "$(basename $PWD)"\
+     -la 'git remote' 'echo; echo "For $REPO, git remote -v  says:"; git remote -v; echo; echo "For $REPO, git remote get-url origin says:"; git remote get-url origin; echo; echo "Change via commands like:"; echo "git remote set-url origin https://github.com/livcoco/${REPO}.git"; echo "git remote set-url origin git@github.com:livcoco/${REPO}.git"; echo "git remote set-url origin https://github.com/ghjwp7/${REPO}.git"; echo "git remote set-url origin git@github.com:ghjwp7/${REPO}.git"; echo "git remote set-url origin https://gitlab.com/ghjwp7/${REPO}.git"; echo "git remote set-url origin git@gitlab.com:ghjwp7/${REPO}.git"; echo'\
+     -la "git status" 'echo; date; git status'\
+ -bu -la 'echo; date; git status --ignored --column' -la 'Repository name:' -la REPO -iv "$(basename $PWD)"\
      -la "git push" 'git push'\
      -la "git pull" 'git pull'\
 
