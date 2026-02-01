@@ -1,4 +1,4 @@
-yume is a menu system with user-editable, mouse-activated shell commands.  It creates and runs a menu based on user-provided arguments. The current version, yume3, is Gtk-based, while a previous version (yume2) is based on the xforms library for X Window System, and an original version (vintage 1997) is Tcl/TK based.
+yume is a menu system with user-editable, mouse-activated shell commands.  It creates and runs a menu based on user-provided arguments. The current version (yume3, March 2011) is Gtk-based, while a previous version (yume2, March 2009) is based on the xforms library for X Window System, and an original version (yume, November 1997) is Tcl/TK based.
 
 To make yume, see directions in INSTALL.  That file explains how to unpack the source files, and how to make yume.  Note, as of January 2018, the latest yume release is in a git repository on github. Briefly, after cloning the repository, `cd yume3`, then for typical linux systems, `make` and `sudo make install`.  The INSTALL file tells (generally) how to get Gtk libraries if not already on-system, and where `make install` puts linked binaries and man pages.
 
