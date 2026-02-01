@@ -1,51 +1,24 @@
-yume is a menu system with user-editable, mouse-activated shell
-commands.  It creates and runs a menu based on user-provided
-arguments. The current version, yume3, is Gtk-based, while a previous
-version (yume2) is based on the xforms library for X Window System,
-and an original version (vintage 1997) is Tcl/TK based.
+yume is a menu system with user-editable, mouse-activated shell commands.  It creates and runs a menu based on user-provided arguments. The current version, yume3, is Gtk-based, while a previous version (yume2) is based on the xforms library for X Window System, and an original version (vintage 1997) is Tcl/TK based.
 
-To make yume, see directions in INSTALL.  That file explains how to
-unpack the source files, and how to make yume.  Note, as of January
-2018, the latest yume release is in a git repository on github.
-Briefly, after cloning the repository, `cd yume3`, then for typical
-linux systems, `make` and `sudo make install`.  The INSTALL file tells
-(generally) how to get Gtk libraries if not already on-system, and
-where `make install` puts linked binaries and man pages.
+To make yume, see directions in INSTALL.  That file explains how to unpack the source files, and how to make yume.  Note, as of January 2018, the latest yume release is in a git repository on github. Briefly, after cloning the repository, `cd yume3`, then for typical linux systems, `make` and `sudo make install`.  The INSTALL file tells (generally) how to get Gtk libraries if not already on-system, and where `make install` puts linked binaries and man pages.
 
-The yume3 wiki at <https://github.com/ghjwp7/yume3/wiki> has a "yume
-screen shot examples" page, with links to images, code, and notes
-working ok.  The wiki also has links for PDF files with man pages for
-yume and yume-examples.
+The yume3 wiki at <https://github.com/ghjwp7/yume3/wiki> has a "yume screen shot examples" page, with links to images, code, and notes working ok.  The wiki also has links for PDF files with man pages for yume and yume-examples.
 
 Here is an example using yume:  The input
 
       yume -bu date ls -ex
 
-creates a menu window with three buttons, labeled date, ls, exit.
-Clicking the button labeled date runs the date command and displays
-the result in the window where yume started; clicking the ls button
-runs the ls command; clicking exit closes the menu window.
+creates a menu window with three buttons, labeled date, ls, exit. Clicking the button labeled date runs the date command and displays the result in the window where yume started; clicking the ls button runs the ls command; clicking exit closes the menu window.
 
-
-As another example:  The input
+ As another example:  The input
 
       yume -do 'ls -al' 'cal -3'
 
-makes a menu window with two "do" items, with command text in an
-editing box where you can change it, and with the option to turn
-on "roll-over" operation, where an item is executed when the mouse
-cursor crosses it.
+makes a menu window with two "do" items, with command text in an editing box where you can change it, and with the option to turn on "roll-over" operation, where an item is executed when the mouse cursor crosses it.
 
-For more examples, cd to the yume3/examples directory after you make
-yume, and enter the command ./yume-examples.  Also, see man yume and
-man yume-examples.  The /web subdirectory includes HTML and pdf
-versions of screen-shots of most yume-examples scripts.
+For more examples, cd to the yume3/examples directory after you make yume, and enter the command ./yume-examples.  Also, see man yume and man yume-examples.  The /web subdirectory includes HTML and pdf versions of screen-shots of most yume-examples scripts.
 
 - jiw, January 2018
 
-Bug note: As of 22 Jan 2018, examples that use exported shell
-functions should run correctly; the 'pipewise1' branch to fix an issue
-was merged in.  (There is an issue with earlier versions of yume where
-exported shell functions don't show up if running dash 0.5.8 / Ubuntu
-15 or later.)
+Bug note: As of 22 Jan 2018, examples that use exported shell functions should run correctly.  In previous versions, exported shell functions didn't show up when running dash 0.5.8 on Ubuntu 15 et seq.
 
