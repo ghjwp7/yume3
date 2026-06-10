@@ -9,7 +9,9 @@ under GPL v3 terms as at http://www.gnu.org/licenses/gpl.html
 
 This file contains typedefs of ErrorCode, ParamMode, EntryType, and
  Sho- enums; typedef for struct ListItem; #defines of WAIT_DELAY,
- deftName, and z; and declarations of global variables.
+ and z; and declarations of global variables.
+
+ 2026-06-06: remove unused item 'deftName'
 */
 #ifndef YUME3_STRUCT
 #define YUME3_STRUCT
@@ -45,7 +47,6 @@ typedef struct {
 
 // Time delay in milliseconds, before waitpid() callback
 #define WAIT_DELAY 3000
-#define deftName "/.yumerc"
 // debugging aid z
 #define z fprintf(stderr,"%s@%3d\n",__FILE__,__LINE__);
 

@@ -417,10 +417,14 @@ Data types include flags, numbers, and strings.
 .IP (1)\ label-colors:
 Label-color string names are listed in column 1 of the following
 table.  The strings may contain Pango markup and are used as formats
-for labels of buttons as noted in column 3.  [Caveat 1: Although Pango
-markup worked ok on some Linux distributions at some point in the 201x
-timeframe it apparently doesn't work on Ubuntu in the 202x timeframe.
-Caveat 2: the fixed-command, general-command, and hidden-command
+for labels of buttons as noted in column 3.  
+
+Caveat 1: Although Pango markup worked ok on some Linux
+distributions at some point in the 201x timeframe it apparently
+doesn't work on Ubuntu in the 202x timeframe.  Note, yume4, a rewrite
+of yume3 in Python rather than C, will support QSS Qt stylesheets.
+
+Caveat 2: The fixed-command, general-command, and hidden-command
 terminology for fa/fb, ga/gb, and ha/hb is intended for future
 developments, which as of 2026 still haven't happened and perhaps
 shouldn't be listed in table.  Instead see item (2), "initial
@@ -459,8 +463,9 @@ change label font sizes for all or many yume menus, put appropriate
 included via \fB\-in\fP option.  Also see example test-y-5 and its
 yume3-gtkrc-5C resource file.
 
-.ce
+.ce 2
 \fBPango markup examples\fP
+\fB[yume4 with QSS will have new examples]\fP
 
 Example:  Create a menu with first button labeled "date" in ordinary
 text, and other button "exit" in big bold text:
@@ -1104,8 +1109,8 @@ source.
 In this section, "Command" stands for the shell command sequence of a
 .B yume
 menu button.  That is, "Command" is the action to be performed when an
-associated button is clicked or activated.  If Command begins begins
-as shown below left, it will act as shown below right.
+associated button is clicked or activated.  If Command begins as shown
+below left, it will act as shown below right.
 .RS
 .IP "\fB%%\fP"
 Print command on stdout before it is executed
@@ -1255,11 +1260,11 @@ exactly the same two error messages, attributed to lines 0 and 1.
 
 Because the commands in test-y-6 are so simple, it is no problem to
 figure out what is causing the problem there.  Just copy the text of
-the command you clicked on, eg "echo 'Ok, let\'s check'", into a shell
-prompt.  Then the error will be as obvious as it's going to get and
-you can quickly resolve the problem.  Here, it is that between single
-quotes, backslash is literal, ie, the first two quotes quote It\\,
-leaving the third quote dangling.
+the command you clicked on, eg "echo 'Ok, let\\'s check'", into a
+shell prompt.  Then the error will be as obvious as it's going to get
+and you can quickly resolve the problem.  Here, it is that between
+single quotes, backslash is literal, ie, the first two single quotes
+quote "Ok, let\\", leaving the third single quote dangling.
 
 If the problem is in the command behind a button, you can add a
 temporary echo or %%, or a \fB\-do\fP group with the same command list, so it
@@ -1297,7 +1302,8 @@ script(1) is a unix command to make a typescript of a terminal
 session.  The sequence
 
 .ce 2
-script t yume ...
+script t
+yume ...
 
 will result in file t containing the output of any commands started
 from the yume menu, along with other session activity, and that output
@@ -1315,19 +1321,23 @@ along with other session activity.
 .IP "\fBVisibility of parameter lists:\fP"
 
 Historically, on multiuser unix systems parameter lists to processes
-could be viewed by anyone who entered a ps -f command.  On most unix
-systems that's no longer so; superuser access is required.
+could be viewed by anyone who entered a ps -f command.  On many unix
+systems that's no longer so; superuser access is required.  For
+example, if /proc is mounted with its hidepid property set (which,
+note, may be problematic), ps won't share command data among
+unprivileged users.
 
-To minimize parameter visibility, yume is just a startup program that
-runs briefly.  It hands parameters over to yume3 and then exits.
-Parameters to yume usually are visible to ps only for a fraction of a
-second.  If that is not good enough and the commands of your yume menu
-should never be exposed to \fBps -f\fP, you can put the commands into
-an access-protected file and use \fB-in\fP option.  With a little more
-effort, it also is possible to put commands into an encrypted file,
-and pipe directly from a decryptor program into yume3.
+In any case, yume tries to minimize parameter visibility by use of a
+startup program (yume) that runs as outlined in next paragraph to hand
+parameters over to a processing program (yume3) via a secure channel.
+Parameters to yume should be visible to ps for at most a few
+milliseconds.  If that is not good enough and the commands of your
+yume menu should never be exposed however fleetingly to \fBps -f\fP,
+you can put menu setup into a private file and use \fB-in\fP option.
+Future versions may allow putting commands into an encrypted file and
+piping them via a decryptor into yume3.
 
-In more detail: yume3-pipr.c, running as 'yume', (1) accepts
+Startup process: yume3-pipr.c, running as 'yume', (1) accepts
 parameters for yume3, (2) pipes them to yume3, and (3) exits, while
 yume3 continues, running in background.  Both yume and yume3 must be
 executable and on your search paths for this pipe - fork - exec

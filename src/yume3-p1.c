@@ -22,15 +22,15 @@ $Id: yume3-p1.c,v 1.6 2011/04/05 19:49:11 j-waldby Exp j-waldby $
 //------------------------------------------------
 // Variables with file scope and internal linkage:
 
-static int labelsIn = 0;	// Number of labels in stack
-static int labelsLim = 32;	// Initial size of label stack
-static char **label;		// Button label stack
-static ParamMode mode =ModeDo;	// Parameter processing mode
-static ParamMode mode2=ModeDo;	// Secondary mode, -do vs -dl
-static int bun;			// Current button-in-line #
-static char *widthString=0;	// Button-width codes
-static int   widthStringLen=0;	// # of button-width codes
-static int itemsSiz;		// initial size of items array
+static int labelsIn = 0;       // Number of labels in stack
+static int labelsLim = 32;     // Initial size of label stack
+static char **label;           // Button label stack
+static ParamMode mode =ModeDo; // Parameter processing mode
+static ParamMode mode2=ModeDo; // Secondary mode, -do vs -dl
+static int bun;                // Current button-in-line #
+static char *widthString=0;    // Button-width codes
+static int   widthStringLen=0; // # of button-width codes
+static int itemsSiz;           // initial size of items array
 
 //--------------------------------------------
 //---------Fix-options Routine----------------
@@ -40,20 +40,20 @@ void fixup_option_codes(int argc, char *argv[]) {
   // conflict with xforms option codes.  Also, convert -geo... to -Yt.
 
   char *opx[] = {"-la", "-de", "-bd", "-dl", "-ti", 
-		 "-in", "-do", "-at", "-bu", "-iv", "-bw", "-ex", 0};
+                 "-in", "-do", "-at", "-bu", "-iv", "-bw", "-ex", 0};
   int i, j;
 
   for (i=1; i < argc; ++i)
     if (argv[i][0]=='-') {
       if (argv[i][1]=='g' && argv[i][2]=='e' && argv[i][3]=='o') {
-	argv[i] = "-Yt";
-	continue;
+        argv[i] = "-Yt";
+        continue;
       } else 
-	for (j=0; opx[j]; ++j)
-	  if (!strcmp(argv[i], opx[j])) {
-	    argv[i][1] = 'Y';
-	    break;
-	  }
+        for (j=0; opx[j]; ++j)
+          if (!strcmp(argv[i], opx[j])) {
+            argv[i][1] = 'Y';
+            break;
+          }
     }
 }
 //--------------------------------------------
@@ -73,8 +73,8 @@ void up_nitems (void) {
 int need_option (char *sw, char *item, int L) {
   if (item) return 2;
   errorExit (YERR_MISSARG, __FILE__, L, 2, 0,
-	     "Switch argument is missing for", sw);
-  return YERR_MISSARG;		// avoid C warning
+             "Switch argument is missing for", sw);
+  return YERR_MISSARG;        // avoid C warning
 }
 //--------------------------------------------
 void pushLabel (char *L, int n) {
@@ -82,8 +82,8 @@ void pushLabel (char *L, int n) {
   // Push label L while fewer than n labels are on stack
   //printf ("pL <%s> %d\n", L, n);
   while (labelsIn < n) {
-    if (!B) B = setTxtBuf(L);	    // Make copy in text buffer
-    label[labelsIn] = B;	    // Push label on stack
+    if (!B) B = setTxtBuf(L);        // Make copy in text buffer
+    label[labelsIn] = B;        // Push label on stack
     if (++labelsIn > labelsLim-2) { // Need to grow the stack?
       // Double label stack size
       labelsLim *= 2;
@@ -94,10 +94,10 @@ void pushLabel (char *L, int n) {
 //--------------------------------------------
 /* Make an entry of type et.  Set width units per Size notes.
   Parameters:
-  	etb,   Base EntryType value;
-	etdex, 0 or 1 for initial state of Push or Roll mode 
-	valu,  command string;
-	labels Lb and La for Push and Roll modes, resp.
+    etb,   Base EntryType value;
+    etdex, 0 or 1 for initial state of Push or Roll mode 
+    valu,  command string;
+    labels Lb and La for Push and Roll modes, resp.
 
   Labels Lb and La get formatted via wraps[etb] and wraps[eta],
   respectively.  In phase II, make_objects will create a GtkLabel for
@@ -123,23 +123,23 @@ int make_entry (EntryType etb, int etdex, char *valu, char *Lb, char *La) {
   int LbLen = Lb? strlen(Lb) : 0;
   int LL = LaLen > LbLen? LaLen : LbLen;
   ListItem *m = items+nitems;
-  int w=SpecSiz[etb];		  // Get default spec width
-  if (w && widthStringLen)	{ // 0-width items not relevant
+  int w=SpecSiz[etb];          // Get default spec width
+  if (w && widthStringLen) {   // 0-width items not relevant
     char b = (bun <= widthStringLen)?
-      widthString[bun-1] :	// Get specified letter of width codes
+      widthString[bun-1] :     // Get specified letter of width codes
       widthString[widthStringLen-1]; // Last letter repeats indefinitely
-    w = 31 & b;			     // Set -bw user-specified width
+    w = 31 & b;                // Set -bw user-specified width
   } else {
-    if (w==1) {			// Scale button by string length?
+    if (w==1) {                // Scale button by string length?
       w *= (vv[VVbuq]-1+LL)/vv[VVbuq]; // Q = vv[VVbuq]
-      if (w<1) w = 1;		       // Require positive width
+      if (w<1) w = 1;          // Require positive width
     }
   }
-  m->w = w;			// Set width for addup_sizes() to see
+  m->w = w;            // Set width for addup_sizes() to see
   m->etb   = etb;
   m->etdex = etdex;
-  m->value = setTxtBuf(valu);	// Save copy for make_objects()
-  m->xL = m->xR = 0;		// y3p2 fills these in
+  m->value = setTxtBuf(valu);    // Save copy for make_objects()
+  m->xL = m->xR = 0;             // y3p2 fills these in
   m->label[0] = Lb? wrapLabel (wraps[etb], Lb, __LINE__) : 0;
   m->label[1] = La? wrapLabel (wraps[etb], La, __LINE__) : 0;
 
@@ -148,11 +148,11 @@ int make_entry (EntryType etb, int etdex, char *valu, char *Lb, char *La) {
       printf ("\nItem# ETyp..........   B#  width  <Labels> and [Command]\n");
     ShoHeading = 0;
     printf ("%3d.  et%2d.%d %-7s   %2d  w%3d  <%s> <%s> [%s]\n",
-	    nitems, etb, etdex, ETNames[etb+etdex],
-	    bun, w, La?La:"", Lb?Lb:"", valu?valu:"");
+        nitems, etb, etdex, ETNames[etb+etdex],
+        bun, w, La?La:"", Lb?Lb:"", valu?valu:"");
   }
-  ++bun;			// Advance button-in-row #
-  up_nitems ();			// Advance item-in-form #
+  ++bun;            // Advance button-in-row #
+  up_nitems ();     // Advance item-in-form #
   return nitems-1;
 }
 //--------------------------------------------
@@ -161,8 +161,8 @@ void startRow (ParamMode modeX, ParamMode modeY, ParamMode modeZ) {
     bun = 0;
     make_entry (RoList, 0, 0, 0, 0); // Start a row list
   }
-  mode  = modeY;	// Set parameter state
-  mode2 = modeZ;	// Set secondary state
+  mode  = modeY;    // Set parameter state
+  mode2 = modeZ;    // Set secondary state
 }
 //--------------------------------------------
 int process_option_pair(int parNumber, char *ai, char *aj) {
@@ -179,11 +179,11 @@ int process_option_pair(int parNumber, char *ai, char *aj) {
    Return:
       # program params used; 1 if singleton option, else 2
   */
-  int used=1;			// Default to 1 param used up
+  int used=1;                   // Default to 1 param used up
   char *ivcom, *ivnam, *ivlab, parcode=ai[2], *aLabel, *bLabel;
   static int ShoHeading=1;
 
-  if (ShoMode & ShoParProc) {	// Check the ShoParProc bit
+  if (ShoMode & ShoParProc) {   // Check the ShoParProc bit
     if (ShoHeading)
       printf ("\n         Item#   Par# \tPar \tPar\n");
     ShoHeading = 0;
@@ -194,89 +194,90 @@ int process_option_pair(int parNumber, char *ai, char *aj) {
   if (ai[0] == '-' && ai[1] == 'Y' && ai[3] == 0) {
     // Now ai is a dash-code and aj is a required value, if needed
     switch (parcode) {
-    case 'a':			// -la label, add a label to labelstack
+    case 'a':            // -la label, add a label to labelstack
       used = need_option (ai, aj, __LINE__); // Need a label string
-      pushLabel (aj, labelsIn+1);	     // Push 1 copy onto stack
+      pushLabel (aj, labelsIn+1);            // Push 1 copy onto stack
       break;
-    case 'e': 			// -de, override a default
+    case 'e':             // -de, override a default
       used = need_option (ai, aj, __LINE__); // Need a value string
       // Call decode_default() to get value and put it into vv array, etc
-      if (decode_default (aj))	// Reports 0 on success
-	errorExit (YERR_DECODE, __FILE__, __LINE__, 2, 0,
-		   "Lookup error in ", aj);
+      if (decode_default (aj))    // Reports 0 on success
+    errorExit (YERR_DECODE, __FILE__, __LINE__, 2, 0,
+           "Lookup error in ", aj);
       break;
-    case 'i':			// -ti title
+    case 'i':                                // -ti title
       used = need_option (ai, aj, __LINE__); // Need a title string
-      formTitle = setTxtBuf(aj);	     // Copy to text buffer
-      break;	
-    case 'l':			// -dl
-      startRow (ModeBu, ModeBu, ModeDl); // Enable Bu-Dl line mode
+      formTitle = setTxtBuf(aj);             // Copy to text buffer
+      break;    
+    case 'l':                                // -dl
+      startRow (ModeBu, ModeBu, ModeDl);     // Enable Bu-Dl line mode
       break;
-    case 'n':			// -in
+    case 'n':                                // -in
       used = need_option (ai, aj, __LINE__); // Need a filename string
-      process_option_file(aj, 1); // Read options from file
+      process_option_file(aj, 1);            // Read options from file
       break;
-    case 'o':			// -do
-      startRow (ModeNu, ModeDo, ModeDo); // Enable Do-Do mode
+    case 'o':                                // -do
+      startRow (ModeNu, ModeDo, ModeDo);     // Enable Do-Do mode
       break;
-    case 't':				 // -at
+    case 't':                                // -at
       used = need_option (ai, aj, __LINE__); // Need a geometry spec
-      atPar = setTxtBuf(aj);	// atPar in txtBuf is copy of argv[]
+      atPar = setTxtBuf(aj);    // atPar in txtBuf is copy of argv[]
       hasAt = 1;
       break;
-    case 'u':			// -bu
-      startRow (ModeNu, ModeBu, ModeBu); // Enable Bu-Bu mode
+    case 'u':                                // -bu
+      startRow (ModeNu, ModeBu, ModeBu);     // Enable Bu-Bu mode
       break;
 
-    case 'v':			// -iv  -- Make label and edit-box
+    case 'v':            // -iv  -- Make label and edit-box
       used = need_option (ai, aj, __LINE__); // Need an initial value
       startRow (ModeBu, ModeBu, ModeBu); // Enable Bu-Bu mode
-      pushLabel (aj, 1);	 // Require at least 1 label on stack
+      pushLabel (aj, 1);         // Require at least 1 label on stack
       ivnam = label[--labelsIn]; // Pull iv shell var name
-      pushLabel (ivnam, 1);	 // Require at least 1 label on stack
+      pushLabel (ivnam, 1);      // Require at least 1 label on stack
       ivlab = label[--labelsIn]; // Pull iv button label
       // If stack is empty, use command "true" 
       ivcom = labelsIn? label[--labelsIn] : "true"; // Pull iv opt. command
       make_entry (InitBu, vv[VVib]==0, ivcom, ivlab, ivlab); // -iv button
-      items[nitems-1].pal = nitems;		 // Link to next item
+      items[nitems-1].pal = nitems;              // Link to next item
       make_entry (InitVal, 0, aj, ivnam, ivnam); // -iv entry box + shell var name 
-      items[nitems-1].pal = nitems-2; 		 // Link to previous item
+      items[nitems-1].pal = nitems-2;            // Link to previous item
       break;
 
-    case 'w':			// -bw, button-width setting
+    case 'w':                                // -bw, button-width setting
       used = need_option (ai, aj, __LINE__); // Need list of widths
       widthString = setTxtBuf(aj); // make a copy of argv[] aj;
+      widthStringLen = strlen(widthString);  // Number of width codes - 2026-05-30
       break;
-    case 'x':				 // -ex, exit button
+    case 'x':                            // -ex, exit button
       startRow (ModeBu, ModeBu, ModeBu); // Enable Bu-Bu mode
       aLabel = "exit";  bLabel = "Exit";
-      if (labelsIn)			 // Is  label available on stack?
-	aLabel = bLabel = label[--labelsIn]; // Yes, pull it from stack
+      if (labelsIn)             // Is  label available on stack?
+    aLabel = bLabel = label[--labelsIn]; // Yes, pull it from stack
       make_entry (Exitor, vv[VVxb]==0, NULL, aLabel, bLabel);
       break;
-    default:			// Is it a digit?
+    default:                    // Is it a digit?
       if (parcode >= '0' && parcode <= '9') vv[VVShoMo] = parcode & 0xF;
       break;
     }
   } else {
     // Current param is not an option code, so it is button or do-group
-    int ro = (mode2 == ModeDl);	// Set ro=1 if doing -dl vs -do.
+    int ro = (mode2 == ModeDl); // Set ro=1 if doing -dl vs -do.
     int dat=-1;
     #define QQ printf ("y3p1  L%3d  P#%2d  ni %2d  dat %2d   ai<%s>  aj<%s>\n",\
-		       __LINE__, parNumber, nitems, dat, ai, aj)
+               __LINE__, parNumber, nitems, dat, ai, aj)
     if (mode == ModeDo || ro) { // do-group
       startRow  (ModeBu,  mode, mode2); // In Do-Do mode, EE & do: are a row
       dat = nitems;
-      make_entry (DoEE,   vv[VVea], NULL, "EE", "EE");	// Make 'EE' button
+      make_entry (DoEE,   vv[VVea], NULL, "EE", "EE");   // Make 'EE' button
       make_entry (DoPush, vv[VVda], NULL, "do:", "Do:"); // Make 'do:' button
       startRow  (ModeBu,  mode, mode2); // In Do-Do mode, edit box is a row
       make_entry (DoTxt, 0, ai, NULL, NULL); // Make entry box
-      items[dat+1].pal =	   // Record entry item# in do: button
+      items[dat+1].pal =           // Record entry item# in do: button
         items[dat].pal = nitems-1; // Record entry item# in EE: button
-    } else { // button
-      pushLabel (ai, 1);	// Require at least 1 label on stack
+    } else {                    // button
+      pushLabel (ai, 1);        // Require at least 1 label on stack
       aLabel = bLabel = label[--labelsIn]; // Pull label from stack
-      make_entry (BuCur, vv[VVba], ai, aLabel, bLabel); // Make button of current kind
+      make_entry (BuCur, vv[VVba], ai, aLabel, bLabel); // Make a current-kind button
     }
   }
   return used;
@@ -305,45 +306,43 @@ void process_option_file(char *fn, int mustHave) {
   struct stat buf;
   wordexp_t wep;
   int s = fn? stat (fn, &buf) : 1;
-  char *ptext, *c, *e, *t;
+  char *ptext;
 
   // If file is required, but isn't ok, give an error.
   if (s || !fi || inDepth >= vv[VVfsl]) {
     //printf ("", s, fi, inDepth, vv[VVfsl]);
-    if (mustHave)		// File required?
+    if (mustHave)        // File required?
       errorExit (YERR_FILE, __FILE__, __LINE__, 2, 0,
-		 "Unable to open file", fn);
+         "Unable to open file", fn);
     return; // File not found, but not required
   }
-  ++inDepth;			// Add 1 to include-depth
-  c = ptext = Ymalloc (1+buf.st_size, __FILE__, __LINE__);
-  e = c+buf.st_size;
-
-  // Slurp file (of up to buf.st_size bytes) into ptext:
-  do {
-    // Read one line from fi to location c
-    t = fgets (c, e-c, fi);	// e-c = # of bytes left in ptext
-    if (t) {
-      if (c[0]=='#')
-	c[0] = 0;		// Suppress #comment lines 
-      else {
-	s = strlen (c);		// Suppress \n and \ at end of line:
-	if (c[s-1]=='\n') {
-	  c[s-1] = ' ';		// -- Convert newline to space
-	  if (c[s-2]=='\\')
-	    c[s-2] = 0;		// -- Convert \ at end to null
-	}
-      }
+  ++inDepth;       // Increase the include-depth
+  // Make buffer with room for whole file and read file into it
+  ptext = Ymalloc (1+buf.st_size, __FILE__, __LINE__);
+  size_t got = fread (ptext, 1, buf.st_size, fi); // Read whole file
+  fclose (fi);                                    // Close file
+  // Pointers:  src= current input, dst= current output, end=buffer end
+  char *src = ptext, *dst = ptext, *end = ptext + got;
+  // Loop to convert as follows:          comment line → nil;
+  // backslash+newline → nil line join;   plain newline → space
+  while (src < end) {
+    char *nl  = memchr (src, '\n', end - src);        // Find next newline
+    char *lim = nl ? nl : end;                        // line is [src, lim)
+    if (*src != '#') {                                // keep non-comment lines
+      int cont = (lim > src && lim[-1] == '\\');      // backslash-newline?
+      size_t len = (cont ? lim - 1 : lim) - src;
+      memmove (dst, src, len);
+      dst += len;
+      if (nl && !cont) *dst++ = ' '; // newline -> space
     }
-    c += strlen(c);		// Advance to end of string
-  } while (t);
-  fclose (fi);			// Done with file, close it
+    src = nl ? nl + 1 : end;         // Move src to next line, or to end
+  }
+  *dst = '\0';   // Make sure of nil at end of string
 
-  // wordexp does word expansion like a (posix) shell
-  i = wordexp(ptext, &wep, 0);
+  i = wordexp(ptext, &wep, 0); // Do word expansion like a (posix) shell
   if (i)
     errorExit (YERR_WEXP, __FILE__, __LINE__, 1, 1, "wordexp failure", i);
-  free (ptext);			// Free file text string
+  free (ptext);             // Release file-text buffer
 
   // Show included file contents if ShoMode & ShoWExp are on.
   if (vv[VVShoMo] & ShoWExp)
@@ -353,12 +352,12 @@ void process_option_file(char *fn, int mustHave) {
   // The next two routines skip element [0], so need -1 offset
   fixup_option_codes(wep.we_wordc+1, wep.we_wordv-1);
   process_option_array (wep.we_wordc+1, wep.we_wordv-1);
-  wordfree(&wep);		// Free the expanded-values area
-  --inDepth;
+  wordfree(&wep);           // Free the expanded-values area
+  --inDepth;                // Decrease the include-depth
 }
 //--------------------------------------------
 void process_command_options(int argc, char *argv[]) {
-  initWidgetWraps();	// Initialize widget style wrappers
+  initWidgetWraps();    // Initialize widget style wrappers
   itemsSiz = 128*sizeof(ListItem); // Initial size of items
   items = Ymalloc(itemsSiz, __FILE__, __LINE__);
   nitems = 0;
@@ -366,13 +365,13 @@ void process_command_options(int argc, char *argv[]) {
   fixup_option_codes(argc, argv); // Remove xforms-param-names conflicts
 
   label = Ymalloc(labelsLim * sizeof (char*), __FILE__, __LINE__);
-  BuCur = BuGen;		/* Set default button type */
+  BuCur = BuGen;        // Set default button type
 
   // If default yume-resource file exists, load it up.
   process_option_file(yrcFileName, 0); // Not a required file
 
   // Process command-line options
   process_option_array (argc, argv);
-  free (label);		       // Free up label stack
+  free (label);         // Free up label stack
 }
 //--------------------------------------------

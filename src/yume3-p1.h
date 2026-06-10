@@ -2,11 +2,11 @@
 $Id: yume3-p1.h,v 1.1 2011/03/05 20:45:11 j-waldby Exp j-waldby $
   Copyright 2009-2011 James Waldby.  Offered without warranty
   under GPL v3 terms as at http://www.gnu.org/licenses/gpl.html
-
+  2026-06-06: Change .yumerc to .yume-rc here and yume-examples.1
 
 process_command_options() does Phase 1 of yume3 processing.
 
-It first tests whether a default-options file .yumerc exists, and if
+It first tests whether a default-options file .yume-rc exists, and if
 so loads options from it.
 
 Next, it processes yume3 command-line options as given via argc and

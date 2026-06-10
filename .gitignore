@@ -6,7 +6,12 @@ yume3-trec.h
 yume3-treh.h
 *.tgz
 !README-c-src-tgz
+t
+u
 t.*
+t-*
 t1-*
 how-email-file
 Screenshot*
+\#*
+.#*

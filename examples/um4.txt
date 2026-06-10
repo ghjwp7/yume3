@@ -1,24 +1,23 @@
 $Id: um4.txt 7 2009-02-25 15:19:11Z j-waldby $
+2026-06-09 - jiw - change "firefox" to "xdg-open" and "FF" to "browser"
 
-um4's "Clip url -> FF" button gets a URL from the clipboard, via
-"xclip -o".  It deletes any newlines within the URL, via "tr -d '\n'".
-In the command, '\n' is quoted by " marks, ie, as "'\n'".  Strings
-    'firefox "`xclip -o | tr -d '
-and 
-    '`"'
-are concatenated to the front and rear of
-    "'\n'"
-and the resulting string
-    firefox "`xclip -o | tr -d '\n'`"
-is used by yume as a single parameter.
+um4's "Clip URL → browser" button gets a URL from the clipboard, via
+"xclip -o".  It deletes any newlines within the URL (for details of
+how, see um4) and opens the URL in user-selected browser.
 
-For example, if you select text http://www.google.com (in linux, by
-moving the mouse cursor to h, pressing left mouse button, then moving
-the mouse cursor to m, then releasing the left mouse button) and click
-the "Clip url -> FF" button, the www.google.com webpage should open in
-firefox.
+For example, if you copy or select URL text like https://www.google.com
+and then click the "Clip URL → browser" button, program xdg-open will
+attempt to open the URL's webpage in user-selected browser.
 
-um4's "Ebay# -> FF" button creates a URL like
-    http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&item=400032181378
-when an item number like 400032181378 is dropped on it.
+If you copy or select an ebay item number like 227364381941 and then
+click the "Ebay# → browser" button, the menu creates a URL
+like the following, and tries to open the URL:
+    http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&item=227364381941
 
+In linux, text selection can be done by "left drag" as follows:
+Move mouse cursor to first or last letter of text to be selected.
+Press left mouse button.  Move mouse cursor to other end of text.
+Release left mouse button.
+
+In linux, text highlighted by left drag can be pasted as follows: Move
+mouse cursor to paste location.  Click the middle mouse button.
