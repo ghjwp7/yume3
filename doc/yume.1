@@ -181,14 +181,16 @@ to any yume option-switch that requires a parameter string.
 Parameter-required switches include \*[PRS].  If you don't provide a
 parameter value word after such a switch, yume will treat whatever is
 next as a parameter value-string anyway, or will quit with an error.
-Example: 
-.B yume -la D -bu date
-will (correctly) make a button labeled D, with command date, while
-.B yume -la -bu date
-will make a do-group with command date.
 Example:
 .B yume -la
 will display a missing-argument error.
+Example: 
+.B yume -la D -bu date
+will make a button labeled D, with command date.
+Example: 
+.B yume -la -bu date -ex
+will make a do-group (not just a button) with command "date"
+and an exit-button labeled "-bu".
 
 .\"------------------------------------------------------------
 .SH OPTIONS
