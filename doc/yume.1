@@ -212,7 +212,15 @@ menu-window size will depend on sizes of labels and commands, and it
 will be placed by window-manager rules.  In any case, the user can
 move and resize the menu-window, after it appears, using ordinary
 window-manager controls.  Note, yume treats "-geometry" as a synonym
-for "\fB\-at\fP".  If a -geometry switch appears, yume converts it to \fB\-at\fP.
+for "\fB\-at\fP".  If a -geometry switch appears, yume converts it to
+\fB\-at\fP.
+
+\fB\Wayland Note\fP -- yume3's "\fB\-at\fP" option works as explained here on
+X11 and XWayland displays.  On Wayland, window managers ignore \fB\-de wOnTop\fP
+and \fB\-de wStick\fP settings and ignore window placement
+data (+XOFF+YOFF part of geometry).  yume4 or yume5 (not yet
+available, 2026-10-17) may restore those features via helper programs.
+Different window managers on Gnome, KDE, macOS require different code.
 
 Yume does not validate geometry specifications.  It tests whether
 gtk_window_parse_geometry() says the spec is valid; if not, it exits
@@ -582,7 +590,8 @@ command line parameters such as --gtk-module, --g-fatal-warnings, and
 a few others.  \fB\-de\fP gtk:string gives parameters in string to
 gtk_init(), after shell-globbing via wordexp().  For additional
 information about gtk options, see the man page for gtk-options, and
-see <http://library.gnome.org/devel/gtk/unstable/gtk-running.html>.
+see <https://help.gnome.org/gnome-help/keyboard-nav.html>. 
+[Link ok 2026-10-17]
 .
 .IP (5)\ gtk-resource-file:
 gtkrc ~[string]~ Use
@@ -612,11 +621,13 @@ larger n allowed.  XYshow:n controls menu coordinates test and display
 as described earlier in \fB\-at\fP section.
 .
 .IP (7)\ initial-window-properties:
-wIconic, wOnTop, wStick, wUndec ~[flags]~ By default, a yume menu window
-is created with Decorated turned on, and Iconic, Keep-Above, and Stick
-properties turned off.  You can override those settings either
-manually (typically by right-clicking in a yume menu's title bar), or
-automatically, via the following parameter settings:
+wIconic, wOnTop, wStick, wUndec ~[flags]~ By default, a yume menu
+window is created with Decorated turned on, and Iconic, Keep-Above,
+and Stick properties turned off.  You can override those settings
+either manually (typically by right-clicking in a yume menu's title
+bar), or automatically, via parameter settings shown below.  If using
+Wayland-based screens, yume3's wOnTop and wStick options fail; see note
+in "\fB\-at\fP geometry".
 
 \fB\-de wIcon\fP will cause menu to be created iconified, rather than as an
 open window.
@@ -631,7 +642,7 @@ decorations (such as title bar or window management bar) may be larger
 than the menu itself.  Note, if you subsequently need to move or
 resize an undecorated menu, use a window-manager menu.  Eg, on
 metacity press alt-F7 and arrow keys; see
-<http://library.gnome.org/users/gnome-access-guide/stable/keynav-14.html.en>.
+<https://help.gnome.org/gnome-help/keyboard-nav.html>.
 
 .RE
 Valpair forms that can appear as parameters for the -de option include
@@ -878,7 +889,8 @@ as follows.  (Note additional \fB\-bu\fP switches.)
 Yume applies Pango markup to button label text.  You can use any UTF8
 encoding and Pango Text Attribute Markup Language in button labels per
 .ce
-<http://library.gnome.org/devel/pango/stable/PangoMarkupFormat.html>.
+<http://library.gnome.org/devel/pango/stable/PangoMarkupFormat.html>
+ [Bad link 2026-10-17].
 
 Yume does not apply markup to other label text, such as shell-variable
 names and commands for \fB\-iv\fP.
